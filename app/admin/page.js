@@ -218,7 +218,7 @@ function Sidebar({ activeTab, setActiveTab, logout }) {
         {!collapsed && (
           <div className="flex items-center gap-2">
             <Navigation className="w-6 h-6 text-primary" />
-            <span className="font-bold">Voyage Admin</span>
+            <span className="font-bold">Excursion Travel Admin</span>
           </div>
         )}
         <button

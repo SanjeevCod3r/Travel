@@ -157,7 +157,7 @@ export default function AuthPage() {
             <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
               <Navigation className="w-8 h-8 text-white" />
             </div>
-            <CardTitle className="text-2xl">Welcome to Voyage</CardTitle>
+            <CardTitle className="text-2xl">Welcome to Excursion Travel</CardTitle>
             <CardDescription>
               Sign in or create an account to continue
             </CardDescription>

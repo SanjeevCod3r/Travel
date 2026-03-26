@@ -130,7 +130,7 @@ export default function PackageDetail() {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Voyage Travel",
+        name: "Excursion Travel",
         description: `Booking for ${packageData.title}`,
         image: "/logo.png",
         order_id: orderData.orderId,
@@ -165,7 +165,7 @@ export default function PackageDetail() {
 
             const verifyData = await verifyRes.json();
             if (verifyData.success) {
-              alert("Booking Confirmed! Thank you for choosing Voyage.");
+              alert("Booking Confirmed! Thank you for choosing Excursion Travel.");
               // Refresh or stay on page
               window.location.reload();
             } else {

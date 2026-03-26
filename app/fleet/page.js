@@ -159,7 +159,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "VOYAGE TRAVEL",
+        name: "EXCURSION TRAVEL",
         description: `Fleet Booking - ${vehicle?.name}`,
         order_id: orderData.orderId,
         handler: async function (response) {

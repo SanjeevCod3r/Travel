@@ -141,7 +141,7 @@ function OldHeader() {
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
               <Navigation className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-paleBlue">Voyage</span>
+            <span className="text-xl font-bold text-paleBlue">Excursion Travel</span>
           </a>
 
           {/* Desktop Nav */}
@@ -647,7 +647,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Voyage Travel",
+        name: "Excursion Travel",
         description: `${type.charAt(0).toUpperCase() + type.slice(1)} Booking`,
         order_id: orderData.orderId,
         handler: async function (response) {

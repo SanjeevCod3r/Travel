@@ -376,8 +376,8 @@ export default function TermsPage () {
                 transition={{ duration: 0.6, delay: 1.4 }}
                 className="space-y-2"
               >
-                <p className="text-xl font-semibold">Phone: +1 234 567 890</p>
-                <p className="text-xl font-semibold">Email: info@voyage.travel</p>
+                <p className="text-xl font-semibold">Phone: +91 9990-817-615</p>
+                <p className="text-xl font-semibold">Email: contact@excursiontravel.in</p>
               </motion.div>
             </motion.div>
           </div>
