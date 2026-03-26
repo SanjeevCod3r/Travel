@@ -156,7 +156,7 @@ export const FeaturedDestinations = () => {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold py-3 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group"
+                    className="w-full bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold py-3 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group"
                     style={{ fontFamily: 'Manrope, sans-serif' }}
                   >
                     <span>View Details</span>

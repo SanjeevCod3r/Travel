@@ -311,7 +311,7 @@ function HeroSection({ onBookingSuccess }) {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Experience
+              Experience
               <br />
               <span className="text-white">Excellence</span>
             </h1>
@@ -772,7 +772,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white">
         {/* Modal Header with vibrant gradient */}
-        <div className="bg-gradient-to-r from-[#0056D2] to-[#43E0F8] p-8 text-white relative">
+        <div className="bg-gradient-to-r from-[#0056D2] to-[#A0006D] p-8 text-white relative">
           <div className="relative z-10">
             <h2
               className="text-2xl font-black mb-2"
@@ -807,7 +807,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
 
             <div className="space-y-4">
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                 <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                   <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                     <User className="w-5 h-5" />
@@ -826,7 +826,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                   <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                     <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                       <Phone className="w-5 h-5" />
@@ -843,7 +843,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
                   </div>
                 </div>
                 <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                   <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                     <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                       <Mail className="w-5 h-5" />
@@ -955,11 +955,11 @@ export default function App() {
       <Header />
       <main>
         <HeroSection onBookingSuccess={handleBookingSuccess} />
-        <AboutShowcase/>
+        <AboutShowcase />
         <Services />
         <FeaturedDestinations />
-        <DestinationShowcase/>
-        <WhyChoose/>
+        <DestinationShowcase />
+        <WhyChoose />
         <FleetIntro />
         <FleetShowcase
           vehicles={vehicles}

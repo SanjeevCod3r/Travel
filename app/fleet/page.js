@@ -287,7 +287,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg rounded-[2rem] border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-0 overflow-hidden bg-white max-h-[90vh] overflow-y-auto">
-        <div className="bg-gradient-to-br from-[#0056D2] to-[#003A8C] p-6 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#0056D2] to-[#A0006D] p-6 text-white relative overflow-hidden">
           <div className="relative z-10">
             <h2
               className="text-2xl font-black mb-1"

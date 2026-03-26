@@ -269,7 +269,7 @@ function BookingModal({ open, onClose, packageData }) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white">
-        <div className="bg-gradient-to-r from-[#0056D2] to-[#43E0F8] p-8 text-white relative">
+        <div className="bg-gradient-to-r from-[#0056D2] to-[#A0006D] p-8 text-white relative">
           <div className="relative z-10">
             <h2
               className="text-2xl font-black mb-2"
@@ -384,7 +384,7 @@ function BookingModal({ open, onClose, packageData }) {
               >
                 Total Amount
               </span>
-              <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0056D2] to-[#43E0F8]">
+              <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0056D2] to-[#A0006D]">
                 ₹{totalAmount.toLocaleString()}
               </span>
             </div>
@@ -401,7 +401,7 @@ function BookingModal({ open, onClose, packageData }) {
             <Button
               onClick={handlePayment}
               disabled={loading}
-              className="flex-[2] bg-gradient-to-r from-[#0056D2] to-[#43E0F8] hover:scale-[1.02] active:scale-95 text-white font-black rounded-2xl py-6 h-auto shadow-xl shadow-paleBlue-100 transition-all gap-3"
+              className="flex-[2] bg-gradient-to-r from-[#0056D2] to-[#A0006D] hover:scale-[1.02] active:scale-95 text-white font-black rounded-2xl py-6 h-auto shadow-xl shadow-paleBlue-100 transition-all gap-3"
             >
               <CreditCard className="w-5 h-5" />
               {loading ? "Processing..." : "Confirm & Pay"}
@@ -577,7 +577,7 @@ function PackageDetailModal({ open, onClose, packageData, onBook }) {
               onClose();
               onBook(packageData);
             }}
-            className="rounded-[1.5rem] bg-gradient-to-r from-[#0056D2] to-[#43E0F8] hover:scale-105 active:scale-95 text-white font-black px-12 py-8 h-auto shadow-2xl shadow-paleBlue-200 transition-all text-lg"
+            className="rounded-[1.5rem] bg-gradient-to-r from-[#0056D2] to-[#A0006D] hover:scale-105 active:scale-95 text-white font-black px-12 py-8 h-auto shadow-2xl shadow-paleBlue-200 transition-all text-lg"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             Book Experience
@@ -630,10 +630,10 @@ export default function PackagesPage() {
   };
 
   const cardColors = [
-    "from-[#0056D2] to-[#43E0F8]",
-    "from-[#43E0F8] to-[#5DFDCB]",
+    "from-[#0056D2] to-[#A0006D]",
+    "from-[#A0006D] to-[#5DFDCB]",
     "from-[#FE805A] to-[#FE6B47]",
-    "from-[#5DFDCB] to-[#43E0F8]",
+    "from-[#5DFDCB] to-[#A0006D]",
     "from-[#0056D2] to-[#5DFDCB]",
     "from-[#FE805A] to-[#0056D2]",
   ];

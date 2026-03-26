@@ -96,9 +96,9 @@ ${formData.message}
       >
         {/* Enhanced Background Pattern */}
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/20 to-[#43E0F8]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#43E0F8]/20 to-[#5DFDCB]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0056D2]/10 to-[#43E0F8]/10 rounded-full filter blur-2xl"></div>
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/20 to-[#A0006D]/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#A0006D]/20 to-[#5DFDCB]/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0056D2]/10 to-[#A0006D]/10 rounded-full filter blur-2xl"></div>
         </div>
 
         {/* Floating Elements */}
@@ -113,7 +113,7 @@ ${formData.message}
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl opacity-20"
+            className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-2xl opacity-20"
           />
           <motion.div
             animate={{
@@ -126,7 +126,7 @@ ${formData.message}
               ease: "easeInOut",
               delay: 1,
             }}
-            className="absolute bottom-40 left-20 w-12 h-12 bg-gradient-to-br from-[#43E0F8] to-[#5DFDCB] rounded-full opacity-20"
+            className="absolute bottom-40 left-20 w-12 h-12 bg-gradient-to-br from-[#A0006D] to-[#5DFDCB] rounded-full opacity-20"
           />
         </div>
 
@@ -145,12 +145,12 @@ ${formData.message}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#43E0F8]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#43E0F8]/30 mb-8 shadow-lg"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#A0006D]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#A0006D]/30 mb-8 shadow-lg"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="w-3 h-3 bg-gradient-to-r from-[#0056D2] via-[#4F46E5] to-[#43E0F8] rounded-full shadow-md"
+                className="w-3 h-3 bg-gradient-to-r from-[#0056D2] via-[#4F46E5] to-[#A0006D] rounded-full shadow-md"
               />
               <span
                 className="text-[#4A8BDF] font-bold text-sm uppercase tracking-wider"
@@ -554,7 +554,7 @@ ${formData.message}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                    className="w-20 h-20 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-full flex items-center justify-center mx-auto mb-6"
+                    className="w-20 h-20 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-full flex items-center justify-center mx-auto mb-6"
                   >
                     <svg
                       className="w-10 h-10 text-white"

@@ -125,7 +125,7 @@ export const DestinationShowcase = () => {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2, type: 'spring' }}
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#43E0F8] to-[#5DFDCB] text-white rounded-full mb-6 shadow-xl"
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] text-white rounded-full mb-6 shadow-xl"
           >
             <Sparkles size={20} className="animate-pulse" />
             <span className="font-bold text-sm uppercase tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -144,7 +144,7 @@ export const DestinationShowcase = () => {
           >
             Incredible Cities
             <br />
-            <span className="bg-gradient-to-r from-[#0056D2] via-[#43E0F8] to-[#5DFDCB] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
               Waiting for You
             </span>
           </motion.h2>
