@@ -219,9 +219,23 @@ export const Fleet = ({ onBookNow, vehicles = [], loading = false }) => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 truncate">
-                    {vehicle.name}
-                  </h3>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 truncate title">
+                      {vehicle.name}
+                    </h3>
+                    {vehicle.type && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs capitalize whitespace-nowrap ml-2 mt-1">
+                        {vehicle.type}
+                      </span>
+                    )}
+                  </div>
+                  
+                  {vehicle.description && (
+                    <p className="text-sm text-gray-500 mb-4 line-clamp-2" title={vehicle.description}>
+                      {vehicle.description}
+                    </p>
+                  )}
+
                   <div className="flex flex-wrap gap-2 mb-6 min-h-[40px]">
                     {(vehicle.features || [])
                       .slice(0, 3)

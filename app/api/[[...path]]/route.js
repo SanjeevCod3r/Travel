@@ -704,6 +704,14 @@ async function handleRoute(request, { params }) {
         itinerary: body.itinerary || [],
         inclusions: body.inclusions || [],
         exclusions: body.exclusions || [],
+        highlights: body.highlights || [],
+        bestTime: body.bestTime || '',
+        difficulty: body.difficulty || '',
+        maxAltitude: body.maxAltitude || '',
+        region: body.region || '',
+        type: body.type || '',
+        rating: body.rating || 4.5,
+        reviews: body.reviews || 0,
         enabled: body.enabled !== false,
         createdAt: new Date()
       }

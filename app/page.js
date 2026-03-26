@@ -60,11 +60,13 @@ import Contact from "./contact/page";
 import About from "./about/page";
 import Footer from "./footer/page";
 import Header from "@/components/Header";
+import { FeaturedDestinations } from "@/components/FeaturedDestinations";
 import { Services } from "@/components/Services";
 import { FleetShowcase } from "@/components/FleetShowcase";
 import { FleetIntro } from "@/components/FleetIntro";
 import { AboutShowcase } from "@/components/AboutShowCase";
 import { WhyChoose } from "@/components/WhyChooseUs";
+import { DestinationShowcase } from "@/components/DestinationShowCase";
 
 // Animation variants
 const fadeInUp = {
@@ -309,9 +311,9 @@ function HeroSection({ onBookingSuccess }) {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Your Journey,
+            Experience
               <br />
-              <span className="text-paleBlue">Our Priority</span>
+              <span className="text-white">Excellence</span>
             </h1>
             <p className="text-lg text-gray-200 mb-8 max-w-lg">
               Book cabs, explore travel packages, and rent fleet vehicles.
@@ -325,7 +327,7 @@ function HeroSection({ onBookingSuccess }) {
               data-testid="hero-cta-container"
             >
               <motion.a
-                href="/packages"
+                href="/destinations"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(0, 86, 210, 0.4)",
@@ -335,7 +337,7 @@ function HeroSection({ onBookingSuccess }) {
                 style={{ fontFamily: "Manrope, sans-serif" }}
                 data-testid="explore-services-button"
               >
-                Explore Services
+                Explore Destinations
               </motion.a>
               <motion.a
                 href="/contact"
@@ -356,7 +358,7 @@ function HeroSection({ onBookingSuccess }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Card className="shadow-2xl">
+            <Card className="shadow-2xl bg-[#FFFFFFCC] ">
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl">Book Your Ride</CardTitle>
                 <CardDescription>Get instant price estimate</CardDescription>
@@ -918,17 +920,12 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
 // Main App Component
 export default function App() {
   const [vehicles, setVehicles] = useState([]);
-  const [packages, setPackages] = useState([]);
   const [loadingVehicles, setLoadingVehicles] = useState(true);
-  const [loadingPackages, setLoadingPackages] = useState(true);
   const [selectedFleetVehicle, setSelectedFleetVehicle] = useState(null);
-  const [selectedPackage, setSelectedPackage] = useState(null);
   const [showFleetModal, setShowFleetModal] = useState(false);
-  const [showServicesModal, setShowServicesModal] = useState(false);
 
   useEffect(() => {
     fetchVehicles();
-    fetchPackages();
   }, []);
 
   const fetchVehicles = async () => {
@@ -943,18 +940,6 @@ export default function App() {
     }
   };
 
-  const fetchPackages = async () => {
-    try {
-      const res = await fetch("/api/packages?enabled=true");
-      const data = await res.json();
-      setPackages(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error("Failed to fetch packages:", error);
-    } finally {
-      setLoadingPackages(false);
-    }
-  };
-
   const handleBookingSuccess = () => {
     console.log("Booking successful!");
     toast.success("Your booking request has been received!");
@@ -965,27 +950,15 @@ export default function App() {
     setShowFleetModal(true);
   };
 
-  const handleServicesBooking = ({ pkg }) => {
-    if (pkg) {
-      setSelectedPackage(pkg);
-      setShowServicesModal(true);
-    } else {
-      // Handle custom quote case
-      setShowServicesModal(true);
-    }
-  };
-
   return (
     <div className="min-h-screen">
       <Header />
       <main>
         <HeroSection onBookingSuccess={handleBookingSuccess} />
         <AboutShowcase/>
-        <Services
-          packages={packages}
-          loading={loadingPackages}
-          onBookNow={handleServicesBooking}
-        />
+        <Services />
+        <FeaturedDestinations />
+        <DestinationShowcase/>
         <WhyChoose/>
         <FleetIntro />
         <FleetShowcase
@@ -997,7 +970,7 @@ export default function App() {
 
       <Footer />
 
-      {/* Booking Modals for New Sections */}
+      {/* Booking Modals for Fleet */}
       {selectedFleetVehicle && (
         <BookingModal
           open={showFleetModal}
@@ -1013,31 +986,6 @@ export default function App() {
             pricePerDay: selectedFleetVehicle.pricePerDay,
             pricePerKm: selectedFleetVehicle.pricePerKm,
           }}
-          onSuccess={handleBookingSuccess}
-        />
-      )}
-
-      {(selectedPackage || showServicesModal) && (
-        <BookingModal
-          open={showServicesModal}
-          onClose={() => {
-            setShowServicesModal(false);
-            setSelectedPackage(null);
-          }}
-          type="package"
-          bookingData={
-            selectedPackage
-              ? {
-                  packageId: selectedPackage.id,
-                  packageTitle: selectedPackage.title,
-                  totalPrice: selectedPackage.price,
-                  duration: selectedPackage.duration,
-                }
-              : {
-                  packageTitle: "Custom Transportation Service",
-                  totalPrice: 1500,
-                }
-          }
           onSuccess={handleBookingSuccess}
         />
       )}

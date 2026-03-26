@@ -37,6 +37,7 @@ import {
   CreditCard,
   Truck,
   Bus,
+  MapPin,
 } from "lucide-react";
 
 // Animation variants
@@ -63,6 +64,9 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [customerAddress, setCustomerAddress] = useState("");
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [dropLocation, setDropLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
@@ -103,7 +107,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
   };
 
   const handlePayment = async () => {
-    if (!customerName || !customerPhone || !startDate) {
+    if (!customerName || !customerPhone || !pickupLocation || !dropLocation || !startDate) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -155,7 +159,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "ANTIGRAVITY TRAVEL",
+        name: "VOYAGE TRAVEL",
         description: `Fleet Booking - ${vehicle?.name}`,
         order_id: orderData.orderId,
         handler: async function (response) {
@@ -175,6 +179,9 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
                   customerName,
                   customerPhone,
                   customerEmail,
+                  customerAddress,
+                  pickupLocation,
+                  dropLocation,
                   vehicleId: vehicle?.id,
                   vehicleName: vehicle?.name,
                   vehicleType: vehicle?.type,
@@ -193,6 +200,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
               toast.success("Payment successful! Vehicle booked.");
               onClose();
               if (onSuccess) onSuccess();
+              window.location.reload();
             } else {
               toast.error("Payment verification failed");
             }
@@ -278,143 +286,146 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white">
-        <div className="bg-gradient-to-r from-[#FE805A] to-[#FE6B47] p-8 text-white relative">
+      <DialogContent className="sm:max-w-lg rounded-[2rem] border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-0 overflow-hidden bg-white max-h-[90vh] overflow-y-auto">
+        <div className="bg-gradient-to-br from-[#0056D2] to-[#003A8C] p-6 text-white relative overflow-hidden">
           <div className="relative z-10">
             <h2
-              className="text-2xl font-black mb-2"
+              className="text-2xl font-black mb-1"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
-              Book Your Ride
+              Secure Your Ride
             </h2>
-            <p
-              className="opacity-90 font-medium"
-              style={{ fontFamily: "Manrope, sans-serif" }}
-            >
-              {vehicle.name} • {vehicle.seating} Seats
-            </p>
+            <div className="flex items-center gap-3 opacity-90 text-sm font-semibold">
+              <span className="flex items-center gap-1.5">
+                <Car className="w-3.5 h-3.5" /> {vehicle.name}
+              </span>
+              <span className="w-1 h-1 bg-white/30 rounded-full"></span>
+              <span className="flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5" /> {vehicle.seating} Seats
+              </span>
+            </div>
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
         </div>
 
-        <div className="p-8 space-y-6">
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label
-                className="text-xs font-black uppercase tracking-widest text-gray-400"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                Start Date
-              </Label>
+        <div className="p-6 space-y-5">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Journey Starts</Label>
               <div className="relative">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
                 <Input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold focus:ring-2 focus:ring-[#FE805A]/20 transition-all"
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
                   min={new Date().toISOString().split("T")[0]}
                   required
                 />
               </div>
             </div>
-            <div className="space-y-2">
-              <Label
-                className="text-xs font-black uppercase tracking-widest text-gray-400"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                End Date
-              </Label>
+            <div className="space-y-1.5">
+              <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Journey Ends</Label>
               <div className="relative">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
                 <Input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold focus:ring-2 focus:ring-[#FE805A]/20 transition-all"
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
                   min={startDate || new Date().toISOString().split("T")[0]}
                 />
               </div>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label
-              className="text-xs font-black uppercase tracking-widest text-gray-400"
-              style={{ fontFamily: "Montserrat, sans-serif" }}
-            >
-              Contact Info
-            </Label>
-            <div className="space-y-3">
+          <div className="space-y-3">
+            <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Location Details</Label>
+            <div className="grid grid-cols-2 gap-4">
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
                 <Input
-                  placeholder="Full Name"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold focus:ring-2 focus:ring-[#FE805A]/20 transition-all"
+                  placeholder="Pickup Location"
+                  value={pickupLocation}
+                  onChange={(e) => setPickupLocation(e.target.value)}
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
                   required
                 />
               </div>
               <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+                <Input
+                  placeholder="Drop Location"
+                  value={dropLocation}
+                  onChange={(e) => setDropLocation(e.target.value)}
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Contact Details</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
+                <Input
+                  placeholder="Full Name"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
                 <Input
                   type="tel"
                   placeholder="Phone Number"
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold focus:ring-2 focus:ring-[#FE805A]/20 transition-all"
+                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
                   required
                 />
               </div>
             </div>
           </div>
 
-          {/* Pricing Summary */}
-          <div className="bg-gray-50 rounded-3xl p-6 border border-gray-100">
-            <div className="flex justify-between items-center mb-2">
-              <span
-                className="text-sm font-bold text-gray-500 uppercase tracking-widest"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                Price/Day
-              </span>
-              <span className="font-black text-gray-900">
-                ₹{vehicle.pricePerDay?.toLocaleString()}{" "}
-                <span className="text-xs text-gray-400">
-                  x {calculateDays()} days
-                </span>
-              </span>
+          <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Daily Rate</span>
+              <span className="font-bold text-gray-900 ml-auto">₹{vehicle.pricePerDay?.toLocaleString()} x {calculateDays()} {calculateDays() === 1 ? 'Day' : 'Days'}</span>
             </div>
-            <div className="border-t border-gray-200/50 my-4"></div>
-            <div className="flex justify-between items-center">
-              <span
-                className="text-lg font-black text-gray-900"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                Total Booking Cost
-              </span>
-              <span className="text-2xl font-black text-[#FE6B47]">
-                ₹{totalAmount.toLocaleString()}
-              </span>
+            <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-200">
+              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">Total Amount Due</span>
+              <span className="text-xl font-black text-[#0056D2]">₹{totalAmount.toLocaleString()}</span>
             </div>
           </div>
 
-          <div className="flex gap-4 pt-2">
+          <div className="flex gap-3 pt-2">
             <Button
               variant="outline"
               onClick={onClose}
-              className="flex-1 rounded-2xl py-6 h-auto font-black border-gray-200 text-gray-500 hover:bg-gray-50 transition-all"
+              className="flex-1 rounded-xl py-5 h-auto font-black border-gray-200 text-gray-500 hover:bg-gray-50 transition-all"
             >
-              Cancel
+              Back
             </Button>
             <Button
               onClick={handlePayment}
               disabled={loading}
-              className="flex-[2] bg-gradient-to-r from-[#FE805A] to-[#FE6B47] hover:scale-[1.02] active:scale-95 text-white font-black rounded-2xl py-6 h-auto shadow-xl shadow-orange-100 transition-all gap-3 text-lg"
+              className="flex-[2] bg-[#0056D2] hover:bg-[#003A8C] text-white font-black rounded-xl py-5 h-auto shadow-lg shadow-[#0056D2]/10 transition-all gap-2 text-base"
             >
-              <CreditCard className="w-5 h-5" />
-              {loading ? "Processing..." : "Secure Booking"}
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Processing...
+                </div>
+              ) : (
+                <>
+                  <CreditCard className="w-4 h-4" />
+                  Confirm & Pay
+                </>
+              )}
             </Button>
           </div>
         </div>

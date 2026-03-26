@@ -589,10 +589,12 @@ function BookingsTab() {
                       )}
                       {booking.type === "fleet" && (
                         <div className="text-sm">
-                          <p>{booking.vehicleName}</p>
-                          <p className="text-gray-500">
-                            ₹{booking.pricePerDay}/day
-                          </p>
+                          <p className="font-bold">{booking.vehicleName}</p>
+                          <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-500">
+                            <p><span className="text-green-600 font-bold">Pick:</span> {booking.pickupLocation || '-'}</p>
+                            <p><span className="text-red-600 font-bold">Drop:</span> {booking.dropLocation || '-'}</p>
+                          </div>
+                          <p className="text-[#0056D2] font-bold mt-1">₹{booking.totalPrice?.toLocaleString()}</p>
                         </div>
                       )}
                     </TableCell>
@@ -658,6 +660,12 @@ function PackagesTab() {
     itinerary: "",
     inclusions: "",
     exclusions: "",
+    highlights: "",
+    bestTime: "",
+    difficulty: "Easy",
+    maxAltitude: "",
+    region: "north",
+    type: "holidays",
     enabled: true,
   });
 
@@ -690,6 +698,12 @@ function PackagesTab() {
       itinerary: formData.itinerary.split("\n").filter(Boolean),
       inclusions: formData.inclusions.split("\n").filter(Boolean),
       exclusions: formData.exclusions.split("\n").filter(Boolean),
+      highlights: formData.highlights.split("\n").filter(Boolean),
+      bestTime: formData.bestTime,
+      difficulty: formData.difficulty,
+      maxAltitude: formData.maxAltitude,
+      region: formData.region,
+      type: formData.type,
       enabled: formData.enabled,
     };
 
@@ -769,6 +783,12 @@ function PackagesTab() {
       itinerary: "",
       inclusions: "",
       exclusions: "",
+      highlights: "",
+      bestTime: "",
+      difficulty: "Easy",
+      maxAltitude: "",
+      region: "north",
+      type: "holidays",
       enabled: true,
     });
     setEditingPackage(null);
@@ -785,6 +805,12 @@ function PackagesTab() {
       itinerary: pkg.itinerary?.join("\n") || "",
       inclusions: pkg.inclusions?.join("\n") || "",
       exclusions: pkg.exclusions?.join("\n") || "",
+      highlights: pkg.highlights?.join("\n") || "",
+      bestTime: pkg.bestTime || "",
+      difficulty: pkg.difficulty || "Easy",
+      maxAltitude: pkg.maxAltitude || "",
+      region: pkg.region || "north",
+      type: pkg.type || "holidays",
       enabled: pkg.enabled,
     });
     setShowModal(true);
@@ -943,6 +969,90 @@ function PackagesTab() {
                     setFormData({ ...formData, exclusions: e.target.value })
                   }
                   rows={3}
+                />
+              </div>
+            </div>
+            <div>
+              <Label>Highlights (one per line)</Label>
+              <Textarea
+                value={formData.highlights}
+                onChange={(e) =>
+                  setFormData({ ...formData, highlights: e.target.value })
+                }
+                rows={3}
+              />
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label>Region</Label>
+                <Select
+                  value={formData.region}
+                  onValueChange={(v) => setFormData({ ...formData, region: v })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="north">North India</SelectItem>
+                    <SelectItem value="south">South India</SelectItem>
+                    <SelectItem value="east">East India</SelectItem>
+                    <SelectItem value="west">West India</SelectItem>
+                    <SelectItem value="central">Central India</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Type</Label>
+                <Select
+                  value={formData.type}
+                  onValueChange={(v) => setFormData({ ...formData, type: v })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="holidays">Holiday Packages</SelectItem>
+                    <SelectItem value="hill-station">Hill Stations</SelectItem>
+                    <SelectItem value="trekking">Trekking</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div>
+                <Label>Best Time</Label>
+                <Input
+                  value={formData.bestTime}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bestTime: e.target.value })
+                  }
+                  placeholder="e.g. October - March"
+                />
+              </div>
+              <div>
+                <Label>Difficulty</Label>
+                <Select
+                  value={formData.difficulty}
+                  onValueChange={(v) => setFormData({ ...formData, difficulty: v })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Easy">Easy</SelectItem>
+                    <SelectItem value="Moderate">Moderate</SelectItem>
+                    <SelectItem value="Challenging">Challenging</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Max Altitude</Label>
+                <Input
+                  value={formData.maxAltitude}
+                  onChange={(e) =>
+                    setFormData({ ...formData, maxAltitude: e.target.value })
+                  }
+                  placeholder="e.g. 4000m or N/A"
                 />
               </div>
             </div>
