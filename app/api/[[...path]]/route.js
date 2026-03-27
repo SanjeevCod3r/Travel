@@ -27,7 +27,7 @@ let db
 async function connectToMongo() {
   try {
     if (db) return db;
-    
+
     if (!client) {
       if (!process.env.MONGO_URL) {
         throw new Error("MONGO_URL is not defined in environment variables");
@@ -36,7 +36,7 @@ async function connectToMongo() {
       await client.connect();
       console.log("Successfully connected to MongoDB client");
     }
-    
+
     db = client.db(process.env.DB_NAME || 'travel_db');
     console.log(`Connected to database: ${process.env.DB_NAME || 'travel_db'}`);
     return db;
@@ -284,18 +284,18 @@ async function handleRoute(request, { params }) {
   try {
     // connectToMongo sets the global db variable
     await connectToMongo()
-    
+
     if (!db) {
       throw new Error("Database connection failed: 'db' is undefined")
     }
-    
+
     if (!isInitialized) {
       await initializeDatabase(db)
       isInitialized = true
     }
 
     // ==================== AUTH ROUTES ====================
-    
+
     // POST /api/auth/signup - User Registration
     if (route === '/auth/signup' && method === 'POST') {
       const body = await request.json()
@@ -370,7 +370,7 @@ async function handleRoute(request, { params }) {
       // User login with email
       if (email) {
         const user = await db.collection('users').findOne({ email: email.toLowerCase() })
-        
+
         if (!user) {
           return handleCORS(NextResponse.json(
             { error: 'Invalid email or password' },
@@ -459,7 +459,7 @@ async function handleRoute(request, { params }) {
         .find({ userId: tokenUser.id })
         .sort({ createdAt: -1 })
         .toArray()
-      
+
       const cleanedBookings = bookings.map(({ _id, ...rest }) => rest)
       return handleCORS(NextResponse.json(cleanedBookings))
     }
@@ -499,7 +499,7 @@ async function handleRoute(request, { params }) {
     if (route === '/routes' && method === 'GET') {
       const url = new URL(request.url)
       const enabledOnly = url.searchParams.get('enabled') === 'true'
-      
+
       const filter = enabledOnly ? { enabled: true } : {}
       const routes = await db.collection('routes').find(filter).toArray()
       const cleanedRoutes = routes.map(({ _id, ...rest }) => rest)
@@ -577,7 +577,7 @@ async function handleRoute(request, { params }) {
     if (route === '/vehicles' && method === 'GET') {
       const url = new URL(request.url)
       const enabledOnly = url.searchParams.get('enabled') === 'true'
-      
+
       const filter = enabledOnly ? { enabled: true } : {}
       const vehicles = await db.collection('vehicles').find(filter).toArray()
       const cleanedVehicles = vehicles.map(({ _id, ...rest }) => rest)
@@ -668,7 +668,7 @@ async function handleRoute(request, { params }) {
     if (route === '/packages' && method === 'GET') {
       const url = new URL(request.url)
       const enabledOnly = url.searchParams.get('enabled') === 'true'
-      
+
       const filter = enabledOnly ? { enabled: true } : {}
       const packages = await db.collection('packages').find(filter).toArray()
       const cleanedPackages = packages.map(({ _id, ...rest }) => rest)
@@ -768,7 +768,7 @@ async function handleRoute(request, { params }) {
     if (route === '/blogs' && method === 'GET') {
       const url = new URL(request.url)
       const featuredOnly = url.searchParams.get('featured') === 'true'
-      
+
       const filter = featuredOnly ? { featured: true } : {}
       const blogs = await db.collection('blogs').find(filter).sort({ createdAt: -1 }).toArray()
       const cleanedBlogs = blogs.map(({ _id, ...rest }) => rest)
@@ -782,9 +782,9 @@ async function handleRoute(request, { params }) {
       if (!blog) {
         return handleCORS(NextResponse.json({ error: 'Blog not found' }, { status: 404 }))
       }
-      
+
       await db.collection('blogs').updateOne({ id: blogId }, { $inc: { views: 1 } })
-      
+
       const { _id, ...cleanBlog } = blog
       cleanBlog.views = (cleanBlog.views || 0) + 1
       return handleCORS(NextResponse.json(cleanBlog))
@@ -831,7 +831,7 @@ async function handleRoute(request, { params }) {
       const updateData = { ...body, updatedAt: new Date() }
       delete updateData.id
       delete updateData._id
-      
+
       if (typeof updateData.tags === 'string') {
         updateData.tags = updateData.tags.split(',').map(t => t.trim())
       }
@@ -872,7 +872,7 @@ async function handleRoute(request, { params }) {
       const { pickup, drop, tripType, vehicleType } = body
 
       const settings = await db.collection('settings').findOne({ id: 'app-settings' })
-      
+
       // Check if trip type is enabled
       if (settings?.tripTypes && !settings.tripTypes[tripType]?.enabled) {
         return handleCORS(NextResponse.json(
@@ -1107,13 +1107,13 @@ async function handleRoute(request, { params }) {
       // Update payment order status
       await db.collection('payment_orders').updateOne(
         { razorpayOrderId: razorpay_order_id },
-        { 
-          $set: { 
+        {
+          $set: {
             status: 'paid',
             razorpayPaymentId: razorpay_payment_id,
             razorpaySignature: razorpay_signature,
             paidAt: new Date()
-          } 
+          }
         }
       )
 
@@ -1132,7 +1132,7 @@ async function handleRoute(request, { params }) {
 
         await db.collection('bookings').insertOne(newBooking)
         const { _id, ...cleanBooking } = newBooking
-        
+
         return handleCORS(NextResponse.json({
           success: true,
           message: 'Payment verified and booking confirmed',
@@ -1185,25 +1185,28 @@ async function handleRoute(request, { params }) {
       const pendingBookings = await db.collection('bookings').countDocuments({ status: 'pending' })
       const confirmedBookings = await db.collection('bookings').countDocuments({ status: 'confirmed' })
       const cancelledBookings = await db.collection('bookings').countDocuments({ status: 'cancelled' })
-      
+
       const cabBookings = await db.collection('bookings').countDocuments({ type: 'cab' })
       const packageBookings = await db.collection('bookings').countDocuments({ type: 'package' })
       const fleetBookings = await db.collection('bookings').countDocuments({ type: 'fleet' })
 
       const activeRoutes = await db.collection('routes').countDocuments({ enabled: true })
       const totalRoutes = await db.collection('routes').countDocuments()
-      
+
       const activeVehicles = await db.collection('vehicles').countDocuments({ enabled: true })
       const totalVehicles = await db.collection('vehicles').countDocuments()
 
       const activePackages = await db.collection('packages').countDocuments({ enabled: true })
       const totalPackages = await db.collection('packages').countDocuments()
 
+      const totalVendors = await db.collection('vendors').countDocuments()
+      const totalContacts = await db.collection('contacts').countDocuments()
+
       // Calculate estimated revenue from confirmed bookings
       const confirmedBookingsList = await db.collection('bookings')
         .find({ status: 'confirmed' })
         .toArray()
-      
+
       const totalRevenue = confirmedBookingsList.reduce((sum, booking) => {
         return sum + (booking.estimatedFare || booking.totalPrice || 0)
       }, 0)
@@ -1230,8 +1233,65 @@ async function handleRoute(request, { params }) {
           total: totalPackages,
           active: activePackages
         },
+        vendors: totalVendors,
+        contacts: totalContacts,
         revenue: totalRevenue
       }))
+    }
+
+    // ==================== VENDOR REGISTRATION ====================
+
+    // POST /api/vendor-registration
+    if (route === '/vendor-registration' && method === 'POST') {
+      const data = await request.json()
+      
+      const vendor = {
+        id: uuidv4(),
+        ...data,
+        status: 'pending',
+        createdAt: new Date()
+      }
+
+      await db.collection('vendors').insertOne(vendor)
+      return handleCORS(NextResponse.json({ success: true, vendor }))
+    }
+
+    // GET /api/admin/vendors
+    if (route === '/admin/vendors' && method === 'GET') {
+      const user = verifyToken(request)
+      if (!user) {
+        return handleCORS(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }))
+      }
+
+      const vendors = await db.collection('vendors').find().sort({ createdAt: -1 }).toArray()
+      return handleCORS(NextResponse.json(vendors))
+    }
+
+    // ==================== CONTACT MESSAGES ====================
+
+    // POST /api/contact
+    if (route === '/contact' && method === 'POST') {
+      const data = await request.json()
+      
+      const contact = {
+        id: uuidv4(),
+        ...data,
+        createdAt: new Date()
+      }
+
+      await db.collection('contacts').insertOne(contact)
+      return handleCORS(NextResponse.json({ success: true, contact }))
+    }
+
+    // GET /api/admin/contacts
+    if (route === '/admin/contacts' && method === 'GET') {
+      const user = verifyToken(request)
+      if (!user) {
+        return handleCORS(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }))
+      }
+
+      const contacts = await db.collection('contacts').find().sort({ createdAt: -1 }).toArray()
+      return handleCORS(NextResponse.json(contacts))
     }
 
     // ==================== DEFAULT ROUTES ====================

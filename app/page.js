@@ -231,6 +231,185 @@ function OldHeader() {
   );
 }
 
+// Component for Cab Booking Form
+function CabBookingForm({ 
+  tripType, setTripType, pickup, setPickup, drop, setDrop, 
+  date, setDate, time, setTime, vehicleType, setVehicleType, 
+  priceEstimate, getEstimate, loading, setShowBookingModal, settings 
+}) {
+  const tripTypes = [
+    { value: "local", label: "Local", icon: Building2 },
+    { value: "outstation", label: "Outstation", icon: Route },
+    { value: "airport", label: "Airport", icon: Plane },
+  ];
+
+  return (
+    <Card className="mt-4 shadow-2xl bg-[#FFFFFFCC] backdrop-blur-md rounded-[2.5rem] border-none">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-2xl font-black" style={{ fontFamily: 'Montserrat, sans-serif' }}>Book Your Ride</CardTitle>
+        <CardDescription className="font-bold text-gray-500">Get instant price estimate</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Trip Type Tabs */}
+        <div className="flex gap-2 p-1.5 bg-gray-100/50 rounded-2xl">
+          {tripTypes.map((type) => {
+            const isDisabled =
+              settings?.tripTypes &&
+              !settings.tripTypes[type.value]?.enabled;
+            return (
+              <button
+                key={type.value}
+                onClick={() => !isDisabled && setTripType(type.value)}
+                disabled={isDisabled}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl transition-all text-xs font-bold ${
+                  tripType === type.value
+                    ? "bg-[#0056D2] text-white shadow-lg"
+                    : isDisabled
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-gray-600 hover:bg-white hover:text-[#0056D2]"
+                }`}
+              >
+                <type.icon className="w-4 h-4" />
+                {type.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Pickup & Drop */}
+        <div className="space-y-3">
+          <div className="relative group">
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 z-10" />
+            <Input
+              placeholder="Pickup Location"
+              value={pickup}
+              onChange={(e) => setPickup(e.target.value)}
+              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
+            />
+          </div>
+          <div className="relative group">
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 z-10" />
+            <Input
+              placeholder="Drop Location"
+              value={drop}
+              onChange={(e) => setDrop(e.target.value)}
+              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
+            />
+          </div>
+        </div>
+
+        {/* Date & Time */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="relative group">
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+            <Input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+          <div className="relative group">
+            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+            <Input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
+            />
+          </div>
+        </div>
+
+        {/* Vehicle Type */}
+        <Select value={vehicleType} onValueChange={setVehicleType}>
+          <SelectTrigger className="py-7 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-[#0056D2]/20 font-bold">
+            <SelectValue placeholder="Select Vehicle" />
+          </SelectTrigger>
+          <SelectContent className="rounded-2xl border-none shadow-xl">
+            <SelectItem value="sedan">
+              <div className="flex items-center gap-2 font-bold py-1">
+                <Car className="w-4 h-4" /> Sedan (4 Seats)
+              </div>
+            </SelectItem>
+            <SelectItem value="suv">
+              <div className="flex items-center gap-2 font-bold py-1">
+                <Car className="w-4 h-4" /> SUV (7 Seats)
+              </div>
+            </SelectItem>
+            <SelectItem value="luxury">
+              <div className="flex items-center gap-2 font-bold py-1">
+                <Car className="w-4 h-4" /> Luxury (4 Seats)
+              </div>
+            </SelectItem>
+            <SelectItem value="tempo">
+              <div className="flex items-center gap-2 font-bold py-1">
+                <Truck className="w-4 h-4" /> Tempo (12 Seats)
+              </div>
+            </SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* Price Estimate Display */}
+        <AnimatePresence>
+          {priceEstimate && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-gradient-to-r from-[#0056D2]/5 to-[#43E0F8]/5 rounded-2xl p-6 border border-[#0056D2]/10"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-gray-500 font-bold text-sm uppercase tracking-wider">Estimated Fare</span>
+                <span className="text-4xl font-black text-[#0056D2]" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  ₹{priceEstimate.estimatedFare}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/50 p-2 rounded-xl text-center">
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Distance</p>
+                  <p className="font-black text-gray-700">{priceEstimate.distance} km</p>
+                </div>
+                <div className="bg-white/50 p-2 rounded-xl text-center">
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Base Rate</p>
+                  <p className="font-black text-gray-700">₹{priceEstimate.baseFare}</p>
+                </div>
+              </div>
+              {!priceEstimate.routeFound && (
+                <p className="text-[10px] text-amber-600 mt-4 text-center font-bold uppercase tracking-wider">
+                  * Estimated based on default rates
+                </p>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </CardContent>
+      <CardFooter className="flex flex-col gap-3 pb-8 px-6 pt-2">
+        <Button
+          variant="outline"
+          className="w-full rounded-2xl py-4 h-auto font-black border-2 border-gray-100 text-gray-500 hover:bg-gray-50 transition-all"
+          onClick={getEstimate}
+          disabled={loading}
+        >
+          {loading ? "Calculating..." : "Update Estimate"}
+        </Button>
+        <Button
+          className="w-full bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all hover:scale-[1.02] active:scale-95 text-lg"
+          onClick={() => {
+            if (!priceEstimate) {
+              toast.error("Please get an estimate first");
+              return;
+            }
+            setShowBookingModal(true);
+          }}
+        >
+          Book Your Ride Now
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
 // Hero Section with Cab Booking
 function HeroSection({ onBookingSuccess }) {
   const [tripType, setTripType] = useState("local");
@@ -286,252 +465,123 @@ function HeroSection({ onBookingSuccess }) {
     }
   };
 
-  const tripTypes = [
-    { value: "local", label: "Local", icon: Building2 },
-    { value: "outstation", label: "Outstation", icon: Route },
-    { value: "airport", label: "Airport", icon: Plane },
-  ];
+  const bookingFormProps = {
+    tripType, setTripType, pickup, setPickup, drop, setDrop, 
+    date, setDate, time, setTime, vehicleType, setVehicleType, 
+    priceEstimate, getEstimate, loading, setShowBookingModal, settings
+  };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-16">
+    <div id="home" className="relative min-h-screen overflow-hidden" data-testid="hero-section">
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src="/asset/Home Page Hero Image.png"
           alt="Hero Background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+        {/* Dark Overlay with Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent z-[1]" />
       </div>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+
+      {/* Content */}
+      <div className="relative z-10 min-h-screen pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full">
+          {/* Mobile First: Form on top for phone view */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="lg:hidden mb-12"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Experience
-              <br />
-              <span className="text-white">Excellence</span>
-            </h1>
-            <p className="text-lg text-gray-200 mb-8 max-w-lg">
-              Book cabs, explore travel packages, and rent fleet vehicles.
-              Experience premium travel service at the best prices.
-            </p>
+            <CabBookingForm {...bookingFormProps} />
+          </motion.div>
+
+          {/* Hero Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Left Content */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-              data-testid="hero-cta-container"
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
+              data-testid="hero-content"
             >
-              <motion.a
-                href="/destinations"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0, 86, 210, 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-semibold rounded-full shadow-2xl transition-all duration-300 text-sm sm:text-base"
-                style={{ fontFamily: "Manrope, sans-serif" }}
-                data-testid="explore-services-button"
+              {/* Eyebrow */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="inline-block px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full text-white text-xs sm:text-sm font-black mb-6 uppercase tracking-[0.2em] border border-white/20 shadow-xl"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
-                Explore Destinations
-              </motion.a>
-              <motion.a
-                href="/contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-full border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-sm sm:text-base"
-                style={{ fontFamily: "Manrope, sans-serif" }}
-                data-testid="contact-us-button"
+                Cooperate Mobility Solutions
+              </motion.div>
+
+              {/* Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.1] tracking-tighter"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
-                Contact Us
-              </motion.a>
+                Experience
+                <br />
+                <span className="text-white drop-shadow-2xl">Excellence</span>
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium opacity-90"
+                style={{ fontFamily: 'Manrope, sans-serif' }}
+              >
+                From premium chauffeur-driven services to tailored solutions, we deliver excellence in every ride.
+              </motion.p>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              >
+                <motion.a
+                  href="/destinations"
+                  whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(0, 86, 210, 0.4)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-10 py-5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-black rounded-2xl shadow-2xl transition-all duration-300 text-base uppercase tracking-widest"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  Explore Now
+                </motion.a>
+                <motion.a
+                  href="/contact"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-10 py-5 bg-white/10 backdrop-blur-lg text-white font-black rounded-2xl border-2 border-white/20 hover:bg-white/20 transition-all duration-300 text-base uppercase tracking-widest"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  Contact Us
+                </motion.a>
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Booking Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Card className="shadow-2xl bg-[#FFFFFFCC] ">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-2xl">Book Your Ride</CardTitle>
-                <CardDescription>Get instant price estimate</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Trip Type Tabs */}
-                <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
-                  {tripTypes.map((type) => {
-                    const isDisabled =
-                      settings?.tripTypes &&
-                      !settings.tripTypes[type.value]?.enabled;
-                    return (
-                      <button
-                        key={type.value}
-                        onClick={() => !isDisabled && setTripType(type.value)}
-                        disabled={isDisabled}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md transition-all text-sm ${
-                          tripType === type.value
-                            ? "bg-paleBlue text-white"
-                            : isDisabled
-                            ? "text-gray-400 cursor-not-allowed"
-                            : "text-gray-600 hover:bg-gray-200"
-                        }`}
-                      >
-                        <type.icon className="w-4 h-4" />
-                        {type.label}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Pickup & Drop */}
-                <div className="space-y-3">
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 w-5 h-5 text-green-500" />
-                    <Input
-                      placeholder="Pickup Location"
-                      value={pickup}
-                      onChange={(e) => setPickup(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 w-5 h-5 text-red-500" />
-                    <Input
-                      placeholder="Drop Location"
-                      value={drop}
-                      onChange={(e) => setDrop(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-
-                {/* Date & Time */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                    <Input
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="pl-10"
-                      min={new Date().toISOString().split("T")[0]}
-                    />
-                  </div>
-                  <div className="relative">
-                    <Clock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                    <Input
-                      type="time"
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-
-                {/* Vehicle Type */}
-                <Select value={vehicleType} onValueChange={setVehicleType}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Vehicle" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="sedan">
-                      <div className="flex items-center gap-2">
-                        <Car className="w-4 h-4" /> Sedan (4 Seats)
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="suv">
-                      <div className="flex items-center gap-2">
-                        <Car className="w-4 h-4" /> SUV (7 Seats)
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="luxury">
-                      <div className="flex items-center gap-2">
-                        <Car className="w-4 h-4" /> Luxury (4 Seats)
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="tempo">
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-4 h-4" /> Tempo (12 Seats)
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* Price Estimate Display */}
-                <AnimatePresence>
-                  {priceEstimate && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="bg-gradient-to-r from-paleBlue-50 to-indigo-50 rounded-lg p-4 border border-paleBlue-100"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-600">Estimated Fare</span>
-                        <span className="text-3xl font-bold text-primary">
-                          ₹{priceEstimate.estimatedFare}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-500 space-y-1">
-                        <div className="flex justify-between">
-                          <span>Distance:</span>
-                          <span>{priceEstimate.distance} km</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Base Fare:</span>
-                          <span>₹{priceEstimate.baseFare}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Per KM Rate:</span>
-                          <span>₹{priceEstimate.perKmRate}/km</span>
-                        </div>
-                        {priceEstimate.surgePricing > 1 && (
-                          <div className="flex justify-between text-orange-600">
-                            <span>Surge:</span>
-                            <span>{priceEstimate.surgePricing}x</span>
-                          </div>
-                        )}
-                      </div>
-                      {!priceEstimate.routeFound && (
-                        <p className="text-xs text-amber-600 mt-2">
-                          * Price based on default rates. Actual fare may vary.
-                        </p>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </CardContent>
-              <CardFooter className="flex gap-3">
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={getEstimate}
-                  disabled={loading}
-                >
-                  {loading ? "Calculating..." : "Get Estimate"}
-                </Button>
-                <Button
-                  className="flex-1 bg-paleBlue hover:bg-paleBlue"
-                  onClick={() => {
-                    if (!priceEstimate) {
-                      toast.error("Please get an estimate first");
-                      return;
-                    }
-                    setShowBookingModal(true);
-                  }}
-                >
-                  Book Now
-                </Button>
-              </CardFooter>
-            </Card>
-          </motion.div>
+            {/* Right Content - Booking Form (Desktop only) */}
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.9, x: 50 }}
+               animate={{ opacity: 1, scale: 1, x: 0 }}
+               transition={{ duration: 0.8, delay: 0.3 }}
+               className="hidden lg:flex justify-end"
+            >
+              <div className="w-full max-w-[480px]">
+                <CabBookingForm {...bookingFormProps} />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -551,7 +601,7 @@ function HeroSection({ onBookingSuccess }) {
         }}
         onSuccess={onBookingSuccess}
       />
-    </section>
+    </div>
   );
 }
 

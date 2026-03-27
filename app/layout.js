@@ -1,6 +1,7 @@
 import { Inter, Montserrat, Manrope } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
+import FloatingChat from '@/components/FloatingChat'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' })
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${montserrat.variable} ${manrope.variable}`}>
       <body className={inter.className}>
         {children}
+        <FloatingChat />
         <Toaster position="top-right" richColors />
       </body>
     </html>

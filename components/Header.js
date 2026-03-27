@@ -141,17 +141,56 @@ export default function Header() {
               <X />
             </button>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6 mt-4">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg text-gray-700 hover:text-primary"
+                  className="text-lg font-semibold text-gray-800 hover:text-[#0056D2] transition-colors"
+                  style={{ fontFamily: 'var(--font-manrope), sans-serif' }}
                 >
                   {link.name}
                 </a>
               ))}
+              
+              <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
+                {user ? (
+                  <>
+                    <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-2xl">
+                      <div className="w-10 h-10 bg-[#0056D2]/10 rounded-full flex items-center justify-center text-[#0056D2] font-bold">
+                        {user.name?.[0] || 'U'}
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900">{user.name || 'User'}</p>
+                        <a href="/my-bookings" className="text-xs text-[#0056D2] font-semibold">View Bookings</a>
+                      </div>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      className="w-full py-6 rounded-2xl border-red-100 text-red-500 hover:bg-red-50"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link 
+                      href="/auth" 
+                      className="w-full py-4 text-center font-bold text-gray-700 hover:text-[#0056D2]"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
+                      <Button className="w-full py-6 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold rounded-2xl shadow-lg">
+                        Sign Up Free
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </motion.div>
         )}

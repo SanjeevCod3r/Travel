@@ -66,6 +66,7 @@ import {
   Save,
   RefreshCw,
   FileText,
+  Mail,
 } from "lucide-react";
 
 // Auth check hook
@@ -204,8 +205,10 @@ function Sidebar({ activeTab, setActiveTab, logout }) {
     { id: "packages", label: "Packages", icon: Package },
     { id: "vehicles", label: "Fleet", icon: Car },
     { id: "routes", label: "Routes", icon: Route },
-    { id: "settings", label: "Settings", icon: Settings },
+    { id: "vendors", label: "Vendors", icon: Users },
+    { id: "contacts", label: "Contacts", icon: Mail },
     { id: "blog", label: "Blog", icon: FileText },
+    { id: "settings", label: "Settings", icon: Settings },
   ];
 
   return (
@@ -307,6 +310,20 @@ function DashboardTab() {
       icon: DollarSign,
       color: "bg-green-500",
       subtext: "From confirmed bookings",
+    },
+    {
+      label: "Vendors",
+      value: stats?.vendors || 0,
+      icon: Users,
+      color: "bg-blue-600",
+      subtext: "Registered partners",
+    },
+    {
+      label: "Inquiries",
+      value: stats?.contacts || 0,
+      icon: Mail,
+      color: "bg-pink-600",
+      subtext: "Contact form messages",
     },
     {
       label: "Active Routes",
@@ -593,6 +610,7 @@ function BookingsTab() {
                           <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-500">
                             <p><span className="text-green-600 font-bold">Pick:</span> {booking.pickupLocation || '-'}</p>
                             <p><span className="text-red-600 font-bold">Drop:</span> {booking.dropLocation || '-'}</p>
+                            <p><span className="text-gray-600 font-bold">Address:</span> {booking.customerAddress || '-'}</p>
                           </div>
                           <p className="text-[#0056D2] font-bold mt-1">₹{booking.totalPrice?.toLocaleString()}</p>
                         </div>
@@ -2278,6 +2296,201 @@ function BlogTab() {
   );
 }
 
+// Vendors Tab
+function VendorsTab() {
+  const [vendors, setVendors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchVendors();
+  }, []);
+
+  const fetchVendors = async () => {
+    const token = localStorage.getItem("adminToken");
+    try {
+      const res = await fetch("/api/admin/vendors", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setVendors(data);
+    } catch (error) {
+      console.error("Failed to fetch vendors:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Vendor Registrations</h1>
+        <Button variant="outline" size="sm" onClick={fetchVendors}>
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Refresh
+        </Button>
+      </div>
+
+      <Card>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Vendor Details</TableHead>
+                <TableHead>Company</TableHead>
+                <TableHead>Vehicles</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Exp</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8">
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              ) : vendors.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-8 text-gray-500"
+                  >
+                    No vendors found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                vendors.map((vendor) => (
+                  <TableRow key={vendor.id}>
+                    <TableCell>
+                      <div>
+                        <p className="font-medium">{vendor.name}</p>
+                        <p className="text-sm text-gray-500">{vendor.email}</p>
+                        <p className="text-xs text-gray-400">{vendor.phone}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">{vendor.companyName}</TableCell>
+                    <TableCell>
+                      <div className="text-sm max-w-[200px] truncate" title={vendor.vehicleTypes}>
+                        {vendor.vehicleTypes}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-sm">{vendor.city}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{vendor.experience}y</Badge>
+                    </TableCell>
+                    <TableCell className="text-sm text-gray-500">
+                      {new Date(vendor.createdAt).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Contacts Tab
+function ContactsTab() {
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  const fetchContacts = async () => {
+    const token = localStorage.getItem("adminToken");
+    try {
+      const res = await fetch("/api/admin/contacts", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setContacts(data);
+    } catch (error) {
+      console.error("Failed to fetch contacts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Contact Inquiries</h1>
+        <Button variant="outline" size="sm" onClick={fetchContacts}>
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Refresh
+        </Button>
+      </div>
+
+      <Card>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Customer</TableHead>
+                <TableHead>Inquiry</TableHead>
+                <TableHead>Message</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-8">
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              ) : contacts.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={4}
+                    className="text-center py-8 text-gray-500"
+                  >
+                    No messages found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                contacts.map((contact) => (
+                  <TableRow key={contact.id}>
+                    <TableCell>
+                      <div>
+                        <p className="font-medium">{contact.name}</p>
+                        <p className="text-sm text-gray-500">{contact.email}</p>
+                        <p className="text-xs text-gray-400">{contact.phone}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <p className="text-sm font-medium">{contact.service || "General"}</p>
+                        {contact.company && (
+                          <p className="text-xs text-gray-500">{contact.company}</p>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="max-w-md">
+                      <p className="text-sm text-gray-600 line-clamp-3" title={contact.message}>
+                        {contact.message}
+                      </p>
+                    </TableCell>
+                    <TableCell className="text-sm text-gray-500">
+                      {new Date(contact.createdAt).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 // Main Admin Component
 export default function AdminPage() {
   const { isAuthenticated, loading, logout, setIsAuthenticated } = useAuth();
@@ -2311,6 +2524,10 @@ export default function AdminPage() {
         return <SettingsTab />;
       case "blog":
         return <BlogTab />;
+      case "vendors":
+        return <VendorsTab />;
+      case "contacts":
+        return <ContactsTab />;
       default:
         return <DashboardTab />;
     }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -38,6 +38,7 @@ import {
   Truck,
   Bus,
   MapPin,
+  Shield,
 } from "lucide-react";
 
 // Animation variants
@@ -61,31 +62,64 @@ import Footer from "@/app/footer/page";
 
 // Fleet Booking Modal with Payment
 function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerAddress, setCustomerAddress] = useState("");
-  const [pickupLocation, setPickupLocation] = useState("");
-  const [dropLocation, setDropLocation] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    customerAddress: "",
+    pickupLocation: "",
+    dropLocation: "",
+    startDate: "",
+    endDate: "",
+  });
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     const userData = localStorage.getItem("userData");
     if (token && userData) {
       const parsedUser = JSON.parse(userData);
-      setCustomerName(parsedUser.name || "");
-      setCustomerPhone(parsedUser.phone || "");
-      setCustomerEmail(parsedUser.email || "");
+      // Try to split name if it contains a space
+      const names = (parsedUser.name || "").split(" ");
+      setFormData(prev => ({
+        ...prev,
+        firstName: names[0] || "",
+        lastName: names.slice(1).join(" ") || "",
+        email: parsedUser.email || "",
+        phone: parsedUser.phone || "",
+      }));
     }
   }, [open]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+  };
+
+  const validateStep = (step) => {
+    const newErrors = {};
+    if (step === 1) {
+      if (!formData.firstName.trim()) newErrors.firstName = "Required";
+      if (!formData.email.trim()) newErrors.email = "Required";
+      if (!formData.phone.trim()) newErrors.phone = "Required";
+    } else if (step === 2) {
+      if (!formData.startDate) newErrors.startDate = "Required";
+      if (!formData.pickupLocation.trim()) newErrors.pickupLocation = "Required";
+      if (!formData.dropLocation.trim()) newErrors.dropLocation = "Required";
+      if (!formData.customerAddress.trim()) newErrors.customerAddress = "Required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const calculateDays = () => {
-    if (!startDate || !endDate) return 1;
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    if (!formData.startDate || !formData.endDate) return 1;
+    const start = new Date(formData.startDate);
+    const end = new Date(formData.endDate);
     const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     return diff > 0 ? diff : 1;
   };
@@ -107,11 +141,6 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
   };
 
   const handlePayment = async () => {
-    if (!customerName || !customerPhone || !pickupLocation || !dropLocation || !startDate) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
     const token = localStorage.getItem("userToken");
     if (!token) {
       toast.error("Please login to book");
@@ -129,8 +158,6 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         return;
       }
 
-      const amount = totalAmount * 100; // Convert to paise
-
       const orderRes = await fetch("/api/payment/create-order", {
         method: "POST",
         headers: {
@@ -138,18 +165,13 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          amount,
+          amount: totalAmount * 100,
           bookingType: "fleet",
         }),
       });
 
       const orderData = await orderRes.json();
-
       if (orderData.error) {
-        if (orderData.requireLogin) {
-          window.location.href = "/auth";
-          return;
-        }
         toast.error(orderData.error);
         setLoading(false);
         return;
@@ -176,18 +198,18 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
                 razorpay_signature: response.razorpay_signature,
                 bookingData: {
                   type: "fleet",
-                  customerName,
-                  customerPhone,
-                  customerEmail,
-                  customerAddress,
-                  pickupLocation,
-                  dropLocation,
+                  customerName: `${formData.firstName} ${formData.lastName}`,
+                  customerPhone: formData.phone,
+                  customerEmail: formData.email,
+                  customerAddress: formData.customerAddress,
+                  pickupLocation: formData.pickupLocation,
+                  dropLocation: formData.dropLocation,
                   vehicleId: vehicle?.id,
                   vehicleName: vehicle?.name,
                   vehicleType: vehicle?.type,
                   pricePerDay: vehicle?.pricePerDay,
-                  startDate,
-                  endDate,
+                  startDate: formData.startDate,
+                  endDate: formData.endDate,
                   days: calculateDays(),
                   totalPrice: totalAmount,
                 },
@@ -195,9 +217,8 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
             });
 
             const verifyData = await verifyRes.json();
-
             if (verifyData.success) {
-              toast.success("Payment successful! Vehicle booked.");
+              toast.success("Booking confirmed successfully!");
               onClose();
               if (onSuccess) onSuccess();
               window.location.reload();
@@ -205,75 +226,47 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
               toast.error("Payment verification failed");
             }
           } catch (error) {
-            toast.error("Payment verification failed");
+            toast.error("An error occurred during verification");
           }
         },
         prefill: {
-          name: customerName,
-          email: customerEmail,
-          contact: customerPhone,
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          contact: formData.phone,
         },
-        theme: {
-          color: "#0056D2",
-        },
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-          },
-        },
+        theme: { color: "#0056D2" },
+        modal: { ondismiss: () => setLoading(false) },
       };
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Payment error:", error);
-      toast.error("Payment failed");
+      toast.error("Payment failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Check if user is logged in
+  const steps = [
+    { id: 1, title: "Personal", icon: User },
+    { id: 2, title: "Trip", icon: MapPin },
+    { id: 3, title: "Confirm", icon: CreditCard },
+  ];
+
   if (open && !localStorage.getItem("userToken")) {
     return (
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-md rounded-3xl border-none shadow-2xl">
-          <DialogHeader className="space-y-4">
-            <DialogTitle
-              className="text-2xl font-black text-gray-900"
-              style={{ fontFamily: "Montserrat, sans-serif" }}
-            >
-              Login Required
-            </DialogTitle>
-            <DialogDescription
-              className="text-gray-500 font-medium"
-              style={{ fontFamily: "Manrope, sans-serif" }}
-            >
-              Sign in to secure your vehicle and unlock premium features.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="text-center py-8">
-            <div className="w-20 h-20 bg-paleBlue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none shadow-2xl p-8">
+          <div className="text-center">
+            <div className="w-20 h-20 bg-[#0056D2]/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <User className="w-10 h-10 text-[#0056D2]" />
             </div>
-            <p
-              className="text-gray-600 mb-8 font-semibold"
-              style={{ fontFamily: "Manrope, sans-serif" }}
-            >
-              You need to be logged in to book a vehicle
-            </p>
+            <h2 className="text-2xl font-black mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>Login Required</h2>
+            <p className="text-gray-500 font-medium mb-8">Please sign in to book your premium fleet.</p>
             <div className="flex gap-4 justify-center">
-              <Button
-                variant="outline"
-                onClick={onClose}
-                className="rounded-xl px-6 py-5 h-auto font-bold border-gray-200"
-              >
-                Cancel
-              </Button>
+              <Button variant="outline" onClick={onClose} className="rounded-2xl px-8 py-6 h-auto font-black border-2 border-gray-100">Cancel</Button>
               <a href="/auth">
-                <Button className="bg-[#0056D2] hover:bg-paleBlue-700 text-white font-bold rounded-xl px-8 py-5 h-auto shadow-lg shadow-paleBlue-100 transition-all">
-                  Sign In Now
-                </Button>
+                <Button className="bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl px-10 py-6 h-auto shadow-xl transition-all">Sign In</Button>
               </a>
             </div>
           </div>
@@ -286,148 +279,160 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg rounded-[2rem] border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-0 overflow-hidden bg-white max-h-[90vh] overflow-y-auto">
-        <div className="bg-gradient-to-br from-[#0056D2] to-[#A0006D] p-6 text-white relative overflow-hidden">
+      <DialogContent className="sm:max-w-2xl rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white max-h-[90vh] flex flex-col">
+        {/* Header Section */}
+        <div className="bg-gradient-to-br from-[#0056D2] to-[#A0006D] p-8 text-white relative h-48 flex flex-col justify-end">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
           <div className="relative z-10">
-            <h2
-              className="text-2xl font-black mb-1"
-              style={{ fontFamily: "Montserrat, sans-serif" }}
-            >
-              Secure Your Ride
-            </h2>
-            <div className="flex items-center gap-3 opacity-90 text-sm font-semibold">
-              <span className="flex items-center gap-1.5">
-                <Car className="w-3.5 h-3.5" /> {vehicle.name}
-              </span>
-              <span className="w-1 h-1 bg-white/30 rounded-full"></span>
-              <span className="flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5" /> {vehicle.seating} Seats
-              </span>
-            </div>
+            <h2 className="text-3xl font-black mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>Book {vehicle.name}</h2>
+            <p className="opacity-90 font-bold" style={{ fontFamily: "Manrope, sans-serif" }}>
+              Step {currentStep} of {steps.length} • {steps[currentStep-1].title} Details
+            </p>
           </div>
         </div>
 
-        <div className="p-6 space-y-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Journey Starts</Label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
-                <Input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  min={new Date().toISOString().split("T")[0]}
-                  required
-                />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Journey Ends</Label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
-                <Input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  min={startDate || new Date().toISOString().split("T")[0]}
-                />
-              </div>
-            </div>
+        {/* Progress Bar */}
+        <div className="px-8 pt-6 pb-2">
+          <div className="flex items-center justify-between">
+            {steps.map((step, idx) => (
+              <React.Fragment key={step.id}>
+                <div className="flex flex-col items-center gap-2">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    step.id <= currentStep ? 'bg-[#0056D2] text-white shadow-lg' : 'bg-gray-100 text-gray-400'
+                  }`}>
+                    <step.icon size={18} />
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${
+                    step.id <= currentStep ? 'text-[#0056D2]' : 'text-gray-400'
+                  }`}>{step.title}</span>
+                </div>
+                {idx < steps.length - 1 && (
+                  <div className={`flex-1 h-1 mx-2 rounded-full ${
+                    step.id < currentStep ? 'bg-[#0056D2]' : 'bg-gray-100'
+                  }`} />
+                )}
+              </React.Fragment>
+            ))}
           </div>
+        </div>
 
-          <div className="space-y-3">
-            <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Location Details</Label>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
-                <Input
-                  placeholder="Pickup Location"
-                  value={pickupLocation}
-                  onChange={(e) => setPickupLocation(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  required
-                />
-              </div>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
-                <Input
-                  placeholder="Drop Location"
-                  value={dropLocation}
-                  onChange={(e) => setDropLocation(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  required
-                />
-              </div>
-            </div>
-          </div>
+        {/* Content Area */}
+        <div className="p-8 overflow-y-auto flex-1">
+          <AnimatePresence mode="wait">
+            {currentStep === 1 && (
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">First Name</Label>
+                    <Input name="firstName" value={formData.firstName} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.firstName ? 'ring-2 ring-red-300' : ''}`} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Last Name</Label>
+                    <Input name="lastName" value={formData.lastName} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.lastName ? 'ring-2 ring-red-300' : ''}`} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Email Address</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Input name="email" type="email" value={formData.email} onChange={handleInputChange} className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.email ? 'ring-2 ring-red-300' : ''}`} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Phone Number</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Input name="phone" type="tel" value={formData.phone} onChange={handleInputChange} className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.phone ? 'ring-2 ring-red-300' : ''}`} />
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
-          <div className="space-y-3">
-            <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Contact Details</Label>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
-                <Input
-                  placeholder="Full Name"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  required
-                />
-              </div>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0056D2]" />
-                <Input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={customerPhone}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="pl-10 py-5 rounded-xl bg-gray-50 border-none font-bold text-gray-900 focus:ring-2 focus:ring-[#0056D2]/10 transition-all text-sm"
-                  required
-                />
-              </div>
-            </div>
-          </div>
+            {currentStep === 2 && (
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Starts</Label>
+                    <Input name="startDate" type="date" value={formData.startDate} onChange={handleInputChange} min={new Date().toISOString().split("T")[0]} className="py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Ends</Label>
+                    <Input name="endDate" type="date" value={formData.endDate} onChange={handleInputChange} min={formData.startDate || new Date().toISOString().split("T")[0]} className="py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Pickup Location</Label>
+                  <div className="relative">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
+                    <Input name="pickupLocation" value={formData.pickupLocation} onChange={handleInputChange} className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Drop Location</Label>
+                  <div className="relative">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+                    <Input name="dropLocation" value={formData.dropLocation} onChange={handleInputChange} className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Customer Address</Label>
+                  <Input name="customerAddress" value={formData.customerAddress} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.customerAddress ? 'ring-2 ring-red-300' : ''}`} placeholder="Enter your full address" />
+                </div>
+              </motion.div>
+            )}
 
-          <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Daily Rate</span>
-              <span className="font-bold text-gray-900 ml-auto">₹{vehicle.pricePerDay?.toLocaleString()} x {calculateDays()} {calculateDays() === 1 ? 'Day' : 'Days'}</span>
-            </div>
-            <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-200">
-              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">Total Amount Due</span>
-              <span className="text-xl font-black text-[#0056D2]">₹{totalAmount.toLocaleString()}</span>
-            </div>
-          </div>
+            {currentStep === 3 && (
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
+                <div className="bg-gray-50 rounded-[2rem] p-6 border-2 border-dashed border-gray-200">
+                  <h4 className="font-black text-gray-900 mb-4 flex items-center gap-2" style={{ fontFamily: "Montserrat, sans-serif" }}>
+                    <CreditCard size={18} /> Booking Summary
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Vehicle:</span><span className="font-black text-gray-900">{vehicle.name}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Duration:</span><span className="font-black text-gray-900">{calculateDays()} {calculateDays() === 1 ? 'Day' : 'Days'}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Route:</span><span className="font-black text-gray-900 text-right">{formData.pickupLocation} → {formData.dropLocation}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Passenger:</span><span className="font-black text-gray-900">{formData.firstName} {formData.lastName}</span></div>
+                    <div className="pt-4 mt-4 border-t-2 border-gray-100 flex justify-between items-center">
+                      <span className="text-lg font-black text-gray-900 uppercase">Total amount</span>
+                      <span className="text-2xl font-black text-[#0056D2]">₹{totalAmount.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-[#0056D2]/5 p-4 rounded-2xl flex items-start gap-3">
+                  <Shield size={20} className="text-[#0056D2] mt-1 flex-shrink-0" />
+                  <p className="text-xs text-[#0056D2] font-bold leading-relaxed">
+                    By clicking "Process Payment", you agree to our terms of service and recognize that this is a premium travel contract.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-          <div className="flex gap-3 pt-2">
-            <Button
-              variant="outline"
-              onClick={onClose}
-              className="flex-1 rounded-xl py-5 h-auto font-black border-gray-200 text-gray-500 hover:bg-gray-50 transition-all"
-            >
-              Back
-            </Button>
-            <Button
-              onClick={handlePayment}
-              disabled={loading}
-              className="flex-[2] bg-[#0056D2] hover:bg-[#003A8C] text-white font-black rounded-xl py-5 h-auto shadow-lg shadow-[#0056D2]/10 transition-all gap-2 text-base"
-            >
+        {/* Footer Actions */}
+        <div className="p-8 pt-0 flex gap-4">
+          {currentStep > 1 ? (
+            <Button variant="outline" onClick={() => setCurrentStep(prev => prev - 1)} className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500">Back</Button>
+          ) : (
+            <Button variant="outline" onClick={onClose} className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500">Cancel</Button>
+          )}
+          
+          {currentStep < 3 ? (
+            <Button onClick={() => validateStep(currentStep) && setCurrentStep(prev => prev + 1)} className="flex-[2] bg-gray-900 hover:bg-black text-white font-black rounded-2xl py-6 h-auto shadow-xl transition-all">Continue</Button>
+          ) : (
+            <Button onClick={handlePayment} disabled={loading} className="flex-[2] bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl py-6 h-auto shadow-xl transition-all gap-2">
               {loading ? (
-                <div className="flex items-center gap-2">
+                <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   Processing...
-                </div>
+                </>
               ) : (
                 <>
-                  <CreditCard className="w-4 h-4" />
-                  Confirm & Pay
+                  <CreditCard size={18} /> Process Payment
                 </>
               )}
             </Button>
-          </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

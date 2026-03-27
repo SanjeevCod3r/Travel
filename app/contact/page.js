@@ -26,8 +26,20 @@ export default function Contact() {
   });
   const [showThankYou, setShowThankYou] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try {
+      // Store in database
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.error("Failed to store contact submission:", error);
+    }
+
     // Show thank you popup
     setShowThankYou(true);
 

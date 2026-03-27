@@ -17,12 +17,10 @@ import {
 export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "Destinations", href: "/destinations" },
-    { name: "Services", href: "/services" },
-    { name: "Fleet", href: "/fleet" },
-    { name: "Blog", href: "/blog" },
     { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
     { name: "Contact", href: "/contact" },
+    { name: "Vendor Registration", href: "/vendor-registration" },
   ];
 
   const services = [
