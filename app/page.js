@@ -846,9 +846,9 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
         <div className="p-8 space-y-8">
           {/* User Details Section */}
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-paleBlue-50 rounded-full mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-3 bg-paleBlue-50 rounded-full mb-2">
               <Label
-                className="text-[10px] font-black uppercase tracking-widest text-[#0056D2]"
+                className="text-[15px] font-black uppercase tracking-widest text-[#0056D2]"
                 style={{ fontFamily: "Montserrat, sans-serif" }}
               >
                 Personal Information
@@ -913,7 +913,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
           </div>
 
           {/* Pricing Summary Card */}
-          <div className="bg-gradient-to-br from-[#FE805A] to-[#FE6B47] rounded-3xl p-8 text-white shadow-xl shadow-orange-100 flex items-center justify-between">
+          <div className="bg-gradient-to-br from-[#0056D2] to-[#0056D2] rounded-3xl p-4 text-white shadow-xl  flex items-center justify-between">
             <div>
               <span
                 className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80"
@@ -945,7 +945,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
             <Button
               onClick={handlePayment}
               disabled={loading}
-              className="flex-[2] bg-gray-900 hover:bg-black text-white font-black rounded-2xl py-6 h-auto shadow-xl transition-all hover:scale-[1.02] active:scale-95 gap-3 text-lg"
+              className="flex-[2] bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all hover:scale-[1.02] active:scale-95 gap-3 text-lg"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
               <CreditCard className="w-5 h-5" />

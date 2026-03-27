@@ -418,9 +418,9 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
           )}
           
           {currentStep < 3 ? (
-            <Button onClick={() => validateStep(currentStep) && setCurrentStep(prev => prev + 1)} className="flex-[2] bg-gray-900 hover:bg-black text-white font-black rounded-2xl py-6 h-auto shadow-xl transition-all">Continue</Button>
+            <Button onClick={() => validateStep(currentStep) && setCurrentStep(prev => prev + 1)} className="flex-[2] bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all">Continue</Button>
           ) : (
-            <Button onClick={handlePayment} disabled={loading} className="flex-[2] bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl py-6 h-auto shadow-xl transition-all gap-2">
+            <Button onClick={handlePayment} disabled={loading} className="flex-[2] bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all gap-2">
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
