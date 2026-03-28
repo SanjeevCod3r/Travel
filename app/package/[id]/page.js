@@ -165,7 +165,9 @@ export default function PackageDetail() {
 
             const verifyData = await verifyRes.json();
             if (verifyData.success) {
-              alert("Booking Confirmed! Thank you for choosing Excursion Travel.");
+              alert(
+                "Booking Confirmed! Thank you for choosing Excursion Travel."
+              );
               // Refresh or stay on page
               window.location.reload();
             } else {
@@ -296,7 +298,7 @@ export default function PackageDetail() {
                 </span>
               )}
               {type && (
-                <span className="bg-[#A0006D]/80 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-[#43E0F8]/80 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium">
                   {type.replace("-", " ").toUpperCase()}
                 </span>
               )}
@@ -603,7 +605,6 @@ export default function PackageDetail() {
                 )}
               </div>
             </div>
-
           </div>
 
           {/* Booking Sidebar */}
@@ -705,7 +706,7 @@ export default function PackageDetail() {
                   ></textarea>
                   <button
                     type="submit"
-                    className="w-full mt-2 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg border-none cursor-pointer"
+                    className="w-full mt-2 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg border-none cursor-pointer"
                   >
                     Book for ₹{(price * bookingForm.travelers).toLocaleString()}
                   </button>

@@ -23,7 +23,7 @@ export default function ServicesPage() {
       title: "Corporate Car Rental",
       shortDescription:
         "Premium vehicles with professional chauffeurs for executive travel and business meetings.",
-      color: "from-[#0056D2] to-[#A0006D]",
+      color: "from-[#0056D2] to-[#43E0F8]",
       image: "/asset/Corporate Car Rental Image 2.jpeg",
       features: [
         "Spacious Interiors",
@@ -40,7 +40,7 @@ export default function ServicesPage() {
       title: "Employee Transport Services",
       shortDescription:
         "Reliable and comfortable daily commute solutions for your workforce across all locations.",
-      color: "from-[#A0006D] to-[#5DFDCB]",
+      color: "from-[#43E0F8] to-[#5DFDCB]",
       image: "/asset/Employee Transport Services Image 2.jpeg",
       features: [
         "Spacious Interiors",
@@ -74,7 +74,7 @@ export default function ServicesPage() {
       title: "Conferences & Delegation",
       shortDescription:
         "Luxury fleet with experienced chauffeurs for C-suite executives and VIP guests.",
-      color: "from-[#5DFDCB] to-[#A0006D]",
+      color: "from-[#5DFDCB] to-[#43E0F8]",
       image: "/asset/Conferences & Delegation Image 1.jpeg",
       features: [
         "Spacious Interiors",
@@ -276,7 +276,7 @@ export default function ServicesPage() {
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group text-sm sm:text-base relative overflow-hidden"
+                        className="w-full bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group text-sm sm:text-base relative overflow-hidden"
                         style={{ fontFamily: "Manrope, sans-serif" }}
                       >
                         <span className="relative z-10">View Details</span>

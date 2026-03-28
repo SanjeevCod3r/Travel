@@ -1,24 +1,33 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Building, Mail, Phone, Car, MapPin, Send, Check } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  User,
+  Building,
+  Mail,
+  Phone,
+  Car,
+  MapPin,
+  Send,
+  Check,
+} from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/app/footer/page";
 import { toast } from "sonner";
 
 export default function VendorRegistrationPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    companyName: '',
-    email: '',
-    phone: '',
-    vehicleTypes: '',
-    city: '',
-    experience: '',
-    message: ''
+    name: "",
+    companyName: "",
+    email: "",
+    phone: "",
+    vehicleTypes: "",
+    city: "",
+    experience: "",
+    message: "",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -29,16 +38,16 @@ export default function VendorRegistrationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const res = await fetch("/api/vendor-registration", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await res.json();
-      
+
       if (data.success) {
         setIsSuccess(true);
         toast.success("Registration submitted successfully!");
@@ -46,8 +55,14 @@ export default function VendorRegistrationPage() {
         setTimeout(() => {
           setIsSuccess(false);
           setFormData({
-            name: '', companyName: '', email: '', phone: '',
-            vehicleTypes: '', city: '', experience: '', message: ''
+            name: "",
+            companyName: "",
+            email: "",
+            phone: "",
+            vehicleTypes: "",
+            city: "",
+            experience: "",
+            message: "",
           });
         }, 3000);
       } else {
@@ -65,8 +80,8 @@ export default function VendorRegistrationPage() {
       <Header />
       <div className="min-h-screen bg-slate-50 py-24 flex items-center justify-center relative overflow-hidden">
         {/* Background elements */}
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-[#0056D2]/10 to-[#A0006D]/10  -z-10 rounded-b-[40%]" />
-        
+        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-[#0056D2]/10 to-[#43E0F8]/10  -z-10 rounded-b-[40%]" />
+
         <div className="max-w-4xl w-full mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -77,11 +92,18 @@ export default function VendorRegistrationPage() {
             <span className="mt-5 bg-blue-100 text-[#0056D2] px-4 py-1.5 rounded-full text-sm font-bold tracking-wider mb-4 inline-block uppercase shadow-sm">
               Partner With Us
             </span>
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>
+            <h1
+              className="text-4xl md:text-5xl font-black text-gray-900 mb-4"
+              style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+            >
               Vendor Registration
             </h1>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
-              Join our network of premium fleet providers. Elevate your business by partnering with Excursion Travel.
+            <p
+              className="text-gray-600 text-lg max-w-2xl mx-auto"
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+            >
+              Join our network of premium fleet providers. Elevate your business
+              by partnering with Excursion Travel.
             </p>
           </motion.div>
 
@@ -90,29 +112,39 @@ export default function VendorRegistrationPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100 relative"
-            style={{ boxShadow: '0 25px 50px -12px rgba(0, 86, 210, 0.15)' }}
+            style={{ boxShadow: "0 25px 50px -12px rgba(0, 86, 210, 0.15)" }}
           >
             {isSuccess ? (
-              <motion.div 
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 className="flex flex-col items-center justify-center py-16"
               >
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                   <Check size={40} className="text-green-500" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>Registration Submitted!</h3>
-                <p className="text-gray-600 text-center" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
-                  Thank you for applying. Our vendor management team will contact you shortly.
+                <h3
+                  className="text-2xl font-bold text-gray-900 mb-2"
+                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+                >
+                  Registration Submitted!
+                </h3>
+                <p
+                  className="text-gray-600 text-center"
+                  style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+                >
+                  Thank you for applying. Our vendor management team will
+                  contact you shortly.
                 </p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  
                   {/* Contact Name */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Contact Person</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Contact Person
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <User className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -131,7 +163,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Company Name */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Company / Agency Name</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Company / Agency Name
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Building className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -150,7 +184,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Email */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Email Address</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Email Address
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -169,7 +205,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Phone */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Contact Number</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Contact Number
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -188,7 +226,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Vehicle Types */}
                   <div className="space-y-2 group md:col-span-2">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Types of Vehicles Available</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Types of Vehicles Available
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Car className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -207,7 +247,9 @@ export default function VendorRegistrationPage() {
 
                   {/* City Location */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Base City</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Base City
+                    </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <MapPin className="h-5 w-5 text-gray-400 group-focus-within:text-[#0056D2] transition-colors" />
@@ -226,7 +268,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Experience */}
                   <div className="space-y-2 group">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Years of Operation</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Years of Operation
+                    </label>
                     <div className="relative">
                       <input
                         type="number"
@@ -243,7 +287,9 @@ export default function VendorRegistrationPage() {
 
                   {/* Message */}
                   <div className="space-y-2 group md:col-span-2">
-                    <label className="text-sm font-bold text-gray-700 ml-1">Additional Information</label>
+                    <label className="text-sm font-bold text-gray-700 ml-1">
+                      Additional Information
+                    </label>
                     <textarea
                       name="message"
                       rows="3"
@@ -256,12 +302,15 @@ export default function VendorRegistrationPage() {
                 </div>
 
                 <motion.button
-                  whileHover={{ scale: 1.02, boxShadow: '0 10px 25px -5px rgba(0, 86, 210, 0.4)' }}
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: "0 10px 25px -5px rgba(0, 86, 210, 0.4)",
+                  }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isSubmitting}
-                  className="w-full py-4 mt-6 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg hover:brightness-110"
+                  className="w-full py-4 mt-6 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg hover:brightness-110"
                   type="submit"
-                  style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}
+                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                 >
                   {isSubmitting ? (
                     <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -280,4 +329,4 @@ export default function VendorRegistrationPage() {
       <Footer />
     </>
   );
-};
+}

@@ -62,9 +62,9 @@ export default function About() {
       >
         {/* Enhanced Background Pattern */}
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/20 to-[#A0006D]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#A0006D]/20 to-[#5DFDCB]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0056D2]/10 to-[#A0006D]/10 rounded-full filter blur-2xl"></div>
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/20 to-[#43E0F8]/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#43E0F8]/20 to-[#5DFDCB]/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0056D2]/10 to-[#43E0F8]/10 rounded-full filter blur-2xl"></div>
         </div>
 
         {/* Cool Floating Elements */}
@@ -81,7 +81,7 @@ export default function About() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute top-28 right-20 w-20 h-20 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-2xl opacity-15 shadow-2xl"
+            className="absolute top-28 right-20 w-20 h-20 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl opacity-15 shadow-2xl"
             style={{
               clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
             }}
@@ -98,7 +98,7 @@ export default function About() {
               ease: "easeInOut",
               delay: 1.5,
             }}
-            className="absolute bottom-36 left-16 w-16 h-16 bg-gradient-to-br from-[#A0006D] to-[#5DFDCB] rounded-full opacity-20 shadow-xl"
+            className="absolute bottom-36 left-16 w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#5DFDCB] rounded-full opacity-20 shadow-xl"
             style={{
               clipPath:
                 "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
@@ -143,7 +143,7 @@ export default function About() {
                 i % 4 === 0
                   ? "bg-[#0056D2]/40"
                   : i % 4 === 1
-                  ? "bg-[#A0006D]/40"
+                  ? "bg-[#43E0F8]/40"
                   : i % 4 === 2
                   ? "bg-[#5DFDCB]/40"
                   : "bg-[#FE805A]/40"
@@ -179,7 +179,7 @@ export default function About() {
               ease: "easeInOut",
               delay: 2,
             }}
-            className="absolute bottom-32 right-32 w-40 h-40 bg-[#A0006D]/8 rounded-full blur-2xl"
+            className="absolute bottom-32 right-32 w-40 h-40 bg-[#43E0F8]/8 rounded-full blur-2xl"
           />
         </div>
 
@@ -198,12 +198,12 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#A0006D]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#A0006D]/30 mb-8 shadow-lg"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#43E0F8]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#43E0F8]/30 mb-8 shadow-lg"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="w-3 h-3 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full"
+                className="w-3 h-3 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full"
               />
               <span
                 className="text-[#0056D2] font-bold text-sm uppercase tracking-wider"
@@ -226,7 +226,7 @@ export default function About() {
               data-testid="about-title"
             >
               Your Trusted Partner in{" "}
-              <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
                 Corporate Car Rentals
               </span>
             </motion.h1>
@@ -260,7 +260,7 @@ export default function About() {
               transition={{ delay: 0.6 }}
               className="group relative"
             >
-              <div className="bg-gradient-to-br from-[#0056D2]/10 via-[#A0006D]/5 to-[#0056D2]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#A0006D]/20 shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-br from-[#0056D2]/10 via-[#43E0F8]/5 to-[#0056D2]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#43E0F8]/20 shadow-xl overflow-hidden">
                 {/* Animated Background */}
                 <motion.div
                   animate={{
@@ -272,7 +272,7 @@ export default function About() {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  className="absolute inset-0 bg-gradient-to-br from-[#0056D2]/5 to-[#A0006D]/5 rounded-3xl"
+                  className="absolute inset-0 bg-gradient-to-br from-[#0056D2]/5 to-[#43E0F8]/5 rounded-3xl"
                 />
 
                 <div className="relative z-10 text-center">
@@ -321,7 +321,7 @@ export default function About() {
                           y2="100%"
                         >
                           <stop offset="0%" stopColor="#0056D2" />
-                          <stop offset="100%" stopColor="#A0006D" />
+                          <stop offset="100%" stopColor="#43E0F8" />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -378,7 +378,7 @@ export default function About() {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-lg flex items-center justify-center shadow-lg"
+                    className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-lg flex items-center justify-center shadow-lg"
                   >
                     <Award className="text-white" size={16} />
                   </motion.div>
@@ -394,7 +394,7 @@ export default function About() {
               transition={{ delay: 0.7 }}
               className="group relative"
             >
-              <div className="bg-gradient-to-br from-[#A0006D]/10 via-[#5DFDCB]/5 to-[#A0006D]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#A0006D]/20 shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-br from-[#43E0F8]/10 via-[#5DFDCB]/5 to-[#43E0F8]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#43E0F8]/20 shadow-xl overflow-hidden">
                 {/* Animated Border */}
                 <motion.div
                   animate={{
@@ -405,7 +405,7 @@ export default function About() {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  className="absolute inset-0 bg-gradient-to-r from-[#0056D2] via-[#A0006D] to-[#5DFDCB] opacity-20 rounded-3xl blur-sm"
+                  className="absolute inset-0 bg-gradient-to-r from-[#0056D2] via-[#43E0F8] to-[#5DFDCB] opacity-20 rounded-3xl blur-sm"
                   style={{
                     backgroundSize: "200% 200%",
                   }}
@@ -416,7 +416,7 @@ export default function About() {
                   <div className="flex items-center justify-between mb-6">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 10 }}
-                      className="w-16 h-16 bg-gradient-to-br from-[#A0006D] to-[#5DFDCB] rounded-2xl flex items-center justify-center shadow-lg"
+                      className="w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#5DFDCB] rounded-2xl flex items-center justify-center shadow-lg"
                     >
                       <Shield className="text-white" size={28} />
                     </motion.div>
@@ -501,7 +501,7 @@ export default function About() {
                         }}
                         className="h-2 bg-gray-200 rounded-full overflow-hidden"
                       >
-                        <div className="h-full bg-gradient-to-r from-[#4A8BDF] to-[#A0006D] rounded-full"></div>
+                        <div className="h-full bg-gradient-to-r from-[#4A8BDF] to-[#43E0F8] rounded-full"></div>
                       </motion.div>
                     </div>
                   </div>
@@ -552,7 +552,7 @@ export default function About() {
                 viewport={{ once: true }}
                 className="flex items-center gap-4 mb-8"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-2xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl flex items-center justify-center">
                   <CheckCircle className="text-white" size={24} />
                 </div>
                 <h2
@@ -603,7 +603,7 @@ export default function About() {
                     <motion.div
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
-                      className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-xl flex items-center justify-center mb-4"
+                      className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-xl flex items-center justify-center mb-4"
                     >
                       <benefit.icon className="text-white" size={20} />
                     </motion.div>
@@ -638,7 +638,7 @@ export default function About() {
               <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#0056D2]/30 transition-all duration-300"
+                  className="w-16 h-16 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#0056D2]/30 transition-all duration-300"
                 >
                   <Eye className="text-white" size={28} />
                 </motion.div>
@@ -702,7 +702,7 @@ export default function About() {
               <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#A0006D] to-[#4A8BDF] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#A0006D]/30 transition-all duration-300"
+                  className="w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#4A8BDF] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#43E0F8]/30 transition-all duration-300"
                 >
                   <Target className="text-white" size={28} />
                 </motion.div>
@@ -766,7 +766,7 @@ export default function About() {
               <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#4A8BDF] to-[#A0006D] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#5DFDCB]/30 transition-all duration-300"
+                  className="w-16 h-16 bg-gradient-to-br from-[#4A8BDF] to-[#43E0F8] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#5DFDCB]/30 transition-all duration-300"
                 >
                   <Lightbulb className="text-white" size={28} />
                 </motion.div>
@@ -827,7 +827,7 @@ export default function About() {
             transition={{ delay: 0.9 }}
             className="text-center mt-16 sm:mt-20"
           >
-            <div className="bg-gradient-to-r from-[#0056D2]/5 via-[#A0006D]/5 to-[#0056D2]/5 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-[#A0006D]/20 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-[#0056D2]/5 via-[#43E0F8]/5 to-[#0056D2]/5 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-[#43E0F8]/20 max-w-4xl mx-auto">
               <h3
                 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: "Montserrat, sans-serif" }}
@@ -844,7 +844,7 @@ export default function About() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
+                className="px-8 py-4 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
                 style={{ fontFamily: "Manrope, sans-serif" }}
               >
                 Get Started Today

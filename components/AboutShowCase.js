@@ -27,7 +27,7 @@ export const AboutShowcase = () => {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white rounded-full mb-6"
+            className="inline-flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white rounded-full mb-6"
           >
             <Heart size={18} />
             <span
@@ -48,7 +48,7 @@ export const AboutShowcase = () => {
           >
             Your Trusted Travel
             <br />
-            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
               Companion
             </span>
           </motion.h2>
@@ -131,7 +131,7 @@ export const AboutShowcase = () => {
                 </p>
               </div>
               <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-100">
-                <Award className="text-[#A0006D] w-8 h-8 mb-3 mx-auto" />
+                <Award className="text-[#43E0F8] w-8 h-8 mb-3 mx-auto" />
                 <h4
                   className="font-bold text-gray-900 mb-2"
                   style={{ fontFamily: "Montserrat, sans-serif" }}

@@ -112,8 +112,8 @@ export const Fleet = ({ onBookNow, vehicles = [], loading = false }) => {
     >
       {/* Background decorations removed for brevity, keeping same structure as user provided snippet */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/10 to-[#A0006D]/10 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#A0006D]/10 to-[#5DFDCB]/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/10 to-[#43E0F8]/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#43E0F8]/10 to-[#5DFDCB]/10 rounded-full filter blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
@@ -123,7 +123,7 @@ export const Fleet = ({ onBookNow, vehicles = [], loading = false }) => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center mt-6 gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#A0006D]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#A0006D]/30 mb-8 shadow-lg">
+          <div className="inline-flex items-center mt-6 gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#43E0F8]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#43E0F8]/30 mb-8 shadow-lg">
             <span
               className="text-[#0056D2] font-bold text-sm uppercase tracking-wider"
               style={{ fontFamily: "Montserrat, sans-serif" }}
@@ -133,7 +133,7 @@ export const Fleet = ({ onBookNow, vehicles = [], loading = false }) => {
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Find Your{" "}
-            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
               Perfect Vehicle
             </span>
           </h2>

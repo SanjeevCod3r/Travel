@@ -61,17 +61,24 @@ import { Fleet } from "@/components/Fleet";
 import Footer from "@/app/footer/page";
 import { useJsApiLoader } from "@react-google-maps/api";
 
-const GOOGLE_MAPS_LIBRARIES = ['places'];
+const GOOGLE_MAPS_LIBRARIES = ["places"];
 
 // Fleet-specific location input that works correctly inside a Dialog.
 // Uses the raw Google Maps Places Autocomplete constructor so that
 // suggestion-dropdown clicks are NOT intercepted by the Dialog's event-trap.
-function FleetLocationInput({ name, value, onChange, placeholder, required, error }) {
+function FleetLocationInput({
+  name,
+  value,
+  onChange,
+  placeholder,
+  required,
+  error,
+}) {
   const inputRef = React.useRef(null);
   const autocompleteRef = React.useRef(null);
 
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
+    id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
     libraries: GOOGLE_MAPS_LIBRARIES,
   });
@@ -96,7 +103,7 @@ function FleetLocationInput({ name, value, onChange, placeholder, required, erro
     autocompleteRef.current = ac;
   }, [isLoaded, name, onChange]);
 
-  const icon = name === 'pickupLocation' ? 'text-green-500' : 'text-red-500';
+  const icon = name === "pickupLocation" ? "text-green-500" : "text-red-500";
 
   if (!isLoaded) {
     return (
@@ -128,7 +135,7 @@ function FleetLocationInput({ name, value, onChange, placeholder, required, erro
         required={required}
         autoComplete="off"
         className={`w-full pl-12 pr-4 py-6 rounded-2xl bg-gray-50 border-none font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all${
-          error ? ' ring-2 ring-red-300' : ''
+          error ? " ring-2 ring-red-300" : ""
         }`}
         onChange={onChange}
       />
@@ -160,7 +167,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
       const parsedUser = JSON.parse(userData);
       // Try to split name if it contains a space
       const names = (parsedUser.name || "").split(" ");
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         firstName: names[0] || "",
         lastName: names.slice(1).join(" ") || "",
@@ -172,8 +179,8 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const validateStep = (step) => {
@@ -184,9 +191,11 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
       if (!formData.phone.trim()) newErrors.phone = "Required";
     } else if (step === 2) {
       if (!formData.startDate) newErrors.startDate = "Required";
-      if (!formData.pickupLocation.trim()) newErrors.pickupLocation = "Required";
+      if (!formData.pickupLocation.trim())
+        newErrors.pickupLocation = "Required";
       if (!formData.dropLocation.trim()) newErrors.dropLocation = "Required";
-      if (!formData.customerAddress.trim()) newErrors.customerAddress = "Required";
+      if (!formData.customerAddress.trim())
+        newErrors.customerAddress = "Required";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -337,12 +346,27 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
             <div className="w-20 h-20 bg-[#0056D2]/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <User className="w-10 h-10 text-[#0056D2]" />
             </div>
-            <h2 className="text-2xl font-black mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>Login Required</h2>
-            <p className="text-gray-500 font-medium mb-8">Please sign in to book your premium fleet.</p>
+            <h2
+              className="text-2xl font-black mb-2"
+              style={{ fontFamily: "Montserrat, sans-serif" }}
+            >
+              Login Required
+            </h2>
+            <p className="text-gray-500 font-medium mb-8">
+              Please sign up to book your premium fleet.
+            </p>
             <div className="flex gap-4 justify-center">
-              <Button variant="outline" onClick={onClose} className="rounded-2xl px-8 py-6 h-auto font-black border-2 border-gray-100">Cancel</Button>
+              <Button
+                variant="outline"
+                onClick={onClose}
+                className="rounded-2xl px-8 py-6 h-auto font-black border-2 border-gray-100"
+              >
+                Cancel
+              </Button>
               <a href="/auth">
-                <Button className="bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl px-10 py-6 h-auto shadow-xl transition-all">Sign In</Button>
+                <Button className="bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl px-10 py-6 h-auto shadow-xl transition-all">
+                  Sign Up
+                </Button>
               </a>
             </div>
           </div>
@@ -360,19 +384,32 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         onInteractOutside={(e) => {
           // Prevent Dialog from closing when clicking on Google Maps pac-container dropdown
           const target = e.target;
-          if (target.closest && (target.closest('.pac-container') || target.closest('.pac-item') || target.closest('.pac-matched'))) {
+          if (
+            target.closest &&
+            (target.closest(".pac-container") ||
+              target.closest(".pac-item") ||
+              target.closest(".pac-matched"))
+          ) {
             e.preventDefault();
           }
         }}
       >
-
         {/* Header Section */}
-        <div className="bg-gradient-to-br from-[#0056D2] to-[#A0006D] p-8 text-white relative h-48 flex flex-col justify-end">
+        <div className="bg-gradient-to-br from-[#0056D2] to-[#43E0F8] p-8 text-white relative h-48 flex flex-col justify-end">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
           <div className="relative z-10">
-            <h2 className="text-3xl font-black mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>Book {vehicle.name}</h2>
-            <p className="opacity-90 font-bold" style={{ fontFamily: "Manrope, sans-serif" }}>
-              Step {currentStep} of {steps.length} • {steps[currentStep - 1].title} Details
+            <h2
+              className="text-3xl font-black mb-2"
+              style={{ fontFamily: "Montserrat, sans-serif" }}
+            >
+              Book {vehicle.name}
+            </h2>
+            <p
+              className="opacity-90 font-bold"
+              style={{ fontFamily: "Manrope, sans-serif" }}
+            >
+              Step {currentStep} of {steps.length} •{" "}
+              {steps[currentStep - 1].title} Details
             </p>
           </div>
         </div>
@@ -383,16 +420,31 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
             {steps.map((step, idx) => (
               <React.Fragment key={step.id}>
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${step.id <= currentStep ? 'bg-[#0056D2] text-white shadow-lg' : 'bg-gray-100 text-gray-400'
-                    }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      step.id <= currentStep
+                        ? "bg-[#0056D2] text-white shadow-lg"
+                        : "bg-gray-100 text-gray-400"
+                    }`}
+                  >
                     <step.icon size={18} />
                   </div>
-                  <span className={`text-[10px] font-black uppercase tracking-widest ${step.id <= currentStep ? 'text-[#0056D2]' : 'text-gray-400'
-                    }`}>{step.title}</span>
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-widest ${
+                      step.id <= currentStep
+                        ? "text-[#0056D2]"
+                        : "text-gray-400"
+                    }`}
+                  >
+                    {step.title}
+                  </span>
                 </div>
                 {idx < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-2 rounded-full ${step.id < currentStep ? 'bg-[#0056D2]' : 'bg-gray-100'
-                    }`} />
+                  <div
+                    className={`flex-1 h-1 mx-2 rounded-full ${
+                      step.id < currentStep ? "bg-[#0056D2]" : "bg-gray-100"
+                    }`}
+                  />
                 )}
               </React.Fragment>
             ))}
@@ -403,48 +455,119 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         <div className="p-8 overflow-y-auto flex-1">
           <AnimatePresence mode="wait">
             {currentStep === 1 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="space-y-6"
+              >
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">First Name</Label>
-                    <Input name="firstName" value={formData.firstName} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.firstName ? 'ring-2 ring-red-300' : ''}`} />
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                      First Name
+                    </Label>
+                    <Input
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${
+                        errors.firstName ? "ring-2 ring-red-300" : ""
+                      }`}
+                    />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Last Name</Label>
-                    <Input name="lastName" value={formData.lastName} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.lastName ? 'ring-2 ring-red-300' : ''}`} />
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                      Last Name
+                    </Label>
+                    <Input
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${
+                        errors.lastName ? "ring-2 ring-red-300" : ""
+                      }`}
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Email Address</Label>
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                    Email Address
+                  </Label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input name="email" type="email" value={formData.email} onChange={handleInputChange} className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.email ? 'ring-2 ring-red-300' : ''}`} />
+                    <Input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${
+                        errors.email ? "ring-2 ring-red-300" : ""
+                      }`}
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Phone Number</Label>
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                    Phone Number
+                  </Label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input name="phone" type="tel" value={formData.phone} onChange={handleInputChange} className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.phone ? 'ring-2 ring-red-300' : ''}`} />
+                    <Input
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className={`pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold ${
+                        errors.phone ? "ring-2 ring-red-300" : ""
+                      }`}
+                    />
                   </div>
                 </div>
               </motion.div>
             )}
 
             {currentStep === 2 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="space-y-6"
+              >
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Starts</Label>
-                    <Input name="startDate" type="date" value={formData.startDate} onChange={handleInputChange} min={new Date().toISOString().split("T")[0]} className="py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                      Starts
+                    </Label>
+                    <Input
+                      name="startDate"
+                      type="date"
+                      value={formData.startDate}
+                      onChange={handleInputChange}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="py-6 rounded-2xl bg-gray-50 border-none font-bold"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Ends</Label>
-                    <Input name="endDate" type="date" value={formData.endDate} onChange={handleInputChange} min={formData.startDate || new Date().toISOString().split("T")[0]} className="py-6 rounded-2xl bg-gray-50 border-none font-bold" />
+                    <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                      Ends
+                    </Label>
+                    <Input
+                      name="endDate"
+                      type="date"
+                      value={formData.endDate}
+                      onChange={handleInputChange}
+                      min={
+                        formData.startDate ||
+                        new Date().toISOString().split("T")[0]
+                      }
+                      className="py-6 rounded-2xl bg-gray-50 border-none font-bold"
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Pickup Location</Label>
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                    Pickup Location
+                  </Label>
                   <FleetLocationInput
                     name="pickupLocation"
                     value={formData.pickupLocation}
@@ -455,7 +578,9 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Drop Location</Label>
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                    Drop Location
+                  </Label>
                   <FleetLocationInput
                     name="dropLocation"
                     value={formData.dropLocation}
@@ -466,33 +591,82 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Customer Address</Label>
-                  <Input name="customerAddress" value={formData.customerAddress} onChange={handleInputChange} className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${errors.customerAddress ? 'ring-2 ring-red-300' : ''}`} placeholder="Enter your full address" />
+                  <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">
+                    Customer Address
+                  </Label>
+                  <Input
+                    name="customerAddress"
+                    value={formData.customerAddress}
+                    onChange={handleInputChange}
+                    className={`py-6 rounded-2xl bg-gray-50 border-none font-bold ${
+                      errors.customerAddress ? "ring-2 ring-red-300" : ""
+                    }`}
+                    placeholder="Enter your full address"
+                  />
                 </div>
               </motion.div>
             )}
 
             {currentStep === 3 && (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="space-y-6"
+              >
                 <div className="bg-gray-50 rounded-[2rem] p-6 border-2 border-dashed border-gray-200">
-                  <h4 className="font-black text-gray-900 mb-4 flex items-center gap-2" style={{ fontFamily: "Montserrat, sans-serif" }}>
+                  <h4
+                    className="font-black text-gray-900 mb-4 flex items-center gap-2"
+                    style={{ fontFamily: "Montserrat, sans-serif" }}
+                  >
                     <CreditCard size={18} /> Booking Summary
                   </h4>
                   <div className="space-y-3">
-                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Vehicle:</span><span className="font-black text-gray-900">{vehicle.name}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Duration:</span><span className="font-black text-gray-900">{calculateDays()} {calculateDays() === 1 ? 'Day' : 'Days'}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Route:</span><span className="font-black text-gray-900 text-right">{formData.pickupLocation} → {formData.dropLocation}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-gray-500 font-bold">Passenger:</span><span className="font-black text-gray-900">{formData.firstName} {formData.lastName}</span></div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500 font-bold">Vehicle:</span>
+                      <span className="font-black text-gray-900">
+                        {vehicle.name}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500 font-bold">Duration:</span>
+                      <span className="font-black text-gray-900">
+                        {calculateDays()}{" "}
+                        {calculateDays() === 1 ? "Day" : "Days"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500 font-bold">Route:</span>
+                      <span className="font-black text-gray-900 text-right">
+                        {formData.pickupLocation} → {formData.dropLocation}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500 font-bold">
+                        Passenger:
+                      </span>
+                      <span className="font-black text-gray-900">
+                        {formData.firstName} {formData.lastName}
+                      </span>
+                    </div>
                     <div className="pt-4 mt-4 border-t-2 border-gray-100 flex justify-between items-center">
-                      <span className="text-lg font-black text-gray-900 uppercase">Total amount</span>
-                      <span className="text-2xl font-black text-[#0056D2]">₹{totalAmount.toLocaleString()}</span>
+                      <span className="text-lg font-black text-gray-900 uppercase">
+                        Total amount
+                      </span>
+                      <span className="text-2xl font-black text-[#0056D2]">
+                        ₹{totalAmount.toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="bg-[#0056D2]/5 p-4 rounded-2xl flex items-start gap-3">
-                  <Shield size={20} className="text-[#0056D2] mt-1 flex-shrink-0" />
+                  <Shield
+                    size={20}
+                    className="text-[#0056D2] mt-1 flex-shrink-0"
+                  />
                   <p className="text-xs text-[#0056D2] font-bold leading-relaxed">
-                    By clicking "Process Payment", you agree to our terms of service and recognize that this is a premium travel contract.
+                    By clicking "Process Payment", you agree to our terms of
+                    service and recognize that this is a premium travel
+                    contract.
                   </p>
                 </div>
               </motion.div>
@@ -503,15 +677,38 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
         {/* Footer Actions */}
         <div className="p-8 pt-0 flex gap-4">
           {currentStep > 1 ? (
-            <Button variant="outline" onClick={() => setCurrentStep(prev => prev - 1)} className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500">Back</Button>
+            <Button
+              variant="outline"
+              onClick={() => setCurrentStep((prev) => prev - 1)}
+              className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500"
+            >
+              Back
+            </Button>
           ) : (
-            <Button variant="outline" onClick={onClose} className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500">Cancel</Button>
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500"
+            >
+              Cancel
+            </Button>
           )}
 
           {currentStep < 3 ? (
-            <Button onClick={() => validateStep(currentStep) && setCurrentStep(prev => prev + 1)} className="flex-[2] bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all">Continue</Button>
+            <Button
+              onClick={() =>
+                validateStep(currentStep) && setCurrentStep((prev) => prev + 1)
+              }
+              className="flex-[2] bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all"
+            >
+              Continue
+            </Button>
           ) : (
-            <Button onClick={handlePayment} disabled={loading} className="flex-[2] bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all gap-2">
+            <Button
+              onClick={handlePayment}
+              disabled={loading}
+              className="flex-[2] bg-[#0056D2] hover:bg-black text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all gap-2"
+            >
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

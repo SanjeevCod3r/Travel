@@ -34,8 +34,8 @@ export const FleetShowcase = ({ onBookNow }) => {
       seats: "7 Passengers",
       features: ["Premium Interior", "Advanced Safety", "Executive Comfort"],
       image: "/asset/Fleet Showcase Toyota Vellfire.png",
-      color: "from-[#0056D2] to-[#A0006D]",
-      bgGradient: "from-[#0056D2]/5 to-[#A0006D]/5",
+      color: "from-[#0056D2] to-[#43E0F8]",
+      bgGradient: "from-[#0056D2]/5 to-[#43E0F8]/5",
       icon: Crown,
     },
     {
@@ -44,8 +44,8 @@ export const FleetShowcase = ({ onBookNow }) => {
       seats: "7 Passengers",
       features: ["Spacious Interior", "Family Comfort", "Reliable Performance"],
       image: "/asset/Fleet Showcase Mercedes GLS.png",
-      color: "from-[#0056D2] to-[#A0006D]",
-      bgGradient: "from-[#0056D2]/5 to-[#A0006D]/5",
+      color: "from-[#0056D2] to-[#43E0F8]",
+      bgGradient: "from-[#0056D2]/5 to-[#43E0F8]/5",
       icon: Users,
     },
     {
@@ -54,8 +54,8 @@ export const FleetShowcase = ({ onBookNow }) => {
       seats: "7 Passengers",
       features: ["Spacious Interior", "Family Comfort", "Reliable Performance"],
       image: "/asset/Fleet Showcase Toyota Innova Hycross.png",
-      color: "from-[#0056D2] to-[#A0006D]",
-      bgGradient: "from-[#0056D2]/5 to-[#A0006D]/5",
+      color: "from-[#0056D2] to-[#43E0F8]",
+      bgGradient: "from-[#0056D2]/5 to-[#43E0F8]/5",
       icon: Users,
     },
     {
@@ -64,8 +64,8 @@ export const FleetShowcase = ({ onBookNow }) => {
       seats: "4 Passengers",
       features: ["Premium Interior", "Advanced Safety", "Executive Comfort"],
       image: "/asset/Fleet Showcase Mercedes S Class.png",
-      color: "from-[#0056D2] to-[#A0006D]",
-      bgGradient: "from-[#0056D2]/5 to-[#A0006D]/5",
+      color: "from-[#0056D2] to-[#43E0F8]",
+      bgGradient: "from-[#0056D2]/5 to-[#43E0F8]/5",
       icon: Crown,
     },
   ];
@@ -85,7 +85,7 @@ export const FleetShowcase = ({ onBookNow }) => {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full opacity-20"
+            className="absolute w-2 h-2 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full opacity-20"
             animate={{
               y: [0, -100, 0],
               x: [0, Math.random() * 100 - 50, 0],
@@ -118,7 +118,7 @@ export const FleetShowcase = ({ onBookNow }) => {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] text-white rounded-full mb-6 shadow-xl"
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] text-white rounded-full mb-6 shadow-xl"
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -145,7 +145,7 @@ export const FleetShowcase = ({ onBookNow }) => {
           >
             Premium Vehicles for
             <br />
-            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
               Every Journey
             </span>
           </motion.h2>
@@ -369,7 +369,7 @@ export const FleetShowcase = ({ onBookNow }) => {
                     repeat: Infinity,
                     delay: index * 0.3,
                   }}
-                  className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-[#A0006D] to-[#5DFDCB] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-[#43E0F8] to-[#5DFDCB] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </motion.div>
             );
@@ -468,7 +468,7 @@ export const FleetShowcase = ({ onBookNow }) => {
                 className="px-8 py-4 bg-white text-[#0056D2] font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden"
                 style={{ fontFamily: "Montserrat, sans-serif" }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0056D2] to-[#A0006D] opacity-0 hover:opacity-10 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] opacity-0 hover:opacity-10 transition-opacity duration-300" />
                 <Car size={18} />
                 View All Vehicles
                 <ChevronRight size={18} />

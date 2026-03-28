@@ -142,7 +142,9 @@ function OldHeader() {
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
               <Navigation className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-paleBlue">Excursion Travel</span>
+            <span className="text-xl font-bold text-paleBlue">
+              Excursion Travel
+            </span>
           </a>
 
           {/* Desktop Nav */}
@@ -236,9 +238,12 @@ function OldHeader() {
 
 // Hero Section with Cab Booking
 function HeroSection() {
-
   return (
-    <div id="home" className="relative min-h-screen overflow-hidden" data-testid="hero-section">
+    <div
+      id="home"
+      className="relative min-h-screen overflow-hidden"
+      data-testid="hero-section"
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -254,7 +259,7 @@ function HeroSection() {
       <div className="relative z-10 min-h-screen pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full">
           {/* Mobile First: Form on top for phone view */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -279,7 +284,7 @@ function HeroSection() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
                 className="inline-block px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full text-white text-xs sm:text-sm font-black mb-6 uppercase tracking-[0.2em] border border-white/20 shadow-xl"
-                style={{ fontFamily: 'Montserrat, sans-serif' }}
+                style={{ fontFamily: "Montserrat, sans-serif" }}
               >
                 Cooperate Mobility Solutions
               </motion.div>
@@ -290,7 +295,7 @@ function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.1] tracking-tighter"
-                style={{ fontFamily: 'Montserrat, sans-serif' }}
+                style={{ fontFamily: "Montserrat, sans-serif" }}
               >
                 Experience
                 <br />
@@ -303,9 +308,10 @@ function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
                 className="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium opacity-90"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
+                style={{ fontFamily: "Manrope, sans-serif" }}
               >
-                From premium chauffeur-driven services to tailored solutions, we deliver excellence in every ride.
+                From premium chauffeur-driven services to tailored solutions, we
+                deliver excellence in every ride.
               </motion.p>
 
               {/* CTAs */}
@@ -317,10 +323,13 @@ function HeroSection() {
               >
                 <motion.a
                   href="/destinations"
-                  whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(0, 86, 210, 0.4)' }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 20px 40px rgba(0, 86, 210, 0.4)",
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-10 py-5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-black rounded-2xl shadow-2xl transition-all duration-300 text-base uppercase tracking-widest"
-                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  className="px-10 py-5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-black rounded-2xl shadow-2xl transition-all duration-300 text-base uppercase tracking-widest"
+                  style={{ fontFamily: "Montserrat, sans-serif" }}
                 >
                   Explore Now
                 </motion.a>
@@ -329,7 +338,7 @@ function HeroSection() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-10 py-5 bg-white/10 backdrop-blur-lg text-white font-black rounded-2xl border-2 border-white/20 hover:bg-white/20 transition-all duration-300 text-base uppercase tracking-widest"
-                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  style={{ fontFamily: "Montserrat, sans-serif" }}
                 >
                   Contact Us
                 </motion.a>
@@ -337,11 +346,11 @@ function HeroSection() {
             </motion.div>
 
             {/* Right Content - Booking Form (Desktop only) */}
-            <motion.div 
-               initial={{ opacity: 0, scale: 0.9, x: 50 }}
-               animate={{ opacity: 1, scale: 1, x: 0 }}
-               transition={{ duration: 0.8, delay: 0.3 }}
-               className="hidden lg:flex justify-end"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="hidden lg:flex justify-end"
             >
               <div className="w-full max-w-[480px]">
                 <CabBookingForm />
@@ -350,7 +359,6 @@ function HeroSection() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
@@ -529,7 +537,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
               className="text-gray-500 font-medium"
               style={{ fontFamily: "Manrope, sans-serif" }}
             >
-              Sign in to secure your booking and unlock premium features.
+              Sign up to secure your booking and unlock premium features.
             </DialogDescription>
           </DialogHeader>
           <div className="text-center py-8">
@@ -552,7 +560,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
               </Button>
               <a href="/auth">
                 <Button className="bg-[#0056D2] hover:bg-paleBlue-700 text-white font-black rounded-xl px-10 py-5 h-auto shadow-lg shadow-paleBlue-100 transition-all">
-                  Sign In Now
+                  Sign Up Now
                 </Button>
               </a>
             </div>
@@ -572,7 +580,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white">
         {/* Modal Header with vibrant gradient */}
-        <div className="bg-gradient-to-r from-[#0056D2] to-[#A0006D] p-8 text-white relative">
+        <div className="bg-gradient-to-r from-[#0056D2] to-[#43E0F8] p-8 text-white relative">
           <div className="relative z-10">
             <h2
               className="text-2xl font-black mb-2"
@@ -607,7 +615,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
 
             <div className="space-y-4">
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                 <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                   <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                     <User className="w-5 h-5" />
@@ -626,7 +634,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                   <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                     <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                       <Phone className="w-5 h-5" />
@@ -643,7 +651,7 @@ function BookingModal({ open, onClose, type, bookingData, onSuccess }) {
                   </div>
                 </div>
                 <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-2xl blur opacity-0 group-focus-within:opacity-10 transition-opacity"></div>
                   <div className="relative flex items-center bg-gray-50 rounded-2xl border-none h-full">
                     <div className="pl-5 flex items-center pointer-events-none text-gray-400">
                       <Mail className="w-5 h-5" />

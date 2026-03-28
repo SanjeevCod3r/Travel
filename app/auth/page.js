@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion,AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -89,9 +89,18 @@ export default function AuthPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Signup button clicked", { signupName, signupEmail, signupPhone });
+    console.log("Signup button clicked", {
+      signupName,
+      signupEmail,
+      signupPhone,
+    });
 
-    if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword) {
+    if (
+      !signupName ||
+      !signupEmail ||
+      !signupPassword ||
+      !signupConfirmPassword
+    ) {
       toast.error("Please fill in all required fields marked with *");
       return;
     }
@@ -134,7 +143,9 @@ export default function AuthPage() {
         toast.success("Welcome to the Excursion family!");
         router.push("/");
       } else {
-        toast.error("Account created but auto-login failed. Please login manually.");
+        toast.error(
+          "Account created but auto-login failed. Please login manually."
+        );
         setActiveTab("login");
       }
     } catch (error) {
@@ -159,7 +170,7 @@ export default function AuthPage() {
 
       {/* Floating Elements for Premium Feel */}
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#0056D2]/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#A0006D]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#43E0F8]/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
       <motion.div
         layout
@@ -168,44 +179,61 @@ export default function AuthPage() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 w-full max-w-[480px] px-6"
       >
-        <div className="bg-white/10 backdrop-blur-[24px] rounded-[2.5rem] border border-white/20 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden p-8 md:p-10">
+        <div className="mt-10 bg-white/10 backdrop-blur-[24px] rounded-[2.5rem] border border-white/20 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden p-8 md:p-7">
           {/* Logo & Branding */}
           <div className="text-center mb-10">
-            <motion.div 
+            <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               className="flex justify-center mb-6"
             >
-              <img 
-                src="/asset/logo website.png" 
-                alt="Excursion Travel" 
+              <img
+                src="/asset/logo website.png"
+                alt="Excursion Travel"
                 className="h-12 w-auto filter drop-shadow-lg"
               />
             </motion.div>
-            <h1 className="text-3xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <h1
+              className="text-3xl font-black text-white mb-2 tracking-tight"
+              style={{ fontFamily: "Montserrat, sans-serif" }}
+            >
               Your Adventure Awaits
             </h1>
-            <p className="text-white/60 font-medium" style={{ fontFamily: 'Manrope, sans-serif' }}>
+            <p
+              className="text-white/60 font-medium"
+              style={{ fontFamily: "Manrope, sans-serif" }}
+            >
               Premium Travel Experiences Redefined
             </p>
           </div>
 
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 p-1 bg-white/5 rounded-[1.25rem] mb-10 border border-white/10 selection-none">
-              <TabsTrigger 
-                value="login" 
-                className="rounded-[1rem] py-3.5 data-[state=active]:bg-white data-[state=active]:text-[#0056D2] data-[state=active]:shadow-lg transition-all duration-300 font-black text-xs uppercase tracking-widest"
+          <div className="w-full">
+            {/* Custom Tab Switcher */}
+            <div className="grid grid-cols-2 gap-1 p-1.5 bg-white/5 rounded-[1.25rem] mb-10 border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setActiveTab("login")}
+                className={`py-3.5 rounded-[0.875rem] text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+                  activeTab === "login"
+                    ? "bg-white text-[#0056D2] shadow-md"
+                    : "text-white/50 hover:text-white/80"
+                }`}
               >
                 Login
-              </TabsTrigger>
-              <TabsTrigger 
-                value="signup" 
-                className="rounded-[1rem] py-3.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#0056D2] data-[state=active]:to-[#0056D2] data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-black text-xs uppercase tracking-widest"
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("signup")}
+                className={`py-3.5 rounded-[0.875rem] text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+                  activeTab === "signup"
+                    ? "bg-[#0056D2] text-white shadow-md"
+                    : "text-white/50 hover:text-white/80"
+                }`}
               >
-                Sign In
-              </TabsTrigger>
-            </TabsList>
+                Sign Up
+              </button>
+            </div>
 
             <AnimatePresence mode="wait">
               {activeTab === "login" ? (
@@ -218,7 +246,9 @@ export default function AuthPage() {
                 >
                   <form onSubmit={handleLogin} className="space-y-5">
                     <div className="space-y-2">
-                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">Email Address</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">
+                        Email Address
+                      </Label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                         <Input
@@ -234,8 +264,15 @@ export default function AuthPage() {
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center px-1">
-                        <Label className="text-xs font-black uppercase tracking-widest text-white/50">Password</Label>
-                        <button type="button" className="text-xs font-bold text-white hover:text-white transition-colors">Forgot?</button>
+                        <Label className="text-xs font-black uppercase tracking-widest text-white/50">
+                          Password
+                        </Label>
+                        <button
+                          type="button"
+                          className="text-xs font-bold text-white hover:text-white transition-colors"
+                        >
+                          Forgot?
+                        </button>
                       </div>
                       <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
@@ -257,12 +294,12 @@ export default function AuthPage() {
                       </div>
                     </div>
 
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       disabled={loading}
                       className="w-full bg-gradient-to-r from-[#0056D2] to-[#0056D2] hover:scale-[1.02] active:scale-95 text-white font-black py-7 rounded-2xl shadow-xl shadow-blue-500/20 transition-all border-none text-lg mt-2"
                     >
-                      {loading ? "Verifying..." : "Login "}
+                      {loading ? "Verifying..." : "Login"}
                     </Button>
                   </form>
                 </motion.div>
@@ -276,14 +313,16 @@ export default function AuthPage() {
                 >
                   <form onSubmit={handleSignup} className="space-y-5">
                     <div className="space-y-2">
-                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">Full Name *</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">
+                        Full Name *
+                      </Label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                         <Input
                           placeholder="Adventurer Name"
                           value={signupName}
                           onChange={(e) => setSignupName(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-[#43E0F8] transition-all font-medium"
                           required
                         />
                       </div>
@@ -291,89 +330,107 @@ export default function AuthPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Email *</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">
+                          Email *
+                        </Label>
                         <Input
                           type="email"
                           placeholder="Your Email"
                           value={signupEmail}
                           onChange={(e) => setSignupEmail(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#43E0F8] transition-all font-medium text-sm"
                           required
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Phone</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">
+                          Phone
+                        </Label>
                         <Input
                           type="tel"
                           placeholder="Phone Number"
                           value={signupPhone}
                           onChange={(e) => setSignupPhone(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#43E0F8] transition-all font-medium text-sm"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Password *</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">
+                          Password *
+                        </Label>
                         <Input
                           type="password"
                           placeholder="Min 6 chars"
                           value={signupPassword}
                           onChange={(e) => setSignupPassword(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#43E0F8] transition-all font-medium text-sm"
                           required
                           minLength={6}
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Confirm *</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">
+                          Confirm *
+                        </Label>
                         <Input
                           type="password"
                           placeholder="Match above"
                           value={signupConfirmPassword}
                           onChange={(e) => setSignupConfirmPassword(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#43E0F8] transition-all font-medium text-sm"
                           required
                         />
                       </div>
                     </div>
 
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       disabled={loading}
-                      className="w-full bg-gradient-to-r from-[#0056D2] to-[#0056D2] hover:scale-[1.02] active:scale-95 text-white font-black py-7 rounded-2xl shadow-xl  transition-all border-none text-lg mt-2"
+                      className="w-full bg-gradient-to-r from-[#0056D2] to-[#0056D2] hover:scale-[1.02] active:scale-95 text-white font-black py-7 rounded-2xl shadow-xl transition-all border-none text-lg mt-2"
                     >
-                      {loading ? "Onboarding..." : "Sign In"}
+                      {loading ? "Onboarding..." : "Sign Up"}
                     </Button>
                   </form>
                 </motion.div>
               )}
             </AnimatePresence>
-          </Tabs>
-
-          <p className="text-center text-white/30 text-xs mt-10 font-medium">
-            By joining, you agree to our <span className="text-white/50 underline cursor-pointer">Terms for Travelers</span>
-          </p>
+          </div>
+          {/* <motion.button
+          whileHover={{ x: -10 }}
+          onClick={() => router.push("/")}
+          className="mt-8 text-center flex items-center gap-2 text-white/50 hover:text-white text-base transition-all mx-auto"
+        >
+          <ArrowLeft size={18} />
+          <span>Explore as guest</span>
+        </motion.button> */}
+          {/* <p className="text-center text-white/30 text-xs mt-10 font-medium">
+            By joining, you agree to our{" "}
+            <span className="text-white/50 underline cursor-pointer">
+              Terms for Travelers
+            </span>
+          </p> */}
         </div>
 
         {/* Back Button */}
         <motion.button
           whileHover={{ x: -10 }}
           onClick={() => router.push("/")}
-          className="mt-8 flex items-center gap-2 text-white/50 hover:text-white font-bold transition-all mx-auto"
+          className="mt-8 flex items-center text-center gap-2 text-white hover:text-white font-bold transition-all mx-auto"
         >
           <ArrowLeft size={18} />
-          <span>Explore destinations as guest</span>
+          <span>Explore as Guest</span>
         </motion.button>
       </motion.div>
 
       {/* Footer Text */}
-      <div className="absolute bottom-6 left-0 right-0 text-center z-10 hidden md:block">
+      {/* <div className="absolute bottom-6 left-0 right-0 text-center z-10 hidden md:block">
         <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]">
           Excursion Travel Private Limited © 2024
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

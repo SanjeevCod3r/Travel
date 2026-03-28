@@ -18,7 +18,7 @@ export const CabBookingForm = () => {
   const [activeTab, setActiveTab] = useState('outstation');
   const [tripType, setTripType] = useState('oneway');
   const [selectedCar, setSelectedCar] = useState('');
-  const [airportDirection, setAirportDirection] = useState('');
+  const [airportDirection, setAirportDirection] = useState('from');
   const [showPricing, setShowPricing] = useState(false);
   const [showUserForm, setShowUserForm] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -390,7 +390,7 @@ export const CabBookingForm = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => { setActiveTab(tab.id); if (tab.id !== 'airport') setAirportDirection(''); }}
+                  onClick={() => { setActiveTab(tab.id); if (tab.id !== 'airport') setAirportDirection('from'); }}
                   className={`flex-1 py-2.5 px-3 text-sm font-medium rounded-lg transition-all duration-300 ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg' : 'text-black hover:bg-white/10'}`}
                 >
                   {tab.label}
@@ -409,12 +409,20 @@ export const CabBookingForm = () => {
             )}
 
             {activeTab === 'outstation' && (
-              <div className="flex gap-4 bg-[#F3F4F680] rounded-xl p-3 backdrop-blur-sm mb-4">
+              <div className="flex gap-2 bg-[#F3F4F680] rounded-xl p-1.5 backdrop-blur-sm mb-4">
                 {['oneway', 'round'].map((type) => (
-                  <label key={type} className="flex items-center cursor-pointer flex-1 gap-3 text-black text-sm font-medium">
-                    <input type="radio" name="tripType" value={type} checked={tripType === type} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 accent-blue-500" />
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setTripType(type)}
+                    className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-300 ${
+                      tripType === type
+                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                        : 'text-black hover:bg-white/50'
+                    }`}
+                  >
                     {type === 'oneway' ? 'One Way' : 'Round Trip'}
-                  </label>
+                  </button>
                 ))}
               </div>
             )}
@@ -571,7 +579,7 @@ export const CabBookingForm = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><Check className="w-8 h-8 text-green-600" /></div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Booking Requested!</h3>
               <p className="text-gray-600 mb-6">Our team will contact you shortly to confirm your ride.</p>
-              <button onClick={() => window.location.reload()} className="w-full py-3 bg-blue-600 text-black rounded-xl font-bold">Back to Home</button>
+              <button onClick={() => window.location.reload()} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">Back to Home</button>
             </motion.div>
           </motion.div>
         )}

@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Phone, Send } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, X, Phone, Send } from "lucide-react";
 
 const FloatingChat = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleWhatsAppClick = () => {
     const phoneNumber = "+919990817615"; // Replace with your actual WhatsApp number
-    const message = "Hi! I'm interested in your transportation services. Can you help me?";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    const message =
+      "Hi! I'm interested in your transportation services. Can you help me?";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   const handleCallClick = () => {
@@ -63,12 +66,12 @@ const FloatingChat = () => {
           <motion.div
             animate={{
               scale: [1, 1.2, 1],
-              opacity: [0.5, 0, 0.5]
+              opacity: [0.5, 0, 0.5],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             className="absolute inset-0 bg-green-500 rounded-full -z-10"
           />
@@ -86,11 +89,17 @@ const FloatingChat = () => {
             className="fixed bottom-24 right-6 z-40 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden min-w-80"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white p-4">
-              <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>
+            <div className="bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white p-4">
+              <h3
+                className="font-bold text-lg"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+              >
                 How can we help you?
               </h3>
-              <p className="text-sm opacity-90" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+              <p
+                className="text-sm opacity-90"
+                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+              >
                 Get in touch with Excursion Travel
               </p>
             </div>
@@ -107,10 +116,16 @@ const FloatingChat = () => {
                   <MessageCircle size={20} className="text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold text-green-800" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+                  <p
+                    className="font-semibold text-green-800"
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+                  >
                     Chat on WhatsApp
                   </p>
-                  <p className="text-sm text-green-600" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+                  <p
+                    className="text-sm text-green-600"
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+                  >
                     Instant messaging
                   </p>
                 </div>
@@ -127,10 +142,16 @@ const FloatingChat = () => {
                   <Phone size={20} className="text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold text-blue-800" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+                  <p
+                    className="font-semibold text-blue-800"
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+                  >
                     Call Us Directly
                   </p>
-                  <p className="text-sm text-blue-600" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+                  <p
+                    className="text-sm text-blue-600"
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+                  >
                     Speak with our team
                   </p>
                 </div>
@@ -140,7 +161,10 @@ const FloatingChat = () => {
 
             {/* Footer */}
             <div className="px-4 pb-4">
-              <div className="text-center text-sm text-gray-500" style={{ fontFamily: 'var(--font-manrope), sans-serif' }}>
+              <div
+                className="text-center text-sm text-gray-500"
+                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+              >
                 Available 24/7 for your transportation needs
               </div>
             </div>

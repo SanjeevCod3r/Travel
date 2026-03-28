@@ -82,8 +82,8 @@ export default function Blog() {
 
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/5 to-[#A0006D]/5 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#A0006D]/5 to-[#5DFDCB]/5 rounded-full filter blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/5 to-[#43E0F8]/5 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#43E0F8]/5 to-[#5DFDCB]/5 rounded-full filter blur-3xl"></div>
       </div>
 
       <div className="relative z-10 pt-24">
@@ -105,7 +105,7 @@ export default function Blog() {
                 style={{ fontFamily: "Montserrat, sans-serif" }}
               >
                 Travel
-                <span className="bg-gradient-to-r from-[#0056D2] to-[#A0006D] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#0056D2] to-[#43E0F8] bg-clip-text text-transparent">
                   {" "}
                   Insights
                 </span>
@@ -192,7 +192,7 @@ export default function Blog() {
                       </div>
                       <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
                         <div className="flex items-center gap-2 mb-4">
-                          <span className="px-3 py-1 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white text-sm font-semibold rounded-full">
+                          <span className="px-3 py-1 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white text-sm font-semibold rounded-full">
                             Featured
                           </span>
                           <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
@@ -213,7 +213,7 @@ export default function Blog() {
                         </p>
                         <div className="flex items-center justify-between mb-6">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full flex items-center justify-center">
+                            <div className="w-10 h-10 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full flex items-center justify-center">
                               <User size={16} className="text-white" />
                             </div>
                             <div>
@@ -246,7 +246,7 @@ export default function Blog() {
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="self-start px-6 py-3 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                            className="self-start px-6 py-3 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                             style={{ fontFamily: "Manrope, sans-serif" }}
                           >
                             Read More
@@ -348,7 +348,7 @@ export default function Blog() {
 
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full flex items-center justify-center">
                               <User size={14} className="text-white" />
                             </div>
                             <span

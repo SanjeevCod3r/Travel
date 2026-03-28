@@ -60,7 +60,7 @@ export const WhyChoose = () => {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, #A0006D 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, #43E0F8 1px, transparent 0)`,
             backgroundSize: "40px 40px",
           }}
         />
@@ -79,7 +79,7 @@ export const WhyChoose = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-6 py-2 bg-[#A0006D]/20 backdrop-blur-lg rounded-full text-[#4A8BDF] text-sm font-semibold mb-6"
+            className="inline-block px-6 py-2 bg-[#43E0F8]/20 backdrop-blur-lg rounded-full text-[#4A8BDF] text-sm font-semibold mb-6"
             style={{ fontFamily: "Manrope, sans-serif" }}
             data-testid="why-choose-eyebrow"
           >
@@ -130,7 +130,7 @@ export const WhyChoose = () => {
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className="w-14 h-14 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#0056D2]/30 transition-all duration-300"
+                className="w-14 h-14 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#0056D2]/30 transition-all duration-300"
                 data-testid={`why-choose-icon-${index}`}
               >
                 <reason.icon className="text-white" size={26} />
@@ -153,7 +153,7 @@ export const WhyChoose = () => {
               </p>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0056D2]/5 to-[#A0006D]/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0056D2]/5 to-[#43E0F8]/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </motion.div>
           ))}
         </motion.div>

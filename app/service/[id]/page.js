@@ -27,7 +27,7 @@ export default function ServiceDetail() {
     "corporate-car-rental": {
       title: "Corporate Car Rental",
       heroImage: "/asset/Corporate Car Rental Image 1.jpeg",
-      iconColor: "from-[#0056D2] to-[#A0006D]",
+      iconColor: "from-[#0056D2] to-[#43E0F8]",
       content: {
         galleryImage: "/asset/Corporate Car Rental Image 2.jpeg",
         subtitle: "Sit back and enjoy – Let our chauffeurs drive you",
@@ -85,7 +85,7 @@ export default function ServiceDetail() {
     "employee-transport": {
       title: "Employee Transport Services",
       heroImage: "/asset/Employee Transport Services Image 1.jpeg",
-      iconColor: "from-[#A0006D] to-[#A0006D]",
+      iconColor: "from-[#43E0F8] to-[#43E0F8]",
       content: {
         galleryImage: "/asset/Employee Transport Services Image 2.jpeg",
         subtitle: "A smooth ride for your workforce",
@@ -199,7 +199,7 @@ export default function ServiceDetail() {
     "conferences-delegation": {
       title: "Conferences & Delegation",
       heroImage: "/asset/Conferences & Delegation Image 1.jpeg",
-      iconColor: "from-[#5DFDCB] to-[#A0006D]",
+      iconColor: "from-[#5DFDCB] to-[#43E0F8]",
       content: {
         galleryImage: "/asset/Conferences & Delegation Image 2.jpeg",
         subtitle: "Conferences & Delegations Transportation Services",
@@ -256,7 +256,7 @@ export default function ServiceDetail() {
     "wedding-car-rental": {
       title: "Wedding Car Rental",
       heroImage: "/asset/Wedding Car Rental Image 1.jpeg",
-      iconColor: "from-[#0056D2] to-[#A0006D]",
+      iconColor: "from-[#0056D2] to-[#43E0F8]",
       content: {
         galleryImage: "/asset/Wedding Car Rental Image 2.jpeg",
         subtitle:
@@ -520,7 +520,7 @@ export default function ServiceDetail() {
                 viewport={{ once: true }}
                 className="text-center mb-20"
               >
-                <div className="inline-block px-6 py-2 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white rounded-full mb-4">
+                <div className="inline-block px-6 py-2 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white rounded-full mb-4">
                   <span
                     className="font-semibold text-sm flex items-center gap-2"
                     style={{ fontFamily: "Manrope, sans-serif" }}
@@ -534,7 +534,7 @@ export default function ServiceDetail() {
                   style={{ fontFamily: "Montserrat, sans-serif" }}
                 >
                   Seamless Experience From{" "}
-                  <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
                     Start to Finish
                   </span>
                 </h2>
@@ -561,7 +561,7 @@ export default function ServiceDetail() {
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="absolute inset-0 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] rounded-full"
+                    className="absolute inset-0 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] rounded-full"
                   />
                 </div>
               </motion.div>
@@ -794,7 +794,7 @@ export default function ServiceDetail() {
                         repeat: Infinity,
                         ease: "linear",
                       }}
-                      className="w-10 h-10 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full flex items-center justify-center"
+                      className="w-10 h-10 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full flex items-center justify-center"
                     >
                       <span className="text-white text-lg">✓</span>
                     </motion.div>
@@ -814,7 +814,7 @@ export default function ServiceDetail() {
                     </div>
                     <Link
                       href="/contact"
-                      className="px-6 py-3 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-block"
+                      className="px-6 py-3 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-block"
                       style={{ fontFamily: "Manrope, sans-serif" }}
                     >
                       Start Now
@@ -916,7 +916,7 @@ export default function ServiceDetail() {
                               delay: index * 0.1 + 0.4,
                             }}
                             viewport={{ once: true }}
-                            className="absolute -top-6 -right-6 bg-gradient-to-r from-[#0056D2] to-[#A0006D] p-4 rounded-2xl shadow-xl"
+                            className="absolute -top-6 -right-6 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] p-4 rounded-2xl shadow-xl"
                           >
                             <IconToRender className="w-8 h-8 text-white" />
                           </motion.div>
@@ -935,7 +935,7 @@ export default function ServiceDetail() {
                           viewport={{ once: true }}
                           className="space-y-6"
                         >
-                          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#0056D2]/10 to-[#A0006D]/10 px-6 py-3 rounded-full">
+                          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#0056D2]/10 to-[#43E0F8]/10 px-6 py-3 rounded-full">
                             <IconToRender className="w-6 h-6 text-[#0056D2]" />
                             <span
                               className="text-[#0056D2] font-semibold text-sm uppercase tracking-wider"
@@ -960,7 +960,7 @@ export default function ServiceDetail() {
                           </p>
 
                           {/* Decorative Line */}
-                          <div className="w-24 h-1 bg-gradient-to-r from-[#0056D2] to-[#A0006D] rounded-full mx-auto lg:mx-0" />
+                          <div className="w-24 h-1 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full mx-auto lg:mx-0" />
                         </motion.div>
                       </div>
                     </motion.div>

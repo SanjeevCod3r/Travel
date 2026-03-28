@@ -1,35 +1,65 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { MapPin, Star, Calendar, ChevronRight, Sparkles, Trophy, Landmark, Utensils, Camera, ShoppingBag, Cpu, Waves, Zap, Clock } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import {
+  MapPin,
+  Star,
+  Calendar,
+  ChevronRight,
+  Sparkles,
+  Trophy,
+  Landmark,
+  Utensils,
+  Camera,
+  ShoppingBag,
+  Cpu,
+  Waves,
+  Zap,
+  Clock,
+} from "lucide-react";
 
 export const DestinationShowcase = () => {
   const router = useRouter();
 
   const getHighlightIcon = (highlight) => {
     const text = highlight.toLowerCase();
-    if (text.includes('charminar') || text.includes('red fort') || text.includes('india gate') || text.includes('temples') || text.includes('palace') || text.includes('gateway')) {
+    if (
+      text.includes("charminar") ||
+      text.includes("red fort") ||
+      text.includes("india gate") ||
+      text.includes("temples") ||
+      text.includes("palace") ||
+      text.includes("gateway")
+    ) {
       return Landmark;
     }
-    if (text.includes('biryani') || text.includes('cuisine') || text.includes('food')) {
+    if (
+      text.includes("biryani") ||
+      text.includes("cuisine") ||
+      text.includes("food")
+    ) {
       return Utensils;
     }
-    if (text.includes('it hubs') || text.includes('tech')) {
+    if (text.includes("it hubs") || text.includes("tech")) {
       return Cpu;
     }
-    if (text.includes('gardens') || text.includes('beach') || text.includes('marine')) {
+    if (
+      text.includes("gardens") ||
+      text.includes("beach") ||
+      text.includes("marine")
+    ) {
       return Camera;
     }
-    if (text.includes('bollywood') || text.includes('stars')) {
+    if (text.includes("bollywood") || text.includes("stars")) {
       return Star;
     }
-    if (text.includes('markets') || text.includes('shopping')) {
+    if (text.includes("markets") || text.includes("shopping")) {
       return ShoppingBag;
     }
-    if (text.includes('nightlife') || text.includes('water sports')) {
+    if (text.includes("nightlife") || text.includes("water sports")) {
       return Sparkles;
     }
     return MapPin;
@@ -38,70 +68,70 @@ export const DestinationShowcase = () => {
   const featuredDestinations = [
     {
       id: 1,
-      name: 'Hyderabad',
-      subtitle: 'City of Pearls',
-      image: '/asset/Hydrabad Image HomePage.jpg',
+      name: "Hyderabad",
+      subtitle: "City of Pearls",
+      image: "/asset/Hydrabad Image HomePage.jpg",
       rating: 4.8,
-      bestTime: 'Oct - Mar',
-      highlights: ['Charminar', 'Biryani', 'IT Hubs'],
-      color: 'from-orange-500 to-red-600',
-      bgGradient: 'from-orange-50 to-red-50'
+      bestTime: "Oct - Mar",
+      highlights: ["Charminar", "Biryani", "IT Hubs"],
+      color: "from-orange-500 to-red-600",
+      bgGradient: "from-orange-50 to-red-50",
     },
     {
       id: 2,
-      name: 'Bangalore',
-      subtitle: 'Silicon Valley',
-      image: '/asset/Bangalore Image HomePage.webp',
+      name: "Bangalore",
+      subtitle: "Silicon Valley",
+      image: "/asset/Bangalore Image HomePage.webp",
       rating: 4.7,
-      bestTime: 'Oct - May',
-      highlights: ['Gardens', 'Palace', 'Tech Scene'],
-      color: 'from-green-500 to-emerald-600',
-      bgGradient: 'from-green-50 to-emerald-50'
+      bestTime: "Oct - May",
+      highlights: ["Gardens", "Palace", "Tech Scene"],
+      color: "from-green-500 to-emerald-600",
+      bgGradient: "from-green-50 to-emerald-50",
     },
     {
       id: 3,
-      name: 'Mumbai',
-      subtitle: 'City That Never Sleeps',
-      image: '/asset/Mumbai Image HomePage.jpg',
+      name: "Mumbai",
+      subtitle: "City That Never Sleeps",
+      image: "/asset/Mumbai Image HomePage.jpg",
       rating: 4.6,
-      bestTime: 'Nov - May',
-      highlights: ['Gateway', 'Bollywood', 'Beaches'],
-      color: 'from-blue-500 to-cyan-600',
-      bgGradient: 'from-blue-50 to-cyan-50'
+      bestTime: "Nov - May",
+      highlights: ["Gateway", "Bollywood", "Beaches"],
+      color: "from-blue-500 to-cyan-600",
+      bgGradient: "from-blue-50 to-cyan-50",
     },
     {
       id: 4,
-      name: 'Delhi',
-      subtitle: 'Heart of India',
-      image: '/asset/Delhi Image HomePage.jpg',
+      name: "Delhi",
+      subtitle: "Heart of India",
+      image: "/asset/Delhi Image HomePage.jpg",
       rating: 4.5,
-      bestTime: 'Oct - Mar',
-      highlights: ['Red Fort', 'India Gate', 'Markets'],
-      color: 'from-purple-500 to-pink-600',
-      bgGradient: 'from-purple-50 to-pink-50'
+      bestTime: "Oct - Mar",
+      highlights: ["Red Fort", "India Gate", "Markets"],
+      color: "from-purple-500 to-pink-600",
+      bgGradient: "from-purple-50 to-pink-50",
     },
     {
       id: 5,
-      name: 'Chennai',
-      subtitle: 'Cultural Capital',
-      image: '/asset/Chennai Image HomePage.jpg',
+      name: "Chennai",
+      subtitle: "Cultural Capital",
+      image: "/asset/Chennai Image HomePage.jpg",
       rating: 4.4,
-      bestTime: 'Dec - Mar',
-      highlights: ['Temples', 'Marina Beach', 'Cuisine'],
-      color: 'from-teal-500 to-blue-600',
-      bgGradient: 'from-teal-50 to-blue-50'
+      bestTime: "Dec - Mar",
+      highlights: ["Temples", "Marina Beach", "Cuisine"],
+      color: "from-teal-500 to-blue-600",
+      bgGradient: "from-teal-50 to-blue-50",
     },
     {
       id: 6,
-      name: 'Goa',
-      subtitle: 'Beach Paradise',
-      image: '/asset/Goa Image HomePage.jpg',
+      name: "Goa",
+      subtitle: "Beach Paradise",
+      image: "/asset/Goa Image HomePage.jpg",
       rating: 4.9,
-      bestTime: 'Nov - May',
-      highlights: ['Beaches', 'Nightlife', 'Water Sports'],
-      color: 'from-yellow-500 to-orange-600',
-      bgGradient: 'from-yellow-50 to-orange-50'
-    }
+      bestTime: "Nov - May",
+      highlights: ["Beaches", "Nightlife", "Water Sports"],
+      color: "from-yellow-500 to-orange-600",
+      bgGradient: "from-yellow-50 to-orange-50",
+    },
   ];
 
   return (
@@ -124,11 +154,14 @@ export const DestinationShowcase = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2, type: 'spring' }}
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] text-white rounded-full mb-6 shadow-xl"
+            transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] text-white rounded-full mb-6 shadow-xl"
           >
             <Sparkles size={20} className="animate-pulse" />
-            <span className="font-bold text-sm uppercase tracking-wider" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <span
+              className="font-bold text-sm uppercase tracking-wider"
+              style={{ fontFamily: "Montserrat, sans-serif" }}
+            >
               Explore Destinations
             </span>
             <Sparkles size={20} className="animate-pulse" />
@@ -140,11 +173,11 @@ export const DestinationShowcase = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 leading-tight"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
+            style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             Incredible Cities
             <br />
-            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#A0006D] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
               Waiting for You
             </span>
           </motion.h2>
@@ -155,10 +188,11 @@ export const DestinationShowcase = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-            style={{ fontFamily: 'Manrope, sans-serif' }}
+            style={{ fontFamily: "Manrope, sans-serif" }}
           >
-            Discover India's most captivating destinations with our premium transportation services.
-            From historic landmarks to vibrant cultures, your perfect journey awaits.
+            Discover India's most captivating destinations with our premium
+            transportation services. From historic landmarks to vibrant
+            cultures, your perfect journey awaits.
           </motion.p>
         </motion.div>
 
@@ -174,13 +208,15 @@ export const DestinationShowcase = () => {
                 y: -12,
                 scale: 1.03,
                 rotateY: 5,
-                transition: { duration: 0.3 }
+                transition: { duration: 0.3 },
               }}
               className="group relative"
             >
               <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100/50 backdrop-blur-sm">
                 <div className="relative h-80 overflow-hidden cursor-pointer group/image">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${destination.color} opacity-20 group-hover:opacity-10 transition-opacity duration-500 z-10`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${destination.color} opacity-20 group-hover:opacity-10 transition-opacity duration-500 z-10`}
+                  />
                   <Image
                     src={destination.image}
                     alt={destination.name}
@@ -198,10 +234,16 @@ export const DestinationShowcase = () => {
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: index * 0.15 + 0.3 }}
                     >
-                      <h3 className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      <h3
+                        className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight"
+                        style={{ fontFamily: "Montserrat, sans-serif" }}
+                      >
                         {destination.name}
                       </h3>
-                      <p className="text-lg text-white/90 font-medium" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <p
+                        className="text-lg text-white/90 font-medium"
+                        style={{ fontFamily: "Manrope, sans-serif" }}
+                      >
                         {destination.subtitle}
                       </p>
                     </motion.div>
@@ -211,11 +253,17 @@ export const DestinationShowcase = () => {
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.15 + 0.5, type: 'spring' }}
+                    transition={{
+                      duration: 0.5,
+                      delay: index * 0.15 + 0.5,
+                      type: "spring",
+                    }}
                     className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-lg flex items-center gap-1.5 z-30"
                   >
                     <Star className="text-yellow-500 fill-current" size={14} />
-                    <span className="text-sm font-bold text-gray-900">{destination.rating}</span>
+                    <span className="text-sm font-bold text-gray-900">
+                      {destination.rating}
+                    </span>
                   </motion.div>
 
                   <motion.div
@@ -226,7 +274,9 @@ export const DestinationShowcase = () => {
                     className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-white px-3 py-2 rounded-2xl flex items-center gap-1.5 z-30"
                   >
                     <Calendar size={14} />
-                    <span className="text-xs font-semibold">{destination.bestTime}</span>
+                    <span className="text-xs font-semibold">
+                      {destination.bestTime}
+                    </span>
                   </motion.div>
 
                   <motion.div
@@ -238,10 +288,13 @@ export const DestinationShowcase = () => {
                     <motion.div
                       initial={{ y: 30, scale: 0.9 }}
                       whileHover={{ y: 0, scale: 1 }}
-                      transition={{ duration: 0.4, ease: 'easeOut' }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                       className="bg-white/95 backdrop-blur-md rounded-3xl p-6 shadow-2xl w-full max-w-md mx-auto border border-white/20"
                     >
-                      <h4 className="text-lg font-bold text-white mb-4 text-center bg-black/30 backdrop-blur-sm px-4 py-2 rounded-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      <h4
+                        className="text-lg font-bold text-white mb-4 text-center bg-black/30 backdrop-blur-sm px-4 py-2 rounded-xl"
+                        style={{ fontFamily: "Montserrat, sans-serif" }}
+                      >
                         Top Highlights
                       </h4>
                       <div className="grid grid-cols-1 gap-3">
@@ -255,10 +308,18 @@ export const DestinationShowcase = () => {
                               transition={{ duration: 0.3, delay: idx * 0.1 }}
                               className="flex items-center gap-3 p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all duration-300"
                             >
-                              <div className={`w-8 h-8 bg-gradient-to-r ${destination.color} rounded-xl flex items-center justify-center shadow-sm`}>
-                                <IconComponent size={16} className="text-white" />
+                              <div
+                                className={`w-8 h-8 bg-gradient-to-r ${destination.color} rounded-xl flex items-center justify-center shadow-sm`}
+                              >
+                                <IconComponent
+                                  size={16}
+                                  className="text-white"
+                                />
                               </div>
-                              <span className="text-sm font-semibold text-gray-700 flex-1" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                              <span
+                                className="text-sm font-semibold text-gray-700 flex-1"
+                                style={{ fontFamily: "Manrope, sans-serif" }}
+                              >
                                 {highlight}
                               </span>
                             </motion.div>
@@ -269,22 +330,27 @@ export const DestinationShowcase = () => {
                   </motion.div>
                 </div>
 
-                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${destination.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`} />
+                <div
+                  className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${destination.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`}
+                />
               </div>
 
               <motion.div
                 animate={{
                   scale: [1, 1.2, 1],
-                  opacity: [0.5, 1, 0.5]
+                  opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
-                  delay: index * 0.5
+                  delay: index * 0.5,
                 }}
                 className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               >
-                <Sparkles size={12} className="text-white absolute inset-0 m-auto" />
+                <Sparkles
+                  size={12}
+                  className="text-white absolute inset-0 m-auto"
+                />
               </motion.div>
             </motion.div>
           ))}
@@ -330,11 +396,14 @@ export const DestinationShowcase = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.2, type: 'spring' }}
+              transition={{ duration: 0.6, delay: 1.2, type: "spring" }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full mb-6"
             >
               <Clock size={16} />
-              <span className="text-sm font-semibold" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              <span
+                className="text-sm font-semibold"
+                style={{ fontFamily: "Manrope, sans-serif" }}
+              >
                 Ready for Adventure?
               </span>
             </motion.div>
@@ -345,7 +414,7 @@ export const DestinationShowcase = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 1.4 }}
               className="text-3xl md:text-4xl font-black mb-4"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
+              style={{ fontFamily: "Montserrat, sans-serif" }}
             >
               Your Perfect City Awaits
             </motion.h3>
@@ -356,9 +425,10 @@ export const DestinationShowcase = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 1.6 }}
               className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto"
-              style={{ fontFamily: 'Manrope, sans-serif' }}
+              style={{ fontFamily: "Manrope, sans-serif" }}
             >
-              Choose your destination and let us transport you there in style. Every journey with Excursion Travel is an experience to remember.
+              Choose your destination and let us transport you there in style.
+              Every journey with Excursion Travel is an experience to remember.
             </motion.p>
 
             <motion.div
@@ -371,9 +441,9 @@ export const DestinationShowcase = () => {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push('/fleet')}
+                onClick={() => router.push("/fleet")}
                 className="px-8 py-4 bg-white text-[#0056D2] font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2"
-                style={{ fontFamily: 'Montserrat, sans-serif' }}
+                style={{ fontFamily: "Montserrat, sans-serif" }}
               >
                 <Sparkles size={18} />
                 Start Your Journey
@@ -383,9 +453,9 @@ export const DestinationShowcase = () => {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push('/services')}
+                onClick={() => router.push("/services")}
                 className="px-8 py-4 bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
-                style={{ fontFamily: 'Manrope, sans-serif' }}
+                style={{ fontFamily: "Manrope, sans-serif" }}
               >
                 Discover All Services
               </motion.button>

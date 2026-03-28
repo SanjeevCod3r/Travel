@@ -63,22 +63,22 @@ export default function Header() {
 
           <div>
             <div className="flex items-center mb-2">
-            <motion.div
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
                 className="flex items-center"
                 data-testid="logo-container"
               >
                 <Link href="/" className="mt-3 flex items-center">
-                  <img 
-                    src="/asset/logo website.png" 
-                    alt="Excursion Travel" 
+                  <img
+                    src="/asset/logo website.png"
+                    alt="Excursion Travel"
                     className="h-8 w-auto md:h-10 transition-all duration-300"
                   />
                 </Link>
               </motion.div>
             </div>
-            </div>
+          </div>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
@@ -110,11 +110,16 @@ export default function Header() {
               </>
             ) : (
               <>
-                <Link href="/auth" className="text-gray-600 hover:text-paleBlue transition-colors font-medium">
+                <Link
+                  href="/auth"
+                  className="text-gray-600 hover:text-paleBlue transition-colors font-medium"
+                >
                   Login
                 </Link>
                 <Link href="/auth">
-                  <Button className="bg-paleBlue" size="sm">Sign Up</Button>
+                  <Button className="bg-paleBlue" size="sm">
+                    Sign Up
+                  </Button>
                 </Link>
               </>
             )}
@@ -150,26 +155,33 @@ export default function Header() {
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-lg font-semibold text-gray-800 hover:text-[#0056D2] transition-colors"
-                  style={{ fontFamily: 'var(--font-manrope), sans-serif' }}
+                  style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                 >
                   {link.name}
                 </a>
               ))}
-              
+
               <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
                 {user ? (
                   <>
                     <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-2xl">
                       <div className="w-10 h-10 bg-[#0056D2]/10 rounded-full flex items-center justify-center text-[#0056D2] font-bold">
-                        {user.name?.[0] || 'U'}
+                        {user.name?.[0] || "U"}
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900">{user.name || 'User'}</p>
-                        <a href="/my-bookings" className="text-xs text-[#0056D2] font-semibold">View Bookings</a>
+                        <p className="font-bold text-gray-900">
+                          {user.name || "User"}
+                        </p>
+                        <a
+                          href="/my-bookings"
+                          className="text-xs text-[#0056D2] font-semibold"
+                        >
+                          View Bookings
+                        </a>
                       </div>
                     </div>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full py-6 rounded-2xl border-red-100 text-red-500 hover:bg-red-50"
                       onClick={handleLogout}
                     >
@@ -178,15 +190,15 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <Link 
-                      href="/auth" 
+                    <Link
+                      href="/auth"
                       className="w-full py-4 text-center font-bold text-gray-700 hover:text-[#0056D2]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Login
                     </Link>
                     <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
-                      <Button className="w-full py-6 bg-gradient-to-r from-[#0056D2] to-[#A0006D] text-white font-bold rounded-2xl shadow-lg">
+                      <Button className="w-full py-6 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold rounded-2xl shadow-lg">
                         Sign Up Free
                       </Button>
                     </Link>
