@@ -59,6 +59,82 @@ const staggerContainer = {
 import Header from "@/components/Header";
 import { Fleet } from "@/components/Fleet";
 import Footer from "@/app/footer/page";
+import { useJsApiLoader } from "@react-google-maps/api";
+
+const GOOGLE_MAPS_LIBRARIES = ['places'];
+
+// Fleet-specific location input that works correctly inside a Dialog.
+// Uses the raw Google Maps Places Autocomplete constructor so that
+// suggestion-dropdown clicks are NOT intercepted by the Dialog's event-trap.
+function FleetLocationInput({ name, value, onChange, placeholder, required, error }) {
+  const inputRef = React.useRef(null);
+  const autocompleteRef = React.useRef(null);
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+    libraries: GOOGLE_MAPS_LIBRARIES,
+  });
+
+  React.useEffect(() => {
+    if (!isLoaded || !inputRef.current || autocompleteRef.current) return;
+
+    const ac = new window.google.maps.places.Autocomplete(inputRef.current, {
+      componentRestrictions: { country: "in" },
+      fields: ["formatted_address", "name", "geometry"],
+      types: ["establishment", "geocode"],
+    });
+
+    ac.addListener("place_changed", () => {
+      const place = ac.getPlace();
+      const address = place.formatted_address || place.name || "";
+      if (address) {
+        onChange({ target: { name, value: address } });
+      }
+    });
+
+    autocompleteRef.current = ac;
+  }, [isLoaded, name, onChange]);
+
+  const icon = name === 'pickupLocation' ? 'text-green-500' : 'text-red-500';
+
+  if (!isLoaded) {
+    return (
+      <div className="relative group">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+          <MapPin className={`h-5 w-5 ${icon} animate-pulse`} />
+        </div>
+        <input
+          type="text"
+          placeholder="Loading maps..."
+          disabled
+          className="w-full pl-12 pr-4 py-6 rounded-2xl bg-gray-50 border-none font-bold text-sm opacity-50"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative group">
+      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+        <MapPin className={`h-5 w-5 ${icon}`} />
+      </div>
+      <input
+        ref={inputRef}
+        type="text"
+        name={name}
+        defaultValue={value}
+        placeholder={placeholder}
+        required={required}
+        autoComplete="off"
+        className={`w-full pl-12 pr-4 py-6 rounded-2xl bg-gray-50 border-none font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all${
+          error ? ' ring-2 ring-red-300' : ''
+        }`}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
 
 // Fleet Booking Modal with Payment
 function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
@@ -279,14 +355,24 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white max-h-[90vh] flex flex-col">
+      <DialogContent
+        className="sm:max-w-2xl rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white max-h-[90vh] flex flex-col"
+        onInteractOutside={(e) => {
+          // Prevent Dialog from closing when clicking on Google Maps pac-container dropdown
+          const target = e.target;
+          if (target.closest && (target.closest('.pac-container') || target.closest('.pac-item') || target.closest('.pac-matched'))) {
+            e.preventDefault();
+          }
+        }}
+      >
+
         {/* Header Section */}
         <div className="bg-gradient-to-br from-[#0056D2] to-[#A0006D] p-8 text-white relative h-48 flex flex-col justify-end">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>Book {vehicle.name}</h2>
             <p className="opacity-90 font-bold" style={{ fontFamily: "Manrope, sans-serif" }}>
-              Step {currentStep} of {steps.length} • {steps[currentStep-1].title} Details
+              Step {currentStep} of {steps.length} • {steps[currentStep - 1].title} Details
             </p>
           </div>
         </div>
@@ -297,19 +383,16 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
             {steps.map((step, idx) => (
               <React.Fragment key={step.id}>
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    step.id <= currentStep ? 'bg-[#0056D2] text-white shadow-lg' : 'bg-gray-100 text-gray-400'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${step.id <= currentStep ? 'bg-[#0056D2] text-white shadow-lg' : 'bg-gray-100 text-gray-400'
+                    }`}>
                     <step.icon size={18} />
                   </div>
-                  <span className={`text-[10px] font-black uppercase tracking-widest ${
-                    step.id <= currentStep ? 'text-[#0056D2]' : 'text-gray-400'
-                  }`}>{step.title}</span>
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${step.id <= currentStep ? 'text-[#0056D2]' : 'text-gray-400'
+                    }`}>{step.title}</span>
                 </div>
                 {idx < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-2 rounded-full ${
-                    step.id < currentStep ? 'bg-[#0056D2]' : 'bg-gray-100'
-                  }`} />
+                  <div className={`flex-1 h-1 mx-2 rounded-full ${step.id < currentStep ? 'bg-[#0056D2]' : 'bg-gray-100'
+                    }`} />
                 )}
               </React.Fragment>
             ))}
@@ -362,17 +445,25 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Pickup Location</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
-                    <Input name="pickupLocation" value={formData.pickupLocation} onChange={handleInputChange} className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold" />
-                  </div>
+                  <FleetLocationInput
+                    name="pickupLocation"
+                    value={formData.pickupLocation}
+                    onChange={handleInputChange}
+                    placeholder="Enter Pickup Point"
+                    required
+                    error={errors.pickupLocation}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Drop Location</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
-                    <Input name="dropLocation" value={formData.dropLocation} onChange={handleInputChange} className="pl-12 py-6 rounded-2xl bg-gray-50 border-none font-bold" />
-                  </div>
+                  <FleetLocationInput
+                    name="dropLocation"
+                    value={formData.dropLocation}
+                    onChange={handleInputChange}
+                    placeholder="Enter Destination"
+                    required
+                    error={errors.dropLocation}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs font-black uppercase tracking-widest text-gray-500 ml-1">Customer Address</Label>
@@ -416,7 +507,7 @@ function FleetBookingModal({ open, onClose, vehicle, onSuccess }) {
           ) : (
             <Button variant="outline" onClick={onClose} className="flex-1 py-6 rounded-2xl border-2 border-gray-100 font-black text-gray-500">Cancel</Button>
           )}
-          
+
           {currentStep < 3 ? (
             <Button onClick={() => validateStep(currentStep) && setCurrentStep(prev => prev + 1)} className="flex-[2] bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all">Continue</Button>
           ) : (

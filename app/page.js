@@ -67,6 +67,7 @@ import { FleetIntro } from "@/components/FleetIntro";
 import { AboutShowcase } from "@/components/AboutShowCase";
 import { WhyChoose } from "@/components/WhyChooseUs";
 import { DestinationShowcase } from "@/components/DestinationShowCase";
+import { CabBookingForm } from "@/components/CabBookingForm";
 
 // Animation variants
 const fadeInUp = {
@@ -231,245 +232,10 @@ function OldHeader() {
   );
 }
 
-// Component for Cab Booking Form
-function CabBookingForm({ 
-  tripType, setTripType, pickup, setPickup, drop, setDrop, 
-  date, setDate, time, setTime, vehicleType, setVehicleType, 
-  priceEstimate, getEstimate, loading, setShowBookingModal, settings 
-}) {
-  const tripTypes = [
-    { value: "local", label: "Local", icon: Building2 },
-    { value: "outstation", label: "Outstation", icon: Route },
-    { value: "airport", label: "Airport", icon: Plane },
-  ];
-
-  return (
-    <Card className="mt-4 shadow-2xl bg-[#FFFFFFCC] backdrop-blur-md rounded-[2.5rem] border-none">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-2xl font-black" style={{ fontFamily: 'Montserrat, sans-serif' }}>Book Your Ride</CardTitle>
-        <CardDescription className="font-bold text-gray-500">Get instant price estimate</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Trip Type Tabs */}
-        <div className="flex gap-2 p-1.5 bg-gray-100/50 rounded-2xl">
-          {tripTypes.map((type) => {
-            const isDisabled =
-              settings?.tripTypes &&
-              !settings.tripTypes[type.value]?.enabled;
-            return (
-              <button
-                key={type.value}
-                onClick={() => !isDisabled && setTripType(type.value)}
-                disabled={isDisabled}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl transition-all text-xs font-bold ${
-                  tripType === type.value
-                    ? "bg-[#0056D2] text-white shadow-lg"
-                    : isDisabled
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray-600 hover:bg-white hover:text-[#0056D2]"
-                }`}
-              >
-                <type.icon className="w-4 h-4" />
-                {type.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Pickup & Drop */}
-        <div className="space-y-3">
-          <div className="relative group">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 z-10" />
-            <Input
-              placeholder="Pickup Location"
-              value={pickup}
-              onChange={(e) => setPickup(e.target.value)}
-              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
-            />
-          </div>
-          <div className="relative group">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 z-10" />
-            <Input
-              placeholder="Drop Location"
-              value={drop}
-              onChange={(e) => setDrop(e.target.value)}
-              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
-            />
-          </div>
-        </div>
-
-        {/* Date & Time */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="relative group">
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-            <Input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
-              min={new Date().toISOString().split("T")[0]}
-            />
-          </div>
-          <div className="relative group">
-            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-            <Input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="pl-12 py-7 bg-gray-50 border-none rounded-2xl focus-visible:ring-2 focus-visible:ring-[#0056D2]/20 font-bold"
-            />
-          </div>
-        </div>
-
-        {/* Vehicle Type */}
-        <Select value={vehicleType} onValueChange={setVehicleType}>
-          <SelectTrigger className="py-7 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-[#0056D2]/20 font-bold">
-            <SelectValue placeholder="Select Vehicle" />
-          </SelectTrigger>
-          <SelectContent className="rounded-2xl border-none shadow-xl">
-            <SelectItem value="sedan">
-              <div className="flex items-center gap-2 font-bold py-1">
-                <Car className="w-4 h-4" /> Sedan (4 Seats)
-              </div>
-            </SelectItem>
-            <SelectItem value="suv">
-              <div className="flex items-center gap-2 font-bold py-1">
-                <Car className="w-4 h-4" /> SUV (7 Seats)
-              </div>
-            </SelectItem>
-            <SelectItem value="luxury">
-              <div className="flex items-center gap-2 font-bold py-1">
-                <Car className="w-4 h-4" /> Luxury (4 Seats)
-              </div>
-            </SelectItem>
-            <SelectItem value="tempo">
-              <div className="flex items-center gap-2 font-bold py-1">
-                <Truck className="w-4 h-4" /> Tempo (12 Seats)
-              </div>
-            </SelectItem>
-          </SelectContent>
-        </Select>
-
-        {/* Price Estimate Display */}
-        <AnimatePresence>
-          {priceEstimate && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="bg-gradient-to-r from-[#0056D2]/5 to-[#43E0F8]/5 rounded-2xl p-6 border border-[#0056D2]/10"
-            >
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-500 font-bold text-sm uppercase tracking-wider">Estimated Fare</span>
-                <span className="text-4xl font-black text-[#0056D2]" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  ₹{priceEstimate.estimatedFare}
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/50 p-2 rounded-xl text-center">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Distance</p>
-                  <p className="font-black text-gray-700">{priceEstimate.distance} km</p>
-                </div>
-                <div className="bg-white/50 p-2 rounded-xl text-center">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Base Rate</p>
-                  <p className="font-black text-gray-700">₹{priceEstimate.baseFare}</p>
-                </div>
-              </div>
-              {!priceEstimate.routeFound && (
-                <p className="text-[10px] text-amber-600 mt-4 text-center font-bold uppercase tracking-wider">
-                  * Estimated based on default rates
-                </p>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-3 pb-8 px-6 pt-2">
-        <Button
-          variant="outline"
-          className="w-full rounded-2xl py-4 h-auto font-black border-2 border-gray-100 text-gray-500 hover:bg-gray-50 transition-all"
-          onClick={getEstimate}
-          disabled={loading}
-        >
-          {loading ? "Calculating..." : "Update Estimate"}
-        </Button>
-        <Button
-          className="w-full bg-primary hover:bg-primary text-white font-black rounded-2xl py-4 h-auto shadow-xl transition-all hover:scale-[1.02] active:scale-95 text-lg"
-          onClick={() => {
-            if (!priceEstimate) {
-              toast.error("Please get an estimate first");
-              return;
-            }
-            setShowBookingModal(true);
-          }}
-        >
-          Book Your Ride Now
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
+// Redundant CabBookingForm removed as it is now a separate component
 
 // Hero Section with Cab Booking
-function HeroSection({ onBookingSuccess }) {
-  const [tripType, setTripType] = useState("local");
-  const [pickup, setPickup] = useState("");
-  const [drop, setDrop] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [vehicleType, setVehicleType] = useState("sedan");
-  const [priceEstimate, setPriceEstimate] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showBookingModal, setShowBookingModal] = useState(false);
-  const [settings, setSettings] = useState(null);
-
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
-  const fetchSettings = async () => {
-    try {
-      const res = await fetch("/api/settings");
-      const data = await res.json();
-      setSettings(data);
-    } catch (error) {
-      console.error("Failed to fetch settings:", error);
-    }
-  };
-
-  const getEstimate = async () => {
-    if (!pickup || !drop) {
-      toast.error("Please enter pickup and drop locations");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch("/api/pricing/estimate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pickup, drop, tripType, vehicleType }),
-      });
-      const data = await res.json();
-
-      if (data.error) {
-        toast.error(data.error);
-        return;
-      }
-
-      setPriceEstimate(data);
-    } catch (error) {
-      toast.error("Failed to get estimate");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const bookingFormProps = {
-    tripType, setTripType, pickup, setPickup, drop, setDrop, 
-    date, setDate, time, setTime, vehicleType, setVehicleType, 
-    priceEstimate, getEstimate, loading, setShowBookingModal, settings
-  };
+function HeroSection() {
 
   return (
     <div id="home" className="relative min-h-screen overflow-hidden" data-testid="hero-section">
@@ -494,7 +260,7 @@ function HeroSection({ onBookingSuccess }) {
             transition={{ duration: 0.6 }}
             className="lg:hidden mb-12"
           >
-            <CabBookingForm {...bookingFormProps} />
+            <CabBookingForm />
           </motion.div>
 
           {/* Hero Content Grid */}
@@ -578,29 +344,13 @@ function HeroSection({ onBookingSuccess }) {
                className="hidden lg:flex justify-end"
             >
               <div className="w-full max-w-[480px]">
-                <CabBookingForm {...bookingFormProps} />
+                <CabBookingForm />
               </div>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Booking Modal */}
-      <BookingModal
-        open={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        type="cab"
-        bookingData={{
-          pickup,
-          drop,
-          tripType,
-          vehicleType,
-          date,
-          time,
-          ...priceEstimate,
-        }}
-        onSuccess={onBookingSuccess}
-      />
     </div>
   );
 }
@@ -1004,7 +754,7 @@ export default function App() {
     <div className="min-h-screen">
       <Header />
       <main>
-        <HeroSection onBookingSuccess={handleBookingSuccess} />
+        <HeroSection />
         <AboutShowcase />
         <Services />
         <FeaturedDestinations />

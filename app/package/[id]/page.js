@@ -254,8 +254,6 @@ export default function PackageDetail() {
   }
 
   const price = packageData.price || 0;
-  const rating = packageData.rating || 4.5;
-  const reviews = packageData.reviews || 0;
   const title = packageData.title || "Beautiful Destination";
   const type = packageData.type || "holidays";
 
@@ -315,12 +313,6 @@ export default function PackageDetail() {
               <div className="flex items-center gap-2">
                 <Clock size={20} />
                 <span>{packageData.duration || "Flexible"}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star size={20} className="text-yellow-400 fill-current" />
-                <span>
-                  {rating} ({reviews} reviews)
-                </span>
               </div>
               <div className="flex items-center gap-2">
                 <IndianRupee size={20} />
@@ -612,39 +604,6 @@ export default function PackageDetail() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h3
-                className="text-2xl font-bold mb-6 text-gray-900"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                Customer Reviews
-              </h3>
-              <div className="space-y-6">
-                <div className="border-b border-gray-100 pb-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#A0006D] rounded-full flex items-center justify-center text-white font-bold">
-                      R
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900">Rajesh Kumar</h4>
-                      <div className="flex items-center gap-1 mt-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className="text-yellow-400 fill-current"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 italic bg-gray-50 p-4 rounded-xl border border-gray-100">
-                    "Amazing experience! The guides were knowledgeable and the
-                    itinerary was perfectly planned. Highly recommended."
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Booking Sidebar */}

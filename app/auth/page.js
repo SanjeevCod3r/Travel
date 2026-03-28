@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion,AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -56,7 +56,7 @@ export default function AuthPage() {
     e.preventDefault();
 
     if (!loginEmail || !loginPassword) {
-      toast.error("Please fill in all fields");
+      toast.error("Please enter both email and password");
       return;
     }
 
@@ -77,10 +77,11 @@ export default function AuthPage() {
 
       localStorage.setItem("userToken", data.token);
       localStorage.setItem("userData", JSON.stringify(data.user));
-      toast.success("Welcome back!");
+      toast.success("Welcome back to Excursion Travel!");
       router.push("/");
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      console.error("Login flow error:", error);
+      toast.error("Account verification failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -88,9 +89,10 @@ export default function AuthPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    console.log("Signup button clicked", { signupName, signupEmail, signupPhone });
 
-    if (!signupName || !signupEmail || !signupPassword) {
-      toast.error("Please fill in all required fields");
+    if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword) {
+      toast.error("Please fill in all required fields marked with *");
       return;
     }
 
@@ -106,6 +108,7 @@ export default function AuthPage() {
 
     setLoading(true);
     try {
+      console.log("Sending signup request to API...");
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,209 +121,259 @@ export default function AuthPage() {
       });
 
       const data = await res.json();
+      console.log("Signup API response:", data);
 
       if (data.error) {
         toast.error(data.error);
         return;
       }
 
-      localStorage.setItem("userToken", data.token);
-      localStorage.setItem("userData", JSON.stringify(data.user));
-      toast.success("Account created successfully!");
-      router.push("/");
+      if (data.token) {
+        localStorage.setItem("userToken", data.token);
+        localStorage.setItem("userData", JSON.stringify(data.user));
+        toast.success("Welcome to the Excursion family!");
+        router.push("/");
+      } else {
+        toast.error("Account created but auto-login failed. Please login manually.");
+        setActiveTab("login");
+      }
     } catch (error) {
-      toast.error("Signup failed. Please try again.");
+      console.error("Signup flow error:", error);
+      toast.error("Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-paleBlue-50 to-indigo-100 p-4">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden">
+      {/* Dynamic Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+          alt="Background"
+          className="w-full h-full object-cover scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-[#0056D2]/20" />
+      </div>
+
+      {/* Floating Elements for Premium Feel */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#0056D2]/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#A0006D]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        layout
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-[480px] px-6"
       >
-        {/* Back to Home Link */}
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-primary mb-6 transition-colors"
+        <div className="bg-white/10 backdrop-blur-[24px] rounded-[2.5rem] border border-white/20 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden p-8 md:p-10">
+          {/* Logo & Branding */}
+          <div className="text-center mb-10">
+            <motion.div 
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="flex justify-center mb-6"
+            >
+              <img 
+                src="/asset/logo website.png" 
+                alt="Excursion Travel" 
+                className="h-12 w-auto filter drop-shadow-lg"
+              />
+            </motion.div>
+            <h1 className="text-3xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Your Adventure Awaits
+            </h1>
+            <p className="text-white/60 font-medium" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              Premium Travel Experiences Redefined
+            </p>
+          </div>
+
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 p-1 bg-white/5 rounded-[1.25rem] mb-10 border border-white/10 selection-none">
+              <TabsTrigger 
+                value="login" 
+                className="rounded-[1rem] py-3.5 data-[state=active]:bg-white data-[state=active]:text-[#0056D2] data-[state=active]:shadow-lg transition-all duration-300 font-black text-xs uppercase tracking-widest"
+              >
+                Login
+              </TabsTrigger>
+              <TabsTrigger 
+                value="signup" 
+                className="rounded-[1rem] py-3.5 data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#0056D2] data-[state=active]:to-[#0056D2] data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-black text-xs uppercase tracking-widest"
+              >
+                Sign In
+              </TabsTrigger>
+            </TabsList>
+
+            <AnimatePresence mode="wait">
+              {activeTab === "login" ? (
+                <motion.div
+                  key="login"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <form onSubmit={handleLogin} className="space-y-5">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">Email Address</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                        <Input
+                          type="email"
+                          placeholder="name@example.com"
+                          value={loginEmail}
+                          onChange={(e) => setLoginEmail(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-[#0056D2] transition-all font-medium"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center px-1">
+                        <Label className="text-xs font-black uppercase tracking-widest text-white/50">Password</Label>
+                        <button type="button" className="text-xs font-bold text-white hover:text-white transition-colors">Forgot?</button>
+                      </div>
+                      <div className="relative">
+                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Your Secret Key"
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 pr-12 rounded-2xl focus:ring-0 focus:border-[#0056D2] transition-all font-medium"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-[#0056D2] to-[#0056D2] hover:scale-[1.02] active:scale-95 text-white font-black py-7 rounded-2xl shadow-xl shadow-blue-500/20 transition-all border-none text-lg mt-2"
+                    >
+                      {loading ? "Verifying..." : "Login "}
+                    </Button>
+                  </form>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="signup"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <form onSubmit={handleSignup} className="space-y-5">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-black uppercase tracking-widest text-white/50 pl-1">Full Name *</Label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                        <Input
+                          placeholder="Adventurer Name"
+                          value={signupName}
+                          onChange={(e) => setSignupName(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Email *</Label>
+                        <Input
+                          type="email"
+                          placeholder="Your Email"
+                          value={signupEmail}
+                          onChange={(e) => setSignupEmail(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Phone</Label>
+                        <Input
+                          type="tel"
+                          placeholder="Phone Number"
+                          value={signupPhone}
+                          onChange={(e) => setSignupPhone(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Password *</Label>
+                        <Input
+                          type="password"
+                          placeholder="Min 6 chars"
+                          value={signupPassword}
+                          onChange={(e) => setSignupPassword(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          required
+                          minLength={6}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/50 pl-1">Confirm *</Label>
+                        <Input
+                          type="password"
+                          placeholder="Match above"
+                          value={signupConfirmPassword}
+                          onChange={(e) => setSignupConfirmPassword(e.target.value)}
+                          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 px-5 rounded-2xl focus:ring-0 focus:border-[#A0006D] transition-all font-medium text-sm"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-[#0056D2] to-[#0056D2] hover:scale-[1.02] active:scale-95 text-white font-black py-7 rounded-2xl shadow-xl  transition-all border-none text-lg mt-2"
+                    >
+                      {loading ? "Onboarding..." : "Sign In"}
+                    </Button>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Tabs>
+
+          <p className="text-center text-white/30 text-xs mt-10 font-medium">
+            By joining, you agree to our <span className="text-white/50 underline cursor-pointer">Terms for Travelers</span>
+          </p>
+        </div>
+
+        {/* Back Button */}
+        <motion.button
+          whileHover={{ x: -10 }}
+          onClick={() => router.push("/")}
+          className="mt-8 flex items-center gap-2 text-white/50 hover:text-white font-bold transition-all mx-auto"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Home
-        </a>
-
-        <Card className="shadow-xl">
-          <CardHeader className="text-center pb-2">
-            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Navigation className="w-8 h-8 text-white" />
-            </div>
-            <CardTitle className="text-2xl">Welcome to Excursion Travel</CardTitle>
-            <CardDescription>
-              Sign in or create an account to continue
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
-
-              {/* Login Tab */}
-              <TabsContent value="login">
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div>
-                    <Label htmlFor="login-email">Email</Label>
-                    <div className="relative mt-1">
-                      <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="login-email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={loginEmail}
-                        onChange={(e) => setLoginEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="login-password">Password</Label>
-                    <div className="relative mt-1">
-                      <Lock className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="login-password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Enter your password"
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}
-                        className="pl-10 pr-10"
-                        required
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                      >
-                        {showPassword ? (
-                          <EyeOff className="w-4 h-4" />
-                        ) : (
-                          <Eye className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Signing in..." : "Sign In"}
-                  </Button>
-                </form>
-              </TabsContent>
-
-              {/* Signup Tab */}
-              <TabsContent value="signup">
-                <form onSubmit={handleSignup} className="space-y-4">
-                  <div>
-                    <Label htmlFor="signup-name">Full Name *</Label>
-                    <div className="relative mt-1">
-                      <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="signup-name"
-                        placeholder="Enter your name"
-                        value={signupName}
-                        onChange={(e) => setSignupName(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="signup-email">Email *</Label>
-                    <div className="relative mt-1">
-                      <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="signup-email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={signupEmail}
-                        onChange={(e) => setSignupEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="signup-phone">Phone Number</Label>
-                    <div className="relative mt-1">
-                      <Phone className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="signup-phone"
-                        type="tel"
-                        placeholder="Enter phone number"
-                        value={signupPhone}
-                        onChange={(e) => setSignupPhone(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="signup-password">Password *</Label>
-                    <div className="relative mt-1">
-                      <Lock className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="signup-password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Create a password"
-                        value={signupPassword}
-                        onChange={(e) => setSignupPassword(e.target.value)}
-                        className="pl-10 pr-10"
-                        required
-                        minLength={6}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                      >
-                        {showPassword ? (
-                          <EyeOff className="w-4 h-4" />
-                        ) : (
-                          <Eye className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="signup-confirm">Confirm Password *</Label>
-                    <div className="relative mt-1">
-                      <Lock className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="signup-confirm"
-                        type="password"
-                        placeholder="Confirm your password"
-                        value={signupConfirmPassword}
-                        onChange={(e) =>
-                          setSignupConfirmPassword(e.target.value)
-                        }
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Creating Account..." : "Create Account"}
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-          <CardFooter className="justify-center text-sm text-gray-500">
-            By continuing, you agree to our Terms of Service
-          </CardFooter>
-        </Card>
+          <ArrowLeft size={18} />
+          <span>Explore destinations as guest</span>
+        </motion.button>
       </motion.div>
+
+      {/* Footer Text */}
+      <div className="absolute bottom-6 left-0 right-0 text-center z-10 hidden md:block">
+        <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]">
+          Excursion Travel Private Limited © 2024
+        </p>
+      </div>
     </div>
   );
 }

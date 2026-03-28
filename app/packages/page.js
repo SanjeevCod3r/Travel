@@ -820,17 +820,7 @@ export default function PackagesPage() {
                     {/* Content Area */}
                     <div className="p-7 sm:p-8 flex flex-col flex-grow bg-white group-hover:bg-[#FCFDFF] transition-colors duration-500">
                       <div className="mb-4">
-                        <div className="flex items-center gap-1 mb-2">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className="w-3.5 h-3.5 fill-amber-400 text-amber-400"
-                            />
-                          ))}
-                          <span className="text-gray-400 text-xs ml-1.5 font-medium tracking-wide">
-                            4.8 (120+ reviews)
-                          </span>
-                        </div>
+                        <div className="mb-2 h-4"></div>
                         <h3
                           className="text-2xl font-bold text-gray-900 leading-tight group-hover:text-[#0056D2] transition-colors cursor-pointer line-clamp-2 mb-2"
                           style={{ fontFamily: "Montserrat, sans-serif" }}

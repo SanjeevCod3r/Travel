@@ -110,10 +110,12 @@ export default function Header() {
               </>
             ) : (
               <>
-                <a href="/auth" className="text-gray-600 hover:text-paleBlue">
+                <Link href="/auth" className="text-gray-600 hover:text-paleBlue transition-colors font-medium">
                   Login
-                </a>
-                <Button className="bg-paleBlue"size="sm">Sign Up</Button>
+                </Link>
+                <Link href="/auth">
+                  <Button className="bg-paleBlue" size="sm">Sign Up</Button>
+                </Link>
               </>
             )}
           </div>

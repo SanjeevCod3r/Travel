@@ -67,6 +67,7 @@ import {
   RefreshCw,
   FileText,
   Mail,
+  ArrowRight
 } from "lucide-react";
 
 // Auth check hook
@@ -142,54 +143,108 @@ function LoginForm({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-paleBlue-700 p-4">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden">
+      {/* Background with Dark Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop"
+          alt="Admin Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
+      </div>
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="relative z-10 w-full max-w-md px-4"
       >
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Navigation className="w-8 h-8 text-white" />
+        <div className="bg-white/10 backdrop-blur-xl rounded-[2.5rem] border border-white/20 shadow-2xl p-8 md:p-12 overflow-hidden relative">
+          {/* Logo & Header */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                <img 
+                  src="/asset/logo website.png" 
+                  alt="Excursion Travel Admin" 
+                  className="h-12 w-auto relative z-10 filter drop-shadow-xl"
+                />
+              </div>
             </div>
-            <CardTitle className="text-2xl">Admin Login</CardTitle>
-            <CardDescription>
-              Sign in to manage your travel business
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter username"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  required
-                />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-            <p className="text-center text-sm text-gray-500 mt-4">
-              Default: admin / admin123
+            <h1 className="text-2xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+             Admin Panel
+            </h1>
+            <p className="text-white/60 text-sm font-medium" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              Authorized Person Only
             </p>
-          </CardContent>
-        </Card>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 pl-1">Administrator Identity</Label>
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-500 rounded-2xl blur opacity-0 group-focus-within:opacity-20 transition-opacity" />
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                  <Input
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-primary transition-all font-medium"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 pl-1">Access Key</Label>
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-500 rounded-2xl blur opacity-0 group-focus-within:opacity-20 transition-opacity" />
+                <div className="relative">
+                  <Settings className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-14 pl-12 rounded-2xl focus:ring-0 focus:border-primary transition-all font-medium"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full bg-primary hover:bg-primary/90 text-white font-black py-7 rounded-2xl shadow-xl shadow-primary/20 transition-all border-none text-lg mt-4 flex items-center justify-center gap-3"
+              disabled={loading}
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Verifying...</span>
+                </div>
+              ) : (
+                <>
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </Button>
+          </form>
+
+          <div className="mt-10 pt-8 border-t border-white/5 text-center">
+            <p className="text-[10px] text-white/20 font-black uppercase tracking-widest">
+              Excursion Travel Private Limited © 2026
+            </p>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
@@ -217,18 +272,22 @@ function Sidebar({ activeTab, setActiveTab, logout }) {
         collapsed ? "w-16" : "w-64"
       } min-h-screen flex flex-col`}
     >
-      <div className="p-4 flex items-center justify-between border-b border-gray-800">
+      <div className="p-6 flex items-center justify-between border-b border-gray-800">
         {!collapsed && (
-          <div className="flex items-center gap-2">
-            <Navigation className="w-6 h-6 text-primary" />
-            <span className="font-bold">Excursion Travel Admin</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/asset/logo website.png" 
+              alt="Logo" 
+              className="h-8 w-auto filter brightness-0 invert"
+            />
+            {/* <span className="font-black text-xs uppercase tracking-widest text-[#0056D2] bg-white px-2 py-1 rounded">Admin</span> */}
           </div>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1 hover:bg-gray-800 rounded"
+          className="p-1.5 hover:bg-gray-800 rounded-lg transition-colors"
         >
-          <Menu className="w-5 h-5" />
+          {collapsed ? <ChevronRight className="w-5 h-5" /> : <X className="w-5 h-5" />}
         </button>
       </div>
 
@@ -544,86 +603,148 @@ function BookingsTab() {
 
       <Card>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Details</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-gray-50">
+                <TableHead className="font-bold text-gray-700 whitespace-nowrap">Customer</TableHead>
+                <TableHead className="font-bold text-gray-700">Type</TableHead>
+                <TableHead className="font-bold text-gray-700">Route / Vehicle</TableHead>
+                <TableHead className="font-bold text-gray-700">Schedule</TableHead>
+                <TableHead className="font-bold text-gray-700">Amount</TableHead>
+                <TableHead className="font-bold text-gray-700">Status</TableHead>
+                <TableHead className="font-bold text-gray-700 whitespace-nowrap">Booked On</TableHead>
+                <TableHead className="font-bold text-gray-700">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8">
+                  <TableCell colSpan={8} className="text-center py-8">
                     Loading...
                   </TableCell>
                 </TableRow>
               ) : filteredBookings.length === 0 ? (
                 <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="text-center py-8 text-gray-500"
-                  >
+                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                     No bookings found
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredBookings.map((booking) => (
-                  <TableRow key={booking.id}>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{booking.customerName}</p>
-                        <p className="text-sm text-gray-500">
-                          {booking.customerPhone}
-                        </p>
-                      </div>
+                  <TableRow key={booking.id} className="hover:bg-gray-50 align-top">
+
+                    {/* ── Customer ── */}
+                    <TableCell className="min-w-[160px]">
+                      <p className="font-semibold text-gray-900">{booking.customerName}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{booking.customerPhone}</p>
+                      {booking.customerEmail && (
+                        <p className="text-xs text-blue-500 mt-0.5 break-all">{booking.customerEmail}</p>
+                      )}
                     </TableCell>
+
+                    {/* ── Type ── */}
                     <TableCell>
-                      <Badge variant="outline" className="capitalize">
+                      <Badge variant="outline" className={`capitalize font-semibold ${
+                        booking.type === 'cab' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                        booking.type === 'fleet' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                        'bg-purple-50 text-purple-700 border-purple-200'
+                      }`}>
                         {booking.type}
                       </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {booking.type === "cab" && (
-                        <div className="text-sm">
-                          <p>
-                            {booking.pickup} → {booking.drop}
-                          </p>
-                          <p className="text-gray-500">
-                            ₹{booking.estimatedFare}
-                          </p>
-                        </div>
-                      )}
-                      {booking.type === "package" && (
-                        <div className="text-sm">
-                          <p>{booking.packageTitle}</p>
-                          <p className="text-gray-500">₹{booking.totalPrice}</p>
-                        </div>
-                      )}
-                      {booking.type === "fleet" && (
-                        <div className="text-sm">
-                          <p className="font-bold">{booking.vehicleName}</p>
-                          <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-500">
-                            <p><span className="text-green-600 font-bold">Pick:</span> {booking.pickupLocation || '-'}</p>
-                            <p><span className="text-red-600 font-bold">Drop:</span> {booking.dropLocation || '-'}</p>
-                            <p><span className="text-gray-600 font-bold">Address:</span> {booking.customerAddress || '-'}</p>
-                          </div>
-                          <p className="text-[#0056D2] font-bold mt-1">₹{booking.totalPrice?.toLocaleString()}</p>
-                        </div>
+                      {booking.type === 'cab' && booking.serviceType && (
+                        <p className="text-[10px] text-gray-400 mt-1 capitalize">{booking.serviceType}{booking.tripType ? ` · ${booking.tripType}` : ''}</p>
                       )}
                     </TableCell>
+
+                    {/* ── Route / Vehicle ── */}
+                    <TableCell className="min-w-[200px]">
+                      {booking.type === 'cab' && (
+                        <div className="text-sm space-y-0.5">
+                          <p className="font-medium text-gray-800">
+                            <span className="text-green-600">●</span> {booking.pickup || '—'}
+                          </p>
+                          <p className="font-medium text-gray-800">
+                            <span className="text-red-500">●</span> {booking.drop || 'Local'}
+                          </p>
+                          {booking.vehicleType && <p className="text-xs text-gray-400">Car: {booking.vehicleType}</p>}
+                          {booking.distance && <p className="text-xs text-gray-400">{Number(booking.distance).toFixed(1)} km · {booking.duration}</p>}
+                          {booking.localPackage && <p className="text-xs text-gray-400">Pkg: {booking.localPackage}</p>}
+                          {booking.airportDirection && <p className="text-xs text-gray-400 capitalize">Dir: {booking.airportDirection} airport</p>}
+                        </div>
+                      )}
+                      {booking.type === 'fleet' && (
+                        <div className="text-sm space-y-0.5">
+                          <p className="font-semibold text-gray-900">{booking.vehicleName}</p>
+                          {booking.vehicleType && <p className="text-xs text-gray-400 capitalize">{booking.vehicleType}</p>}
+                          <p className="text-xs text-gray-700 mt-1">
+                            <span className="text-green-600 font-semibold">↑</span> {booking.pickupLocation || '—'}
+                          </p>
+                          <p className="text-xs text-gray-700">
+                            <span className="text-red-500 font-semibold">↓</span> {booking.dropLocation || '—'}
+                          </p>
+                          {booking.customerAddress && (
+                            <p className="text-xs text-gray-400">Addr: {booking.customerAddress}</p>
+                          )}
+                        </div>
+                      )}
+                      {booking.type === 'package' && (
+                        <div className="text-sm">
+                          <p className="font-semibold text-gray-900">{booking.packageTitle || '—'}</p>
+                        </div>
+                      )}
+                    </TableCell>
+
+                    {/* ── Schedule ── */}
+                    <TableCell className="min-w-[140px]">
+                      {booking.type === 'cab' && (
+                        <div className="text-xs space-y-0.5 text-gray-700">
+                          {booking.date && <p><span className="font-semibold text-gray-500">Date:</span> {booking.date}</p>}
+                          {booking.time && <p><span className="font-semibold text-gray-500">Time:</span> {booking.time}</p>}
+                          {booking.returnDate && (
+                            <>
+                              <p className="text-gray-400 mt-1 font-semibold">Return</p>
+                              <p><span className="font-semibold text-gray-500">Date:</span> {booking.returnDate}</p>
+                              {booking.returnTime && <p><span className="font-semibold text-gray-500">Time:</span> {booking.returnTime}</p>}
+                            </>
+                          )}
+                        </div>
+                      )}
+                      {booking.type === 'fleet' && (
+                        <div className="text-xs space-y-0.5 text-gray-700">
+                          {booking.startDate && <p><span className="font-semibold text-gray-500">From:</span> {booking.startDate}</p>}
+                          {booking.endDate && <p><span className="font-semibold text-gray-500">To:</span> {booking.endDate}</p>}
+                          {booking.days && <p><span className="font-semibold text-gray-500">Days:</span> {booking.days}</p>}
+                        </div>
+                      )}
+                      {booking.type === 'package' && (
+                        <div className="text-xs text-gray-400">—</div>
+                      )}
+                    </TableCell>
+
+                    {/* ── Amount ── */}
+                    <TableCell className="whitespace-nowrap">
+                      <p className="font-bold text-[#0056D2] text-sm">
+                        ₹{(booking.estimatedFare || booking.totalPrice || 0).toLocaleString()}
+                      </p>
+                      <p className="text-[10px] text-gray-400 mt-0.5">
+                        {booking.paymentStatus === 'paid' ? '✓ Paid' : 'Unpaid'}
+                      </p>
+                    </TableCell>
+
+                    {/* ── Status ── */}
                     <TableCell>
                       <Badge className={statusColors[booking.status]}>
                         {booking.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-sm text-gray-500">
-                      {new Date(booking.createdAt).toLocaleDateString()}
+
+                    {/* ── Booked On ── */}
+                    <TableCell className="text-xs text-gray-500 whitespace-nowrap">
+                      {new Date(booking.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </TableCell>
+
+                    {/* ── Actions ── */}
                     <TableCell>
                       <div className="flex gap-1">
                         {booking.status === "pending" && (
@@ -631,20 +752,16 @@ function BookingsTab() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-green-600"
-                              onClick={() =>
-                                updateBookingStatus(booking.id, "confirmed")
-                              }
+                              className="text-green-600 hover:bg-green-50"
+                              onClick={() => updateBookingStatus(booking.id, "confirmed")}
                             >
                               <CheckCircle className="w-4 h-4" />
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-red-600"
-                              onClick={() =>
-                                updateBookingStatus(booking.id, "cancelled")
-                              }
+                              className="text-red-600 hover:bg-red-50"
+                              onClick={() => updateBookingStatus(booking.id, "cancelled")}
                             >
                               <XCircle className="w-4 h-4" />
                             </Button>
@@ -652,12 +769,15 @@ function BookingsTab() {
                         )}
                       </div>
                     </TableCell>
+
                   </TableRow>
                 ))
               )}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
+
       </Card>
     </div>
   );

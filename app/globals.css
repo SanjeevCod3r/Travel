@@ -92,3 +92,9 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Fix: Google Maps autocomplete dropdown must appear above Dialog overlays (z-50) */
+.pac-container {
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
