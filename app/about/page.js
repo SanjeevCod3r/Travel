@@ -3,854 +3,407 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Target,
-  Eye,
+  Users,
+  Globe,
+  Zap,
   Award,
-  Lightbulb,
+  TrendingUp,
+  Heart,
+  ArrowRight,
   CheckCircle,
   Star,
-  ArrowRight,
   Shield,
+  Clock,
+  MapPin,
+  Car,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/app/footer/page";
 
 export default function About() {
-  const visionPoints = [
-    "Technology is at the core of our innovation.",
-    "We aim to exceed customer expectations.",
-    "Reliable and premium services set us apart.",
+  const stats = [
+    { number: "10K+", label: "Happy Customers", icon: Users, color: "from-blue-500 to-cyan-500" },
+    { number: "50+", label: "Cities Covered", icon: MapPin, color: "from-emerald-500 to-teal-500" },
+    { number: "1000+", label: "Vehicle Fleet", icon: Car, color: "from-amber-500 to-orange-500" },
+    { number: "24/7", label: "Support Available", icon: Clock, color: "from-rose-500 to-pink-500" },
   ];
 
-  const missionPoints = [
-    "Customers come first, always.",
-    "Quality drives every aspect of our service.",
-    "Vehicles are impeccably maintained and road-ready.",
-  ];
-
-  const approachPoints = [
-    "Innovation drives our service enhancements.",
-    "Safety and sustainability are non-negotiable.",
-    "Every vehicle reflects our dedication to perfection.",
-  ];
-
-  const benefits = [
+  const values = [
     {
-      icon: CheckCircle,
-      title: "Flexible Travel Options",
-      description: "One-way and round-trip rentals for any journey type",
+      icon: Heart,
+      title: "Customer First",
+      description: "Your satisfaction is our top priority. We go above and beyond to ensure every journey exceeds expectations.",
+      color: "from-rose-500 to-pink-500"
     },
     {
-      icon: Star,
-      title: "Diverse Fleet",
-      description: "From compact cars to luxury SUVs for every need",
+      icon: Shield,
+      title: "Safety Always",
+      description: "Every vehicle is thoroughly inspected and maintained to the highest safety standards.",
+      color: "from-blue-500 to-cyan-500"
     },
     {
-      icon: Target,
-      title: "24/7 Airport Transfers",
-      description: "Stress-free connectivity at any schedule",
+      icon: Zap,
+      title: "Speed & Efficiency",
+      description: "Quick bookings, instant confirmations, and on-time service every single time.",
+      color: "from-amber-500 to-orange-500"
+    },
+    {
+      icon: Globe,
+      title: "Global Standards",
+      description: "We bring world-class service quality and international best practices to every ride.",
+      color: "from-emerald-500 to-teal-500"
+    },
+  ];
+
+  const timeline = [
+    {
+      year: "2019",
+      title: "Our Journey Begins",
+      description: "Started with a small fleet and a big dream to revolutionize car rentals.",
+    },
+    {
+      year: "2021",
+      title: "Expansion Phase",
+      description: "Expanded to 20+ cities and introduced corporate travel solutions.",
+    },
+    {
+      year: "2023",
+      title: "Digital Transformation",
+      description: "Launched our advanced booking platform and mobile app.",
+    },
+    {
+      year: "2024",
+      title: "Market Leader",
+      description: "Became the preferred choice for corporate and leisure travel.",
     },
   ];
 
   return (
     <>
       <Header />
-      <section
-        id="about"
-        className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-paleBlue-50 relative overflow-hidden"
-        data-testid="about-section"
-      >
-        {/* Enhanced Background Pattern */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#0056D2]/20 to-[#43E0F8]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-[#43E0F8]/20 to-[#5DFDCB]/20 rounded-full filter blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0056D2]/10 to-[#43E0F8]/10 rounded-full filter blur-2xl"></div>
-        </div>
+      <section className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,theme(colors.blue.50),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,theme(colors.emerald.50),transparent_50%)]"></div>
+          </div>
 
-        {/* Cool Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Floating Geometric Shapes */}
-          <motion.div
-            animate={{
-              y: [0, -30, 0],
-              rotate: [0, 8, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-28 right-20 w-20 h-20 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl opacity-15 shadow-2xl"
-            style={{
-              clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
-            }}
-          />
-          <motion.div
-            animate={{
-              y: [0, 35, 0],
-              rotate: [0, -10, 0],
-              scale: [1, 0.9, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1.5,
-            }}
-            className="absolute bottom-36 left-16 w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#5DFDCB] rounded-full opacity-20 shadow-xl"
-            style={{
-              clipPath:
-                "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
-            }}
-          />
-          <motion.div
-            animate={{
-              y: [0, -25, 0],
-              x: [0, 15, 0],
-              rotate: [0, 15, 0],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 3,
-            }}
-            className="absolute top-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-[#5DFDCB] to-[#0056D2] rounded-lg opacity-25 shadow-lg"
-            style={{
-              clipPath:
-                "polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%)",
-            }}
-          />
-
-          {/* Floating Particles */}
-          {[...Array(8)].map((_, i) => (
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
             <motion.div
-              key={i}
-              animate={{
-                y: [0, -100 - i * 20, 0],
-                x: [0, Math.sin(i) * 50, 0],
-                opacity: [0.3, 0.8, 0.3],
-                scale: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 8 + i * 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.5,
-              }}
-              className={`absolute w-2 h-2 rounded-full ${
-                i % 4 === 0
-                  ? "bg-[#0056D2]/40"
-                  : i % 4 === 1
-                  ? "bg-[#43E0F8]/40"
-                  : i % 4 === 2
-                  ? "bg-[#5DFDCB]/40"
-                  : "bg-[#FE805A]/40"
-              }`}
-              style={{
-                top: `${20 + i * 8}%`,
-                left: `${15 + i * 10}%`,
-              }}
-            />
-          ))}
-
-          {/* Glowing Orbs */}
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-16 left-16 w-32 h-32 bg-[#0056D2]/10 rounded-full blur-xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1.3, 1, 1.3],
-              opacity: [0.3, 0.1, 0.3],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            className="absolute bottom-32 right-32 w-40 h-40 bg-[#43E0F8]/8 rounded-full blur-2xl"
-          />
-        </div>
-
-        <div className="mt-6 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-24 relative z-10">
-          {/* Enhanced Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16 sm:mb-20"
-            data-testid="about-header"
-          >
-            {/* Modern Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0056D2]/10 via-[#43E0F8]/10 to-[#0056D2]/10 backdrop-blur-xl rounded-full border border-[#43E0F8]/30 mb-8 shadow-lg"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
             >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="w-3 h-3 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] rounded-full"
-              />
-              <span
-                className="text-[#0056D2] font-bold text-sm uppercase tracking-wider"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
+              {/* Main Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight mt-8"
               >
-                ABOUT EXCURSION TRAVEL
-              </span>
+                Your Journey,
+                <br />
+                <span className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                  Our Mission
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed"
+              >
+                We're not just a car rental service. We're your travel partner, 
+                committed to making every journey memorable, comfortable, and hassle-free.
+              </motion.p>
+
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full mt-8"
+              >
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium text-slate-700">About Excursion Travel</span>
+              </motion.div>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight"
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                letterSpacing: "-0.02em",
-              }}
-              data-testid="about-title"
-            >
-              Your Trusted Partner in{" "}
-              <span className="bg-gradient-to-r from-[#0056D2] via-[#4A8BDF] to-[#43E0F8] bg-clip-text text-transparent">
-                Corporate Car Rentals
-              </span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 sm:px-0"
-              style={{ fontFamily: "Manrope, sans-serif" }}
-              data-testid="about-subtitle"
-            >
-              Excellence, innovation, and reliability in every journey. We
-              redefine corporate transportation with cutting-edge technology and
-              unparalleled service quality.
-            </motion.p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-20"
-          >
-            {/* Vehicles Stat - Circular Design */}
+            {/* Stats Grid */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="group relative"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-20"
             >
-              <div className="bg-gradient-to-br from-[#0056D2]/10 via-[#43E0F8]/5 to-[#0056D2]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#43E0F8]/20 shadow-xl overflow-hidden">
-                {/* Animated Background */}
+              {stats.map((stat, index) => (
                 <motion.div
-                  animate={{
-                    rotate: 360,
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 bg-gradient-to-br from-[#0056D2]/5 to-[#43E0F8]/5 rounded-3xl"
-                />
-
-                <div className="relative z-10 text-center">
-                  {/* Circular Progress Indicator */}
-                  <div className="relative w-32 h-32 mx-auto mb-6">
-                    <svg
-                      className="w-full h-full transform -rotate-90"
-                      viewBox="0 0 120 120"
-                    >
-                      {/* Background Circle */}
-                      <circle
-                        cx="60"
-                        cy="60"
-                        r="50"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="8"
-                        className="text-gray-200"
-                      />
-                      {/* Progress Circle */}
-                      <motion.circle
-                        cx="60"
-                        cy="60"
-                        r="50"
-                        fill="none"
-                        stroke="url(#vehiclesGradient)"
-                        strokeWidth="8"
-                        strokeLinecap="round"
-                        initial={{ pathLength: 0 }}
-                        whileInView={{ pathLength: 0.85 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 2,
-                          delay: 0.8,
-                          ease: "easeOut",
-                        }}
-                        className="drop-shadow-lg"
-                      />
-                      {/* Gradient Definition */}
-                      <defs>
-                        <linearGradient
-                          id="vehiclesGradient"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="100%"
-                        >
-                          <stop offset="0%" stopColor="#0056D2" />
-                          <stop offset="100%" stopColor="#43E0F8" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-
-                    {/* Center Content */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 1,
-                          type: "spring",
-                          stiffness: 200,
-                        }}
-                      >
-                        <div
-                          className="text-3xl font-bold text-gray-900 mb-1"
-                          style={{ fontFamily: "Montserrat, sans-serif" }}
-                        >
-                          900+
-                        </div>
-                        <div
-                          className="text-sm text-gray-600 font-medium"
-                          style={{ fontFamily: "Manrope, sans-serif" }}
-                        >
-                          Vehicles
-                        </div>
-                      </motion.div>
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-12 h-12 bg-gradient-to-r ${stat.color} rounded-xl flex items-center justify-center`}>
+                      <stat.icon className="text-white" size={20} />
                     </div>
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                      className="w-2 h-2 bg-emerald-500 rounded-full"
+                    ></motion.div>
                   </div>
-
-                  {/* Description */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 1.2 }}
-                    className="text-gray-600 text-sm leading-relaxed"
-                    style={{ fontFamily: "Manrope, sans-serif" }}
-                  >
-                    Our extensive fleet ensures you always have the perfect
-                    vehicle for your corporate needs.
-                  </motion.p>
-
-                  {/* Floating Icon */}
-                  <motion.div
-                    animate={{
-                      y: [0, -10, 0],
-                      rotate: [0, 5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-lg flex items-center justify-center shadow-lg"
-                  >
-                    <Award className="text-white" size={16} />
-                  </motion.div>
-                </div>
-              </div>
+                  <div className="text-3xl font-bold text-slate-900 mb-1">{stat.number}</div>
+                  <div className="text-sm text-slate-600">{stat.label}</div>
+                </motion.div>
+              ))}
             </motion.div>
+          </div>
+        </div>
 
-            {/* Support Stat - Modern Card Design */}
+        {/* Values Section */}
+        <div className="py-24 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
-              className="group relative"
+              className="text-center mb-16"
             >
-              <div className="bg-gradient-to-br from-[#43E0F8]/10 via-[#5DFDCB]/5 to-[#43E0F8]/10 backdrop-blur-xl rounded-3xl p-8 border border-[#43E0F8]/20 shadow-xl overflow-hidden">
-                {/* Animated Border */}
-                <motion.div
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 bg-gradient-to-r from-[#0056D2] via-[#43E0F8] to-[#5DFDCB] opacity-20 rounded-3xl blur-sm"
-                  style={{
-                    backgroundSize: "200% 200%",
-                  }}
-                />
-
-                <div className="relative z-10">
-                  {/* Icon and Title */}
-                  <div className="flex items-center justify-between mb-6">
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 10 }}
-                      className="w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#5DFDCB] rounded-2xl flex items-center justify-center shadow-lg"
-                    >
-                      <Shield className="text-white" size={28} />
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ x: 20, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.9 }}
-                      className="text-right"
-                    >
-                      <div
-                        className="text-3xl font-bold text-gray-900"
-                        style={{ fontFamily: "Montserrat, sans-serif" }}
-                      >
-                        24/7
-                      </div>
-                      <div
-                        className="text-lg text-[#0056D2] font-semibold"
-                        style={{ fontFamily: "Manrope, sans-serif" }}
-                      >
-                        Support
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Progress Bars */}
-                  <div className="space-y-3 mb-6">
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span
-                          className="text-gray-600"
-                          style={{ fontFamily: "Manrope, sans-serif" }}
-                        >
-                          Response Time
-                        </span>
-                        <span
-                          className="text-gray-900 font-medium"
-                          style={{ fontFamily: "Manrope, sans-serif" }}
-                        >
-                          Under 5 min
-                        </span>
-                      </div>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "95%" }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 1,
-                          duration: 1.5,
-                          ease: "easeOut",
-                        }}
-                        className="h-2 bg-gray-200 rounded-full overflow-hidden"
-                      >
-                        <div className="h-full bg-gradient-to-r from-[#0056D2] to-[#4A8BDF] rounded-full"></div>
-                      </motion.div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span
-                          className="text-gray-600"
-                          style={{ fontFamily: "Manrope, sans-serif" }}
-                        >
-                          Uptime
-                        </span>
-                        <span
-                          className="text-gray-900 font-medium"
-                          style={{ fontFamily: "Manrope, sans-serif" }}
-                        >
-                          99.9%
-                        </span>
-                      </div>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "99%" }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 1.2,
-                          duration: 1.5,
-                          ease: "easeOut",
-                        }}
-                        className="h-2 bg-gray-200 rounded-full overflow-hidden"
-                      >
-                        <div className="h-full bg-gradient-to-r from-[#4A8BDF] to-[#43E0F8] rounded-full"></div>
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 1.4 }}
-                    className="text-gray-600 text-sm leading-relaxed"
-                    style={{ fontFamily: "Manrope, sans-serif" }}
-                  >
-                    Round-the-clock support ensures your business never stops
-                    moving. Our dedicated team is always ready to assist.
-                  </motion.p>
-
-                  {/* Pulsing Indicator */}
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.7, 1, 0.7],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute top-4 left-4 w-3 h-3 bg-green-400 rounded-full shadow-lg"
-                  />
-                </div>
-              </div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Our Core Values</h2>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                The principles that guide everything we do, every single day.
+              </p>
             </motion.div>
-          </motion.div>
 
-          {/* Exploring The Benefits Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mb-20"
-          >
-            <div className="bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 sm:p-12 shadow-lg border border-gray-100">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {values.map((value, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="group"
+                >
+                  <div className="bg-white rounded-2xl p-8 h-full hover:shadow-lg transition-all duration-300">
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      className={`w-16 h-16 bg-gradient-to-r ${value.color} rounded-2xl flex items-center justify-center mb-6 group-hover:shadow-lg transition-shadow`}
+                    >
+                      <value.icon className="text-white" size={24} />
+                    </motion.div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{value.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{value.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Story Section */}
+        <div className="py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-4 mb-8"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl flex items-center justify-center">
-                  <CheckCircle className="text-white" size={24} />
+                <h2 className="text-4xl font-bold text-slate-900 mb-6">Our Story</h2>
+                <div className="space-y-4 text-slate-600 leading-relaxed">
+                  <p>
+                    Founded in 2019, Voyage Travel started with a simple mission: 
+                    to make car rental services more accessible, reliable, and customer-friendly.
+                  </p>
+                  <p>
+                    What began as a small fleet of 50 vehicles has grown into a comprehensive 
+                    transportation network serving thousands of customers across multiple cities.
+                  </p>
+                  <p>
+                    Our success is built on trust, innovation, and an unwavering commitment to 
+                    customer satisfaction. We've continuously evolved our services, embracing 
+                    technology to make bookings easier, vehicles safer, and experiences better.
+                  </p>
                 </div>
-                <h2
-                  className="text-3xl sm:text-4xl font-bold text-gray-900"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-8 flex flex-wrap gap-4"
                 >
-                  Exploring The Benefits
-                </h2>
+                  {["Award Winning Service", "ISO Certified", "24/7 Support", "Best Prices"].map((badge, index) => (
+                    <div
+                      key={index}
+                      className="px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg font-medium text-sm"
+                    >
+                      {badge}
+                    </div>
+                  ))}
+                </motion.div>
               </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-gray-600 text-lg leading-relaxed mb-8"
-                style={{ fontFamily: "Manrope, sans-serif" }}
+                className="relative"
               >
-                Excursion travel play a vital role in creating seamless and
-                enjoyable travel experiences. Excursions are perfect for
-                exploring local attractions, cultural landmarks, and natural
-                wonders. To complement this, car rental services provide
-                travelers with the flexibility to explore at their own pace,
-                offering options such as one-way rentals, ideal for journeys
-                that don't loop back to the starting point, and round-trip
-                rentals for local or day travel. With a wide range of vehicles
-                available, including compact cars, SUVs, and luxury options,
-                travelers can choose what best suits their needs. For air
-                travelers, transfer services ensure stress-free connectivity to
-                and from airports with options for private transportation, often
-                available round-the-clock to accommodate any schedule. Whether
-                planning a one-way trip to a new destination or a round-trip
-                adventure, these services work together to simplify logistics,
-                giving travelers more time to focus on enjoying their journey.
-              </motion.p>
-
-              <div className="grid md:grid-cols-3 gap-6">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
-                  >
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                      className="w-12 h-12 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-xl flex items-center justify-center mb-4"
-                    >
-                      <benefit.icon className="text-white" size={20} />
-                    </motion.div>
-                    <h3
-                      className="text-lg font-bold text-gray-900 mb-2"
-                      style={{ fontFamily: "Montserrat, sans-serif" }}
-                    >
-                      {benefit.title}
-                    </h3>
-                    <p
-                      className="text-gray-600 text-sm"
-                      style={{ fontFamily: "Manrope, sans-serif" }}
-                    >
-                      {benefit.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+                <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-3xl p-8">
+                  <div className="space-y-6">
+                    {timeline.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex gap-4"
+                      >
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
+                            <span className="text-sm font-bold text-slate-700">{item.year}</span>
+                          </div>
+                          {index < timeline.length - 1 && (
+                            <div className="w-0.5 h-16 bg-slate-200 mx-auto mt-2"></div>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-slate-900 mb-1">{item.title}</h4>
+                          <p className="text-sm text-slate-600">{item.description}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Vision, Mission, Approach Grid */}
-          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Our Vision */}
+        {/* Features Grid */}
+        <div className="py-24 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="group"
+              className="text-center mb-16"
             >
-              <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#0056D2] to-[#43E0F8] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#0056D2]/30 transition-all duration-300"
-                >
-                  <Eye className="text-white" size={28} />
-                </motion.div>
-
-                <h3
-                  className="text-2xl font-bold text-gray-900 mb-4"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
-                >
-                  Our Vision
-                </h3>
-                <h4
-                  className="text-lg font-semibold text-[#0056D2] mb-6"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
-                >
-                  Setting New Standards in Car Rentals
-                </h4>
-
-                <p
-                  className="text-gray-600 mb-6 leading-relaxed"
-                  style={{ fontFamily: "Manrope, sans-serif" }}
-                >
-                  We envision redefining corporate car rentals with innovation
-                  and precision. By integrating the latest technology, we
-                  simplify the rental process and ensure reliable service every
-                  time. Our commitment to excellence is reflected in our diverse
-                  fleet and our focus on providing tailored solutions for
-                  business professionals and travelers.
-                </p>
-
-                <ul className="space-y-3">
-                  {visionPoints.map((point, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.8 + index * 0.1 }}
-                      className="flex items-start gap-3 text-gray-700"
-                    >
-                      <ArrowRight
-                        className="text-[#0056D2] mt-1 flex-shrink-0"
-                        size={16}
-                      />
-                      <span style={{ fontFamily: "Manrope, sans-serif" }}>
-                        {point}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Why Choose Voyage Travel?</h2>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                We're different, and we're proud of it. Here's what sets us apart.
+              </p>
             </motion.div>
 
-            {/* Our Mission */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Car,
+                  title: "Premium Fleet",
+                  description: "Well-maintained vehicles equipped with modern amenities for your comfort.",
+                  features: ["Regular Sanitization", "GPS Tracking", "Insurance Coverage"]
+                },
+                {
+                  icon: Users,
+                  title: "Expert Drivers",
+                  description: "Professional, trained drivers who prioritize your safety and comfort.",
+                  features: ["Background Verified", "Well Trained", "Professional Behavior"]
+                },
+                {
+                  icon: TrendingUp,
+                  title: "Best Prices",
+                  description: "Transparent pricing with no hidden charges. Quality service at affordable rates.",
+                  features: ["No Hidden Fees", "Best Rate Guarantee", "Flexible Payment"]
+                },
+                {
+                  icon: Clock,
+                  title: "On-Time Service",
+                  description: "Punctual pickups and drop-offs. We respect your time.",
+                  features: ["Real-time Tracking", "24/7 Availability", "Quick Response"]
+                },
+                {
+                  icon: Shield,
+                  title: "Safety First",
+                  description: "Your safety is our priority with comprehensive safety measures.",
+                  features: ["Safety Kits", "Emergency Support", "Regular Maintenance"]
+                },
+                {
+                  icon: Star,
+                  title: "5-Star Experience",
+                  description: "Consistently rated excellent by our customers for service quality.",
+                  features: ["Customer Support", "Quality Assurance", "Feedback System"]
+                },
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all"
+                >
+                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6">
+                    <feature.icon className="text-white" size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                  <p className="text-slate-600 mb-4">{feature.description}</p>
+                  <ul className="space-y-2">
+                    {feature.features.map((feat, i) => (
+                      <li key={i} className="flex items-center gap-2 text-sm text-slate-600">
+                        <CheckCircle className="text-emerald-500" size={14} />
+                        {feat}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="py-24 bg-gradient-to-r from-blue-600 to-emerald-600">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
-              className="group"
             >
-              <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#43E0F8] to-[#4A8BDF] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#43E0F8]/30 transition-all duration-300"
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Ready to Start Your Journey with Us?
+              </h2>
+              <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                Join thousands of satisfied customers who trust Voyage Travel for their transportation needs.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-colors"
                 >
-                  <Target className="text-white" size={28} />
-                </motion.div>
-
-                <h3
-                  className="text-2xl font-bold text-gray-900 mb-4"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
+                  Book Now
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 transition-colors"
                 >
-                  Our Mission
-                </h3>
-                <h4
-                  className="text-lg font-semibold text-[#0056D2] mb-6"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
-                >
-                  Excellence in Every Ride
-                </h4>
-
-                <p
-                  className="text-gray-600 mb-6 leading-relaxed"
-                  style={{ fontFamily: "Manrope, sans-serif" }}
-                >
-                  Our mission is to deliver unparalleled car rental experiences
-                  by combining innovative technology with exceptional service.
-                  From streamlined booking processes to real-time vehicle
-                  tracking, we aim to make every journey seamless and
-                  stress-free. With a fleet of meticulously maintained vehicles,
-                  we ensure safety, comfort, and reliability in every ride.
-                </p>
-
-                <ul className="space-y-3">
-                  {missionPoints.map((point, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.9 + index * 0.1 }}
-                      className="flex items-start gap-3 text-gray-700"
-                    >
-                      <ArrowRight
-                        className="text-[#0056D2] mt-1 flex-shrink-0"
-                        size={16}
-                      />
-                      <span style={{ fontFamily: "Manrope, sans-serif" }}>
-                        {point}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-
-            {/* Our Approach */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.8 }}
-              className="group"
-            >
-              <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 h-full">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 bg-gradient-to-br from-[#4A8BDF] to-[#43E0F8] rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-[#5DFDCB]/30 transition-all duration-300"
-                >
-                  <Lightbulb className="text-white" size={28} />
-                </motion.div>
-
-                <h3
-                  className="text-2xl font-bold text-gray-900 mb-4"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
-                >
-                  Our Approach
-                </h3>
-                <h4
-                  className="text-lg font-semibold text-[#0056D2] mb-6"
-                  style={{ fontFamily: "Montserrat, sans-serif" }}
-                >
-                  Innovation Meets Dedication
-                </h4>
-
-                <p
-                  className="text-gray-600 mb-6 leading-relaxed"
-                  style={{ fontFamily: "Manrope, sans-serif" }}
-                >
-                  Our approach is centered on combining innovation with a
-                  dedication to excellence. We continuously evolve our services
-                  to meet changing customer needs. From high-tech features to a
-                  focus on sustainability, we're committed to setting new
-                  benchmarks in the car rental industry.
-                </p>
-
-                <ul className="space-y-3">
-                  {approachPoints.map((point, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 1.0 + index * 0.1 }}
-                      className="flex items-start gap-3 text-gray-700"
-                    >
-                      <ArrowRight
-                        className="text-[#0056D2] mt-1 flex-shrink-0"
-                        size={16}
-                      />
-                      <span style={{ fontFamily: "Manrope, sans-serif" }}>
-                        {point}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
+                  Learn More
+                </motion.button>
               </div>
             </motion.div>
           </div>
-
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.9 }}
-            className="text-center mt-16 sm:mt-20"
-          >
-            <div className="bg-gradient-to-r from-[#0056D2]/5 via-[#43E0F8]/5 to-[#0056D2]/5 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-[#43E0F8]/20 max-w-4xl mx-auto">
-              <h3
-                className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4"
-                style={{ fontFamily: "Montserrat, sans-serif" }}
-              >
-                Ready to Experience Excellence?
-              </h3>
-              <p
-                className="text-gray-600 mb-8 max-w-2xl mx-auto"
-                style={{ fontFamily: "Manrope, sans-serif" }}
-              >
-                Join thousands of satisfied clients who trust Excursion Travel
-                for their corporate transportation needs.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-[#0056D2] to-[#43E0F8] text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
-                style={{ fontFamily: "Manrope, sans-serif" }}
-              >
-                Get Started Today
-              </motion.button>
-            </div>
-          </motion.div>
         </div>
       </section>
       <Footer />
